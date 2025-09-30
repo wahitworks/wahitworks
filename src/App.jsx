@@ -1,5 +1,10 @@
+import KakaoMap from "./KakaoMap.jsx";
 function App() {
-  return <></>;
+  return (
+    <>
+      <KakaoMap></KakaoMap>
+    </>
+  );
 }
 
 export default App;
