@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
 import "./Main.css";
+import { useNavigate } from "react-router-dom";
 
 function Main() {
   // 테스트

@@ -10,3 +10,12 @@
 
   margin: 0 auto;
 }
+
+:root {
+  --deep-blue: #1C5C86;
+  --personal-blue: #36A6D7;
+  --light-blue: #6AC6D5;
+  --mint: #A3EFAC;
+  --green: #27AF03;
+  --red: #D40000;
+}

@@ -1,4 +1,55 @@
-.header-h1 {
-  /* css import 확인*/
-  color: red;
+.header-container {
+  background-color: #fff;
+  height: 115px;
+
+  padding: 10px;
+  display: flex;
+
+  border-bottom: 1px solid var(--deep-blue);
+
+  justify-content: space-between;
+  align-items: center;
+
+  position: sticky;
+  z-index: 3;
+}
+
+.header-logo {
+  width: 77px;
+  height: 77px;
+
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  cursor: pointer;
+}
+.header-return {
+  font-size: 40px;
+  width: 77px;
+  height: 77px;
+  line-height: 70px;
+}
+
+.header-center {
+  cursor: pointer;
+}
+.header-title {
+  font-size: 16px;
+  font-weight: 900;
+}
+.header-title-info {
+  font-size: 12px;
+  color: #999;
+}
+
+.header-menu {
+  width : 77px;
+  height: 77px;
+
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  cursor: pointer;
 }

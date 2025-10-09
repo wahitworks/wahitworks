@@ -5,17 +5,12 @@ import Footer from "./components/footer/Footer.jsx";
 function App() {
   return (
     <>
-      <header>
-        <Header></Header>
-      </header>
+      <Header />
 
       <main>
         <Outlet />
       </main>
 
-      <footer>
-        <Footer></Footer>
-      </footer>
     </>
   );
 }
