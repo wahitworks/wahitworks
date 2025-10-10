@@ -1,0 +1,80 @@
+.card-container {
+    width: 500;
+    padding: 30px;
+    border-radius: 8px;
+}
+
+.card {
+    background-color: white;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border: 1px solid #000;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hambger { 
+    cursor: grab;
+    padding-right: 10px;
+    font-size: 20px;
+    color: #888;
+}
+
+.card:last-child{
+    margin-bottom: 0;
+}
+
+.card-name {
+    margin: 0;
+    font-weight: bold;
+}
+
+/* 스위치 스타일 */
+/* From Uiverse.io by Yaya12085 */ 
+.switch {
+  position: relative;
+  height: 1.5rem;
+  width: 3rem;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 9999px;
+  background-color: rgba(100, 116, 139, 0.377);
+  transition: all .3s ease;
+}
+
+.switch:checked {
+  background-color: rgba(32, 151, 243, 1);
+}
+
+.switch::before {
+  position: absolute;
+  content: "";
+  left: calc(1.5rem - 1.6rem);
+  top: calc(1.5rem - 1.6rem);
+  display: block;
+  height: 1.6rem;
+  width: 1.6rem;
+  cursor: pointer;
+  border: 1px solid rgba(100, 116, 139, 0.527);
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 3px 10px rgba(100, 116, 139, 0.327);
+  transition: all .3s ease;
+}
+
+.switch:hover::before {
+  box-shadow: 0 0 0px 8px rgba(0, 0, 0, .15)
+}
+
+.switch:checked:hover::before {
+  box-shadow: 0 0 0px 8px rgba(32, 151, 243, .15)
+}
+
+.switch:checked:before {
+  transform: translateX(100%);
+  border-color: rgba(32, 151, 243, 1);
+}
