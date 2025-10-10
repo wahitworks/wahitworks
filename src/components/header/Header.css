@@ -26,9 +26,9 @@
 }
 .header-return {
   font-size: 40px;
-  width: 77px;
-  height: 77px;
-  line-height: 70px;
+  width: 80px;
+  height: 80px;
+  line-height: 90px;
 }
 
 .header-center {
@@ -44,12 +44,9 @@
 }
 
 .header-menu {
-  width : 77px;
-  height: 77px;
-
-  background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat;
-
+  width : 80px;
+  height: 80px;
+  text-align: center;
+  line-height: 100px;
   cursor: pointer;
 }

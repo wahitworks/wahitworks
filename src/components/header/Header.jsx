@@ -1,6 +1,5 @@
 import "./Header.css";
 import logo from "../../assets/icon-only-blue.PNG";
-import menuIcon from "../../assets/menu-icon.png"
 
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -14,6 +13,10 @@ import { LOCATION_LIST } from "../../constants/locationList.js";
 import { getCurrentLocation } from "../../store/thunks/locationThunk.js";
 import { setMatchedLocation } from "../../store/slices/locationSlice.js";
 import { stringUtils } from "../../utils/stringUtil.js";
+
+// 헤더에 들어가는 아이콘
+import { HiChevronLeft } from "react-icons/hi2";
+import { VscMenu } from "react-icons/vsc";
 
 function Header() {
   const navigate = useNavigate();
@@ -116,7 +119,7 @@ function Header() {
         {
           location.pathname === '/' 
           ? ( <div className="header-logo" onClick={() => goHome()} style={{backgroundImage: `url(${logo})`}}></div> )
-          : ( <span className="header-return" onClick={() => goHome()}>‹</span> )
+          : ( <span className="header-return" onClick={() => goHome()}><HiChevronLeft size={35}/></span> )
         }
         <div className="header-center" onClick={() => headerTitleClick()}>
           <p className="header-title">{headerTitle}</p>
@@ -126,7 +129,7 @@ function Header() {
             </span>
           }
         </div>
-        <div className="header-menu" onClick={() => headerMenuClick()} style={{backgroundImage: `url(${menuIcon})`}}></div>
+        <div className="header-menu" onClick={() => headerMenuClick()}><VscMenu size={35}/></div>
       </div>
       <LocationSearch />
       <HeaderMenu />
