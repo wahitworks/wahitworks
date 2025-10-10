@@ -1,5 +1,5 @@
 import "./Header.css";
-import logo from "../../assets/icon-only-blue.PNG";
+import logoTitle from "../../assets/logo-title-200.svg";
 
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import LocationSearch from "./LocationSearch.jsx";
 import HeaderMenu from "./HeaderMenu.jsx";
+import Logo from "../commons/Logo.jsx";
 
 import { setHeaderTitle, setMenuFlg, setSearchFlg } from "../../store/slices/headerSlice.js";
 import { LOCATION_LIST } from "../../constants/locationList.js";
@@ -27,7 +28,7 @@ function Header() {
   const searchFlg = useSelector(state => state.headerSlice.searchFlg);
 
   const searchKeyword = useSelector(state => state.locationSearchSlice.searchKeyword);
-  const matchedLocation = useSelector(state => state.locationSlice.matchedLocation);
+  // const matchedLocation = useSelector(state => state.locationSlice.matchedLocation);
 
   const currentRegion = useSelector(state => state.locationSlice.currentRegion);
 
@@ -96,7 +97,7 @@ function Header() {
     if(currentRegion && !foundLocation) {
       dispatch(setHeaderTitle(currentRegion));
     }
-  }, [location.pathname, searchKeyword, currentRegion])
+  }, [location.pathname, searchKeyword, currentRegion]);
 
   /**
    * headerTitle 클릭 시, searchFlg true ↔ false
@@ -118,7 +119,10 @@ function Header() {
       <div className="header-container">
         {
           location.pathname === '/' 
-          ? ( <div className="header-logo" onClick={() => goHome()} style={{backgroundImage: `url(${logo})`}}></div> )
+          ? ( <div className="header-logo-container">
+                <Logo animated className="header-logo" onClick={() => goHome()} />
+                <div className="header-logo-title" style={{backgroundImage: `url(${logoTitle})` }}></div>
+              </div> )
           : ( <span className="header-return" onClick={() => goHome()}><HiChevronLeft size={35}/></span> )
         }
         <div className="header-center" onClick={() => headerTitleClick()}>

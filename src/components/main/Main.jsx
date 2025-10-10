@@ -1,3 +1,4 @@
+import Logo from "../commons/Logo";
 import "./Main.css";
 import { useNavigate } from "react-router-dom";
 import Topbtn from "../topBtn/topBtn";

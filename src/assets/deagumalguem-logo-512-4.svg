@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 482.5 496.5">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4 {
+        stroke: #7eafe3;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 23px;
+      }
+
+      .cls-2 {
+        fill: #87aad5;
+      }
+
+      .cls-3, .cls-4 {
+        fill: #7eafe3;
+      }
+
+      .cls-4 {
+        font-size: 125.01px;
+        stroke-miterlimit: 10;
+        stroke-width: 2px;
+        font-family: MemomentKkukkukkR-KSCpc-EUC-H, MemomentKkukkukk;
+      }
+    </style>
+  </defs>
+  <title>deagumalguem-logo-512-4</title>
+  <g id="Layer_1" data-name="Layer 1">
+    <path class="cls-1" d="M216,278H113.14s-67.9-6.86-76.82-69.27,43.21-102.19,78.19-94c0,0,18.17-84,82.64-94.3S302.77,61.64,308.94,94.56c0,0,66.53,2.06,65.85,69.95" transform="translate(-23.81 -3.5)"/>
+    <path class="cls-1" d="M242.81,164.78a21.11,21.11,0,0,1,41.15,0" transform="translate(-23.81 -3.5)"/>
+    <path class="cls-1" d="M187.89,197.78a34.76,34.76,0,0,0,31.55,17.83c18.87-.75,28.29-16.91,28.81-17.83" transform="translate(-23.81 -3.5)"/>
+    <path class="cls-1" d="M153.37,165.23a21.11,21.11,0,0,1,41.15,0" transform="translate(-23.81 -3.5)"/>
+    <path class="cls-1" d="M238,258.82s54.18,39.78,117.28,40.46,61,30.87,61,30.87,3.43,26.06-18.52,29.49-36.35-4.8-31.55-23.32" transform="translate(-23.81 -3.5)"/>
+    <path class="cls-1" d="M256.82,303.05s44.58,19.21,50.07,23.32,13,14.41,4.11,28.12-25.37,5.49-28.8,0" transform="translate(-23.81 -3.5)"/>
+    <path class="cls-1" d="M284.25,253s28.81,18.52,83.68,13.72,52.12-38.41,52.12-38.41,2.06-24.69-27.43-28.81-29.49,26.75-26.75,32.24" transform="translate(-23.81 -3.5)"/>
+    <path class="cls-1" d="M429.65,174.8s17.84-51.44,65.16-60.35C494.81,114.45,488.64,171.37,429.65,174.8Z" transform="translate(-23.81 -3.5)"/>
+    <path class="cls-1" d="M442.68,62.32s-41.83,15.09-38.4,65.16C404.28,127.48,450.91,117.19,442.68,62.32Z" transform="translate(-23.81 -3.5)"/>
+    <path class="cls-2" d="M429.65,275.62s11.66,6.17,17.84,11.66" transform="translate(-23.81 -3.5)"/>
+    <circle class="cls-3" cx="323.54" cy="27.96" r="16.46"/>
+    <circle class="cls-2" cx="350.29" cy="73.23" r="5.49"/>
+    <circle class="cls-2" cx="439.79" cy="205.94" r="5.83"/>
+    <circle class="cls-2" cx="194.6" cy="318.07" r="8.23"/>
+  </g>
+  <g id="Layer_2" data-name="Layer 2">
+    <text class="cls-4" transform="translate(16.15 469.75)">대구맑음</text>
+  </g>
+</svg>

@@ -85,23 +85,6 @@ function LocationSearch () {
           // 배경 클릭으로 searchFlg(false) 전파 막기
           onClick={(e) => e.stopPropagation()}
           // -- 애니메이션 효과 --------------------
-          // initial={{ 
-          //   height: 0,           // 높이 0
-          //   overflow: "hidden"
-          // }}
-          // animate={{ 
-          //   height: "auto"       // 자동 높이로!
-          // }}
-          // exit={{ 
-          //   height: 0 
-          // }}
-          // transition={{
-          //   type: "spring",
-          //   damping: 13,          // 튕김 정도
-          //   duration: 0.5,        // 0.6초 동안
-          //   ease: "easeOut",      // 부드럽게 (천천히 끝남)
-          //   mass: 0.3,
-          // }}
           initial={{ 
             opacity: 0,
             filter: "blur(10px)",
@@ -139,7 +122,7 @@ function LocationSearch () {
             <div className="header-search-list header-flex-style">
               { filteredLocationList.length > 0 && filteredLocationList.map( item =>
                 <div className="header-search-result" key={item} onClick={() => handleSelectLocation(item)}>
-                  {item}
+                  ⭐ {item}
                 </div>
                 )
               }
