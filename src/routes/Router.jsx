@@ -5,7 +5,7 @@ import MainDetail from "../components/mainDetail/MainDetail.jsx";
 import EditBookmark from "../components/editPages/EditBookmark.jsx"
 import EditCard from "../components/editPages/EditCard.jsx";
 import AppTutorial from "../components/explainPages/AppTutorial.jsx";
-import Introduce from "../components/explainPages/Introdue.jsx";
+import Introduce from "../components/explainPages/Introduce.jsx";
 
 const router = createBrowserRouter([
   {
