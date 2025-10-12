@@ -1,7 +1,6 @@
 .card-container {
     width: 500;
-    padding: 30px;
-    border-radius: 8px;
+    padding: 30px;    
 }
 
 .card {
@@ -30,6 +29,40 @@
 .card-name {
     margin: 0;
     font-weight: bold;
+}
+
+/* 초기화 버튼 */
+.reset-btn-container {
+  width: 500;
+  padding: 10px 30px 0 30px; 
+  display: flex;
+  justify-content: flex-end;
+}
+
+.reset-btn{
+  font-size: 13px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 15px;
+}
+
+/* 저장하기 버튼 */
+.card-save-btn-container {
+  width: 500;
+  padding: 30px;  
+}
+
+.card-save-btn {
+  background-color: #fff;
+  font-size: 16px;
+  font-weight: 900;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #000;
+  border-radius: 15px;
+  cursor: pointer;
 }
 
 /* 스위치 스타일 */
