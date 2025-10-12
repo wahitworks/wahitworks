@@ -60,7 +60,7 @@
 
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 30px;
 }
 .header-Menu-container-list {
   font-weight: 700;

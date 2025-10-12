@@ -75,7 +75,7 @@ function HeaderMenu () {
               <div className="header-Menu-container-main">
                 <p className="header-Menu-container-list" onClick={() => {handleMenuClose(); navigate('/');}}>홈</p>
                 <p className="header-Menu-container-list" onClick={() => {handleMenuClose(); navigate('/editbookmark');}}>내 장소 관리</p>
-                <p className="header-Menu-container-list" onClick={() => {handleMenuClose(); navigate('/editcard');}}>카드 편집</p>
+                <p className="header-Menu-container-list" onClick={() => {handleMenuClose(); navigate('/editcard');}}>카드 관리</p>
                 <p className="header-Menu-container-list" onClick={() => {handleMenuClose(); navigate('/apptutorial');}}>사용 가이드</p>
                 <p className="header-Menu-container-list" onClick={() => {handleMenuClose(); navigate('/introduce');}}>About</p>
               </div>

@@ -31,7 +31,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 13px;
 
   margin: 20px 0 60px 0;
 }
@@ -43,45 +43,50 @@
   text-align: center;
 }
 .header-search-btn {
-  font-size: 16px;
-  width: 25px;
-  height: 25px;
+  font-size: 20px;
+  width: 30px;
+  height: 30px;
 
   background: none;
   border: none;
   cursor: pointer;
 
   position: absolute;
-  right: 8%;
-  top: 50%;
-  transform: translateY(-50%);
+  right: 9%;
+  top: 25%;
+  /* transform: translateY(-50%); */
 }
 .header-search-input {
-  width: 100%;
-  height: 30px;
+  font-size: 16px;
+  font-weight: 600;
 
-  border-radius: 5px;
+  width: 100%;
+  height: 45px;
+
+  border-radius: 10px;
   background-color: #EEEEEE;
 
   border: none;
   outline: none;
 
-  padding: 5px 15px;
+  padding: 10px 25px;
 }
 .header-search-input:focus {
   box-shadow: 0 0 5px var(--deep-blue);
 }
 
 .header-search-result {
-  width: 80%;
+  font-weight: 600;
+  width: 85%;
   
-  border: 1px solid #EEEEEE;
+  border: 1px solid var(--personal-blue);
   border-radius: 10px;
   
-  padding: 5px 10px;
+  padding: 10px 15px;
 }
 .header-search-list {
-  min-height: 250px;
+  padding-left: 10px;
+  min-height: 50px;
   max-height: 400px; 
   overflow-y: auto; /* 스크롤 자동 생성 */
 }

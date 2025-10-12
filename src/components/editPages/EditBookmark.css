@@ -1,0 +1,88 @@
+.bookmark-container {
+  padding: 30px;
+
+  display: flex;
+  flex-direction: column;
+}
+.bookmark-title {
+  font-weight: 700;
+}
+
+.bookmark-search-input-btn {
+  text-align: center;
+  
+  margin: 20px auto;
+
+  position: relative;
+}
+.bookmark-search-input {
+  font-size: 16px;
+  font-weight: 600;
+
+  width: 80%;
+  height: 45px;
+
+  border-radius: 10px;
+  background-color: #EEEEEE;
+
+  border: none;
+  outline: none;
+
+  padding: 10px 25px;
+}
+.bookmark-search-input:focus {
+  box-shadow: 0 0 5px var(--deep-blue);
+}
+.bookmark-search-btn{
+  font-size: 20px;
+
+  width: 30px;
+  height: 30px;
+
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  position: absolute;
+  top: 22%;
+  right: 11%;
+}
+
+.bookmark-filtered-conatiner {
+  width: 90%;
+  min-height: 50px;
+  max-height: 200px;
+  overflow-y: auto; /* 스크롤 자동 생성 */
+
+  padding: 10px 30px 10px 60px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.bookmark-filtered-conatiner::-webkit-scrollbar {
+  width: 10px; /* 스크롤바 너비 */
+}
+.bookmark-filtered-conatiner::-webkit-scrollbar-track {
+  background: transparent; /* 투명 배경 */
+}
+.bookmark-filtered-conatiner::-webkit-scrollbar-thumb {
+  background: var(--deep-blue); /* 스크롤바 색상 */
+  border-radius: 5px;
+}
+.bookmark-filtered-item {
+  font-weight: bold;
+
+  padding: 10px 20px;
+  border: 1px solid var(--light-blue);
+  border-radius: 15px;
+}
+
+.bookmark-item {
+  font-weight: bold;
+
+  background-color: white;
+  padding: 10px 20px;
+  border: 1px solid var(--deep-blue);
+  border-radius: 15px;
+}
