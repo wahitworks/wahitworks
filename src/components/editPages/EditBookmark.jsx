@@ -3,8 +3,10 @@ import './EditBookmark.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoMdSearch } from "react-icons/io";
 import { motion, AnimatePresence } from 'framer-motion';
+import { CiStar } from "react-icons/ci";
+import { FaStar } from "react-icons/fa";
 
-import { setBookmarkFilteredList, setBookmarkSearchInput, setBookmarkSearchKeyword } from '../../store/slices/bookmarkSlice.js';
+import { addBookmark, removeBookmark, setBookmarkFilteredList, setBookmarkSearchInput, setBookmarkSearchKeyword } from '../../store/slices/bookmarkSlice.js';
 import { useEffect } from 'react';
 import { LOCATION_LIST } from '../../constants/locationList.js';
 import { stringUtils } from '../../utils/stringUtil';
@@ -34,8 +36,39 @@ function EditBookmark () {
     });
     
     dispatch(setBookmarkFilteredList(filteredResult));
+
   }, [bookmarkSearchInput, dispatch])
   
+  useEffect(() => {
+    // 언마운트 시, 검색어 초기화 설정
+    return () => {
+      dispatch(setBookmarkSearchInput(''));
+    }
+  }, [])
+
+  /**
+   * bookmarkedRegions에 추가되어있는지 아닌지 true/false 반환
+   * @param {string} item : 검색한 지역
+   * @returns {boolean} 
+   */
+  const isBookmarked = (item) => {
+    return bookmarkedRegions.some(bookmarkeditem => bookmarkeditem === item)
+  };
+
+  /**
+   * 해당 지역이 북마크되어있다면 (bookmarkedRegions에 있다면) → 북마크에서 삭제 /
+   * 해당 지역이 북마크되어있지 않다면 (bookmarkedRegions에 없다면) → 북마크에 추가
+   * @param {string} item : 검색한 지역
+   */
+  const toggleBookmark = (item) => {
+    if(isBookmarked(item)) {
+      dispatch(removeBookmark(item))
+      console.log('제거:', item);
+    } else {
+      dispatch(addBookmark(item));
+      console.log('추가:', bookmarkedRegions);
+    }
+  };
 
   return(
     <>
@@ -54,9 +87,9 @@ function EditBookmark () {
           className="bookmark-filtered-conatiner"
           initial={{ height: 0, minHeight: 0, opacity: 0 }}
           animate={{
-            height: bookmarkedRegions.length > 0 ? 'auto' : 0,
-            minHeight: bookmarkedRegions.length > 0 ? 50 : 0,
-            opacity: bookmarkedRegions.length > 0 ? 1 : 0
+            height: bookmarkFilteredList.length > 0 ? 'auto' : 0,
+            minHeight: bookmarkFilteredList.length > 0 ? 50 : 0,
+            opacity: bookmarkFilteredList.length > 0 ? 1 : 0
           }}
           transition={{
             duration: 0.3,
@@ -65,8 +98,16 @@ function EditBookmark () {
         >
           {
             bookmarkFilteredList.length > 0 && bookmarkFilteredList.map(filteredItem => (
-              <div className="bookmark-filtered-item">
-                {filteredItem}
+              <div className="bookmark-filtered-item" key={filteredItem}>
+                <span
+                  className="bookmark-icon"
+                  onClick={() => {
+                    toggleBookmark(filteredItem); // 2. item 값 그대로 전달!
+                  }}
+                >
+                  {isBookmarked(filteredItem) ? <FaStar color='var(--deep-blue)' /> : <CiStar color='var(--deep-blue)' />}
+                </span>
+                <span> {filteredItem}</span>
               </div>
             ))
           }
@@ -76,10 +117,17 @@ function EditBookmark () {
       <div className='bookmark-list-container'>
         <p className='bookmark-title'>내 장소</p>
         <div className='bookmark-items-container'>
-        { bookmarkedRegions.length > 0 && bookmarkedRegions.map(region => (
+        { bookmarkedRegions.length > 0 && bookmarkedRegions.map((region) => (
             <div className="bookmark-item" key={region}>
-              {/* todo: 북마크 아이콘 */}
-              <p>{region}</p> 
+              <span>{region}</span> 
+              <span
+                className="bookmark-icon"
+                onClick={() => {
+                  toggleBookmark(region); // 2. item 값 그대로 전달!
+                }}
+              >
+                {isBookmarked(region) ? <FaStar color='var(--deep-blue)' /> : <CiStar color='var(--deep-blue)' />}
+              </span>
             </div>
           ))
         }

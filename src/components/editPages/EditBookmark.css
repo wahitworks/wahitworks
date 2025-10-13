@@ -6,6 +6,11 @@
 }
 .bookmark-title {
   font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.bookmark-search-container {
+  margin-bottom: 30px;
 }
 
 .bookmark-search-input-btn {
@@ -76,6 +81,10 @@
   padding: 10px 20px;
   border: 1px solid var(--light-blue);
   border-radius: 15px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .bookmark-item {
@@ -85,4 +94,9 @@
   padding: 10px 20px;
   border: 1px solid var(--deep-blue);
   border-radius: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }

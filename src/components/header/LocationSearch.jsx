@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IoMdSearch } from "react-icons/io";
+import { CiStar } from "react-icons/ci";
+import { FaStar } from "react-icons/fa";
 
 import { setSearchFlg } from '../../store/slices/headerSlice.js';
 import { setFilteredLocationList, setSearchInput, setSearchKeyword } from '../../store/slices/locationSearchSlice.js';
@@ -169,7 +171,8 @@ function LocationSearch () {
                       e.stopPropagation(); // 1. div로 이벤트 전파 막기!
                       toggleBookmark(item); // 2. item 값 그대로 전달!
                     }}
-                  >{isBookmarked(item) ? `⭐` : `⬜`}</span> {item}
+                  >{isBookmarked(item) ? <FaStar color='var(--deep-blue)' /> : <CiStar color='var(--deep-blue)' />}</span>
+                  <span> {item}</span>
                 </div>
                 )
               }
