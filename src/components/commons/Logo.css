@@ -1,40 +1,56 @@
 /* ========================================
-   초기 상태 설정 (깜빡임 방지)
+   Logo CSS - 기본 로고 애니메이션
+======================================== */
+
+/* ========================================
+   초기 상태 설정
 ======================================== */
 /* 레이어 초기 위치 */
-#Layer_3,
-#Layer_4,
-#Layer_6,
-#Layer_7,
-#Layer_8,
-#Layer_9,
-#Layer_10 {
+.logo #Layer_2,
+.logo #Layer_3,
+.logo #Layer_6,
+.logo #Layer_7 {
   transform: translateY(0);
 }
-/* path 초기 상태 */
-#Layer_6 path,
-#Layer_7 path,
-#Layer_8 path,
-#Layer_9 path,
-#Layer_10 path {
-  transform: translateX(0) scaleX(1);
-  opacity: 0.7;
-}
-#Layer_11 path.cls-2 {
-  transform: translateX(0) scaleX(1);
-  opacity: 0.75;
-}
-/* 원들 초기 상태 */
-circle.cls-3 {
-  transform: translate(0, 0) scale(1);
-  opacity: 1;
-  filter: drop-shadow(0 0 0 rgba(126, 175, 227, 0));
-}
-#Layer_11 circle.cls-2 {
-  transform: translate(0, 0) scale(1);
+
+/* 눈 초기 위치 고정 */
+.logo #Layer_3 path,
+.logo #Layer_6 path {
+  transform: translate(0, 0);
   opacity: 1;
 }
 
+/* 바람 초기 상태 */
+.logo #Layer_4 path,
+.logo #Layer_8 path,
+.logo #Layer_9 path,
+.logo #Layer_10 path {
+  transform: translateX(0) scaleX(1);
+  opacity: 0.8;
+}
+
+/* 물방울 초기 상태 */
+.logo #Layer_12 path,
+.logo #Layer_13 path {
+  transform: translateX(0) scaleX(1);
+  opacity: 0.7;
+}
+
+/* 먼지 초기 상태 */
+.logo #Layer_11 circle.cls-2:nth-of-type(1),
+.logo #Layer_11 circle.cls-2:nth-of-type(2),
+.logo #Layer_11 circle.cls-2:nth-of-type(3) {
+  transform: translate(0, 0) scale(1);
+  opacity: 1;
+}
+/* 4번 먼지 - 반투명 */
+.logo #Layer_11 circle.cls-2:nth-of-type(4) {
+  transform: translate(0, 0) scale(1);
+  opacity: 0.3;
+}
+.logo.animated #Layer_11 circle.cls-2:nth-of-type(4) {
+  animation: dustFloat4 7.5s ease-in-out infinite 2s;
+}
 
 .logo {
   display: block;
@@ -42,445 +58,452 @@ circle.cls-3 {
   height: 100%;
   cursor: pointer;
   overflow: visible;
-  transition: transform 0.15s ease;
-  opacity: 1;
-  transform: translateY(0);
+  transform: translateY(-10px);
 }
+
 /* 등장 애니메이션 */
 .logo-entrance {
-  animation: entrance 1.2s ease-out;
+  animation: entrance 1s ease-out;
 }
+
 @keyframes entrance {
   0% {
     opacity: 0;
+    transform: translateY(20px) scale(0.9);
   }
   100% {
     opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
 /* ========================================
-   레이어 3, 4, 6, 7, 8: 함께 둥실둥실
+   구름 둥실둥실 (Layer_2, 3, 6, 7)
 ======================================== */
+.logo.animated #Layer_2,
 .logo.animated #Layer_3,
-.logo.animated #Layer_4,
 .logo.animated #Layer_6,
-.logo.animated #Layer_7,
-.logo.animated #Layer_8 {
-  animation: mainFloat 6s ease-in-out infinite;
+.logo.animated #Layer_7 {
+  animation: cloudFloat 5s ease-in-out infinite;
 }
-@keyframes mainFloat {
+
+@keyframes cloudFloat {
   0%, 100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-12px);
+    transform: translateY(-8px);
   }
 }
+
 /* ========================================
-   큰 구름 (Layer_3): 추가로 숨쉬기
+   구름 몸통 숨쉬기 (Layer_2)
 ======================================== */
-.logo.animated #Layer_3 path {
-  animation: cloudBreathe 5s ease-in-out infinite;
+.logo.animated #Layer_2 path {
+  animation: cloudBreathe 6s ease-in-out infinite;
   transform-origin: center;
 }
+
 @keyframes cloudBreathe {
   0%, 100% {
     transform: scale(1);
   }
   50% {
-    transform: scale(1.02);
+    transform: scale(1.015);
   }
 }
+
 /* ========================================
-   눈동자 (Layer_4): 좌우로 살펴보기
+   눈 깜빡이기 (Layer_3, Layer_6)
 ======================================== */
-.logo.animated #Layer_4 path:nth-child(1),
-.logo.animated #Layer_4 path:nth-child(3) {
-  animation: eyeLook 8s ease-in-out infinite;
-  transform-origin: center;
+.logo.animated #Layer_3 path,
+.logo.animated #Layer_6 path {
+  animation: eyeBlink 8s ease-in-out infinite;
 }
-@keyframes eyeLook {
-  0%, 20%, 100% {
-    transform: translateX(0);
-  }
-  10% {
-    transform: translateX(2px);
-  }
-  40%, 60% {
-    transform: translateX(0);
+
+@keyframes eyeBlink {
+  0%, 48%, 52%, 100% {
+    transform: translate(0, 0);
+    opacity: 1;
   }
   50% {
-    transform: translateX(-2px);
+    transform: translate(0, 0);
+    opacity: 0.1;
   }
 }
+
 /* ========================================
-   입 (Layer_4 두 번째): 미소 짓기
+   입 미소 (Layer_7)
 ======================================== */
-.logo.animated #Layer_4 path:nth-child(2) {
-  animation: smile 10s ease-in-out infinite;
+.logo.animated #Layer_7 path {
+  animation: smile 7s ease-in-out infinite;
   transform-origin: center;
 }
+
 @keyframes smile {
-  0%, 85%, 100% {
+  0%, 80%, 100% {
     transform: scaleY(1);
   }
-  90% {
-    transform: scaleY(1.08);
-  }
-  95% {
-    transform: scaleY(1.05);
+  85%, 95% {
+    transform: scaleY(1.1);
   }
 }
+
 /* ========================================
-   바람 슝~ (Layer_6, 7, 8): 추가 바람 효과
-   (둥실둥실은 이미 위에서 적용됨!)
+   바람 효과 - 선 긋기 + 둥실둥실
 ======================================== */
-/* Layer_7: 오른쪽 아래 바람 */
-.logo.animated #Layer_7 path {
-  animation: windTrail1 4s ease-in-out infinite;
+/* Layer_4: 가운데 바람 */
+.logo.animated #Layer_4 {
+  animation: cloudFloat 5s ease-in-out infinite;
+}
+.logo.animated #Layer_4 path {
+  animation: windFlow1 4s ease-in-out infinite;
   transform-origin: left center;
 }
-@keyframes windTrail1 {
+
+@keyframes windFlow1 {
   0%, 100% {
     transform: translateX(0) scaleX(1);
-    opacity: 0.7;
+    opacity: 0.8;
   }
   25% {
-    transform: translateX(4px) scaleX(1.08);
-    opacity: 0.95;
+    transform: translateX(4px) scaleX(1.1);
+    opacity: 1;
   }
   50% {
-    transform: translateX(2px) scaleX(1.04);
-    opacity: 0.85;
+    transform: translateX(2px) scaleX(1.05);
+    opacity: 0.9;
   }
   75% {
     transform: translateX(-1px) scaleX(0.98);
-    opacity: 0.6;
+    opacity: 0.7;
   }
 }
-/* Layer_6: 왼쪽 아래 바람 */
-.logo.animated #Layer_6 path {
-  animation: windTrail2 4.5s ease-in-out infinite 0.5s;
+
+/* Layer_8: 왼쪽 바람 */
+.logo.animated #Layer_8 {
+  animation: cloudFloat 5s ease-in-out infinite 0.3s;
+}
+.logo.animated #Layer_8 path {
+  animation: windFlow2 4.5s ease-in-out infinite 0.5s;
   transform-origin: left center;
 }
-@keyframes windTrail2 {
+
+@keyframes windFlow2 {
   0%, 100% {
     transform: translateX(0) scaleX(1);
     opacity: 0.75;
   }
   30% {
-    transform: translateX(5px) scaleX(1.1);
+    transform: translateX(5px) scaleX(1.12);
     opacity: 0.95;
   }
   60% {
-    transform: translateX(3px) scaleX(1.05);
-    opacity: 0.88;
+    transform: translateX(3px) scaleX(1.06);
+    opacity: 0.85;
   }
   80% {
     transform: translateX(-1px) scaleX(0.97);
     opacity: 0.65;
   }
 }
-/* Layer_8: 오른쪽 중간 바람 */
-.logo.animated #Layer_8 path {
-  animation: windTrail3 5s ease-in-out infinite 1s;
+
+/* Layer_9: 오른쪽 바람 */
+.logo.animated #Layer_9 {
+  animation: cloudFloat 5s ease-in-out infinite 0.6s;
+}
+.logo.animated #Layer_9 path {
+  animation: windFlow3 5s ease-in-out infinite 1s;
   transform-origin: left center;
 }
-@keyframes windTrail3 {
+
+@keyframes windFlow3 {
   0%, 100% {
     transform: translateX(0) scaleX(1);
-    opacity: 0.7;
+    opacity: 0.8;
   }
   35% {
-    transform: translateX(6px) scaleX(1.12);
-    opacity: 0.98;
+    transform: translateX(6px) scaleX(1.15);
+    opacity: 1;
   }
   65% {
-    transform: translateX(3px) scaleX(1.06);
+    transform: translateX(3px) scaleX(1.08);
     opacity: 0.9;
   }
   85% {
     transform: translateX(-2px) scaleX(0.96);
-    opacity: 0.6;
+    opacity: 0.7;
   }
 }
-/* ========================================
-   위쪽 바람들 (Layer_9, 10): 따로 움직임
-======================================== */
-/* Layer_9: 오른쪽 위 바람 */
-.logo.animated #Layer_9 path {
-  animation: windTrail4 4.2s ease-in-out infinite 1.5s;
-  transform-origin: left center;
+
+/* Layer_10: 아주 작은 바람 */
+.logo.animated #Layer_10 {
+  animation: cloudFloat 5s ease-in-out infinite 0.9s;
 }
-@keyframes windTrail4 {
-  0%, 100% {
-    transform: translateX(0) scaleX(1) rotate(0deg);
-    opacity: 0.75;
-  }
-  40% {
-    transform: translateX(4px) scaleX(1.09) rotate(1deg);
-    opacity: 0.98;
-  }
-  70% {
-    transform: translateX(2px) scaleX(1.03) rotate(-0.5deg);
-    opacity: 0.85;
-  }
-  90% {
-    transform: translateX(-1px) scaleX(0.98) rotate(0deg);
-    opacity: 0.65;
-  }
-}
-/* Layer_10: 왼쪽 위 바람 */
 .logo.animated #Layer_10 path {
-  animation: windTrail5 3.8s ease-in-out infinite 0.8s;
+  animation: windFlow4 3.5s ease-in-out infinite 1.5s;
   transform-origin: left center;
 }
-@keyframes windTrail5 {
+
+@keyframes windFlow4 {
   0%, 100% {
     transform: translateX(0) scaleX(1);
     opacity: 0.7;
   }
-  30% {
-    transform: translateX(3px) scaleX(1.06);
+  40% {
+    transform: translateX(3px) scaleX(1.08);
     opacity: 0.95;
   }
-  60% {
+  70% {
     transform: translateX(1px) scaleX(1.03);
     opacity: 0.8;
   }
-  85% {
-    transform: translateX(-1px) scaleX(0.97);
+}
+
+/* ========================================
+   물방울 효과 (Layer_12, Layer_13)
+======================================== */
+/* Layer_12: 오른쪽 물방울 */
+.logo.animated #Layer_12 path {
+  animation: dropFlow1 4s ease-in-out infinite;
+  transform-origin: left center;
+}
+
+@keyframes dropFlow1 {
+  0%, 100% {
+    transform: translateX(0) scaleX(1);
+    opacity: 0.7;
+  }
+  25% {
+    transform: translateX(3px) scaleX(1.08);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateX(1px) scaleX(1.04);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translateX(-1px) scaleX(0.98);
     opacity: 0.6;
   }
 }
-/* ========================================
-   바람 효과 (Layer_11 path.cls-2): 작은 바람선
-======================================== */
-.logo.animated #Layer_11 path.cls-2 {
-  animation: windFlow 3s ease-in-out infinite;
+
+/* Layer_13: 왼쪽 물방울 */
+.logo.animated #Layer_13 path {
+  animation: dropFlow2 4.5s ease-in-out infinite 0.8s;
   transform-origin: left center;
 }
-@keyframes windFlow {
+
+@keyframes dropFlow2 {
   0%, 100% {
     transform: translateX(0) scaleX(1);
     opacity: 0.75;
   }
-  20% {
-    transform: translateX(2px) scaleX(1.1);
+  30% {
+    transform: translateX(4px) scaleX(1.1);
     opacity: 0.95;
   }
-  40% {
-    transform: translateX(1px) scaleX(1.05);
-    opacity: 0.9;
-  }
   60% {
-    transform: translateX(-1px) scaleX(0.98);
-    opacity: 0.7;
-  }
-  80% {
-    transform: translateX(0px) scaleX(1.02);
+    transform: translateX(2px) scaleX(1.05);
     opacity: 0.85;
   }
-}
-/* ========================================
-   큰 원 (circle.cls-3): 반짝이며 떠다니기
-======================================== */
-.logo.animated circle.cls-3 {
-  animation: starFloat 5s ease-in-out infinite;
-}
-@keyframes starFloat {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-    opacity: 1;
-    filter: drop-shadow(0 0 0 rgba(126, 175, 227, 0));
-  }
-  50% {
-    transform: translate(-4px, -10px) scale(1.1);
-    opacity: 0.9;
-    filter: drop-shadow(0 0 12px rgba(126, 175, 227, 0.7));
+  80% {
+    transform: translateX(-1px) scaleX(0.97);
+    opacity: 0.65;
   }
 }
+
 /* ========================================
-   작은 원들 (circle.cls-2): 흩날리기
+   먼지 흩날리기 (Layer_11 circle)
 ======================================== */
-/* 첫 번째 - 오른쪽 위로 크게 */
+/* 1번 먼지 - 오른쪽 위로 */
 .logo.animated #Layer_11 circle.cls-2:nth-of-type(1) {
-  animation: particle1 7s ease-in-out infinite;
+  animation: dustFloat1 6s ease-in-out infinite;
 }
-@keyframes particle1 {
+
+@keyframes dustFloat1 {
   0%, 100% {
     transform: translate(0, 0) scale(1);
     opacity: 1;
   }
   25% {
-    transform: translate(15px, -20px) scale(1.6);
-    opacity: 0.5;
-  }
-  50% {
-    transform: translate(20px, -30px) scale(2);
-    opacity: 0.2;
-  }
-  75% {
-    transform: translate(10px, -15px) scale(1.3);
+    transform: translate(12px, -15px) scale(1.4);
     opacity: 0.6;
   }
+  50% {
+    transform: translate(18px, -22px) scale(1.8);
+    opacity: 0.3;
+  }
+  75% {
+    transform: translate(8px, -12px) scale(1.2);
+    opacity: 0.7;
+  }
 }
-/* 두 번째 - 왼쪽 위로 */
+
+/* 2번 먼지 - 왼쪽 위로 */
 .logo.animated #Layer_11 circle.cls-2:nth-of-type(2) {
-  animation: particle2 6.5s ease-in-out infinite 1s;
+  animation: dustFloat2 6.5s ease-in-out infinite 0.8s;
 }
-@keyframes particle2 {
+
+@keyframes dustFloat2 {
   0%, 100% {
     transform: translate(0, 0) scale(1);
     opacity: 1;
   }
   30% {
-    transform: translate(-18px, -25px) scale(1.7);
-    opacity: 0.4;
+    transform: translate(-15px, -18px) scale(1.5);
+    opacity: 0.5;
   }
   60% {
-    transform: translate(-25px, -18px) scale(1.5);
-    opacity: 0.3;
+    transform: translate(-20px, -12px) scale(1.3);
+    opacity: 0.4;
   }
   80% {
-    transform: translate(-8px, -10px) scale(1.2);
-    opacity: 0.7;
+    transform: translate(-6px, -8px) scale(1.1);
+    opacity: 0.8;
   }
 }
-/* 세 번째 - 아래로 천천히 */
+
+/* 3번 먼지 - 위쪽으로 크게 */
 .logo.animated #Layer_11 circle.cls-2:nth-of-type(3) {
-  animation: particle3 8s ease-in-out infinite 2s;
+  animation: dustFloat3 7s ease-in-out infinite 1.5s;
 }
-@keyframes particle3 {
+
+@keyframes dustFloat3 {
   0%, 100% {
     transform: translate(0, 0) scale(1);
     opacity: 1;
   }
   35% {
-    transform: translate(-12px, 35px) scale(2.2);
-    opacity: 0.3;
+    transform: translate(-8px, -25px) scale(2);
+    opacity: 0.4;
   }
   70% {
-    transform: translate(8px, 40px) scale(1.8);
+    transform: translate(5px, -30px) scale(1.6);
+    opacity: 0.3;
+  }
+  85% {
+    transform: translate(-3px, -15px) scale(1.3);
+    opacity: 0.6;
+  }
+}
+
+/* 4번 먼지 - 아래로만 살짝 */
+@keyframes dustFloat4 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.3;
+  }
+  30% {
+    transform: translate(-8px, 8px) scale(1.2);
+    opacity: 0.25;
+  }
+  65% {
+    transform: translate(6px, 12px) scale(1.15);
     opacity: 0.2;
   }
   85% {
-    transform: translate(-5px, 20px) scale(1.4);
-    opacity: 0.5;
+    transform: translate(-3px, 5px) scale(1.1);
+    opacity: 0.28;
   }
 }
+
 /* ========================================
    클릭 효과
 ======================================== */
 .logo:active {
-  transform: scale(0.97);
+  transform: scale(0.95);
 }
+
 .logo.animated:active {
-  animation: clickJump 0.5s ease;
+  animation: clickBounce 0.5s ease;
 }
-@keyframes clickJump {
+
+@keyframes clickBounce {
   0% {
     transform: translateY(0) scale(1);
   }
   40% {
-    transform: translateY(-10px) scale(1.02);
+    transform: translateY(-8px) scale(1.03);
   }
   70% {
-    transform: translateY(-5px) scale(0.99);
+    transform: translateY(-4px) scale(0.98);
   }
   100% {
     transform: translateY(0) scale(1);
   }
 }
-/* 클릭 시 원들 폭발 */
+
+/* 클릭 시 먼지 폭발 */
 .logo.animated:active #Layer_11 circle.cls-2:nth-of-type(1) {
-  animation: explode1 0.6s ease !important;
+  animation: dustExplode1 0.5s ease !important;
 }
 .logo.animated:active #Layer_11 circle.cls-2:nth-of-type(2) {
-  animation: explode2 0.6s ease !important;
+  animation: dustExplode2 0.5s ease !important;
 }
 .logo.animated:active #Layer_11 circle.cls-2:nth-of-type(3) {
-  animation: explode3 0.6s ease !important;
+  animation: dustExplode3 0.5s ease !important;
 }
-@keyframes explode1 {
+.logo.animated:active #Layer_11 circle.cls-2:nth-of-type(4) {
+  animation: dustExplode4 0.5s ease !important;
+}
+
+@keyframes dustExplode1 {
   0% { transform: translate(0, 0) scale(1); opacity: 1; }
-  50% { transform: translate(20px, -20px) scale(1.8); opacity: 0.3; }
+  50% { transform: translate(18px, -18px) scale(1.6); opacity: 0.4; }
   100% { transform: translate(0, 0) scale(1); opacity: 1; }
 }
-@keyframes explode2 {
+
+@keyframes dustExplode2 {
   0% { transform: translate(0, 0) scale(1); opacity: 1; }
-  50% { transform: translate(-22px, -18px) scale(1.6); opacity: 0.3; }
+  50% { transform: translate(-20px, -15px) scale(1.5); opacity: 0.4; }
   100% { transform: translate(0, 0) scale(1); opacity: 1; }
 }
-@keyframes explode3 {
+
+@keyframes dustExplode3 {
   0% { transform: translate(0, 0) scale(1); opacity: 1; }
-  50% { transform: translate(-10px, 30px) scale(2); opacity: 0.3; }
+  50% { transform: translate(-8px, -28px) scale(1.8); opacity: 0.3; }
   100% { transform: translate(0, 0) scale(1); opacity: 1; }
 }
-/* 클릭 시 바람들 강하게 */
-.logo.animated:active #Layer_11 path.cls-2,
-.logo.animated:active #Layer_7 path,
-.logo.animated:active #Layer_6 path,
+
+@keyframes dustExplode4 {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+  50% { transform: translate(-10px, 15px) scale(1.3); opacity: 0.15; }
+  100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+}
+
+/* 클릭 시 바람 강하게 */
+.logo.animated:active #Layer_4 path,
 .logo.animated:active #Layer_8 path,
 .logo.animated:active #Layer_9 path,
 .logo.animated:active #Layer_10 path {
-  animation: strongWind 0.4s ease !important;
+  animation: windStrong 0.4s ease !important;
 }
-@keyframes strongWind {
+
+@keyframes windStrong {
   0%, 100% {
     transform: translateX(0) scaleX(1);
   }
   50% {
-    transform: translateX(10px) scaleX(1.4);
+    transform: translateX(8px) scaleX(1.3);
   }
 }
-/* 클릭 시 큰 원 반짝 */
-.logo.animated:active circle.cls-3 {
-  animation: flashBright 0.4s ease !important;
-}
-@keyframes flashBright {
-  0%, 100% {
-    filter: drop-shadow(0 0 0 rgba(126, 175, 227, 0));
-    transform: scale(1);
-  }
-  50% {
-    filter: drop-shadow(0 0 10px rgba(126, 175, 227, 0.8));
-    transform: scale(1.1);
-  }
-}
+
 /* ========================================
    크기 옵션
 ======================================== */
 .logo-small {
   width: 80px;
 }
+
 .logo-medium {
   width: 150px;
 }
+
 .logo-large {
   width: 300px;
 }
+
 .logo-xlarge {
   width: 400px;
-}
-/* ========================================
-   등장 애니메이션
-======================================== */
-.logo-entrance {
-  animation: entrance 1.2s ease-out;
-}
-@keyframes entrance {
-  0% {
-    opacity: 0;
-    transform: translateY(80px) scale(0.5) rotate(-10deg);
-  }
-  60% {
-    opacity: 1;
-    transform: translateY(-10px) scale(1.05) rotate(2deg);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1) rotate(0deg);
-  }
 }

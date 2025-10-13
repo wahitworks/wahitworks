@@ -1,0 +1,187 @@
+/* ========================================
+   LogoGood CSS - 완전판
+======================================== */
+
+.logo-good {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  overflow: visible;  /* ← 이거 중요! */
+}
+
+/* ========================================
+   초기 위치 설정
+======================================== */
+/* transform 있는 레이어들 (7, 10, 12, 13) */
+.logo-good #Layer_7,
+.logo-good #Layer_10,
+.logo-good #Layer_12,
+.logo-good #Layer_13 {
+  transform: translate(-22.06px, -80.69px);
+}
+
+.logo-good:not(.animated) #Layer_7,
+.logo-good:not(.animated) #Layer_10,
+.logo-good:not(.animated) #Layer_12,
+.logo-good:not(.animated) #Layer_13 {
+  transform: translate(-22.06px, -80.69px);
+}
+
+/* ========================================
+   구름 통통 튀기 - 일반 레이어 (2, 5, 8, 9)
+======================================== */
+.logo-good.animated #Layer_2,
+.logo-good.animated #Layer_5,
+.logo-good.animated #Layer_8,
+.logo-good.animated #Layer_9 {
+  animation: cloudBounce 2s ease-in-out infinite;
+}
+
+@keyframes cloudBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* ========================================
+   구름 통통 튀기 - transform 있는 레이어 (7, 10, 12, 13)
+======================================== */
+.logo-good.animated #Layer_7 {
+  animation: cloudBounceTransform 2s ease-in-out infinite;
+}
+
+.logo-good.animated #Layer_10 {
+  animation: cloudBounceTransform 2s ease-in-out infinite 0.5s;
+}
+
+.logo-good.animated #Layer_12,
+.logo-good.animated #Layer_13 {
+  animation: cloudBounceTransform 2s ease-in-out infinite;
+}
+
+@keyframes cloudBounceTransform {
+  0%, 100% {
+    transform: translate(-22.06px, -80.69px) translateY(0);
+  }
+  50% {
+    transform: translate(-22.06px, -80.69px) translateY(-8px);
+  }
+}
+
+/* ========================================
+   구름 몸통 숨쉬기 (Layer_2)
+======================================== */
+.logo-good.animated #Layer_2 path {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+/* ========================================
+   입 미소 (Layer_7)
+======================================== */
+.logo-good.animated #Layer_7 path {
+  animation: smile 4s ease-in-out infinite;
+}
+
+@keyframes smile {
+  0%, 100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(1.08);
+  }
+}
+
+/* ========================================
+   바람 (Layer_5, 8, 9, 10)
+======================================== */
+.logo-good.animated #Layer_5 path,
+.logo-good.animated #Layer_8 path,
+.logo-good.animated #Layer_9 path,
+.logo-good.animated #Layer_10 path {
+  animation: windFlow 3s ease-in-out infinite;
+}
+
+@keyframes windFlow {
+  0%, 100% {
+    transform: translateX(0) scaleX(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateX(3px) scaleX(1.1);
+    opacity: 0.9;
+  }
+}
+
+/* ========================================
+   물방울 (Layer_12, 13)
+======================================== */
+.logo-good.animated #Layer_12 path,
+.logo-good.animated #Layer_13 path {
+  animation: dropFlow 3s ease-in-out infinite;
+}
+
+@keyframes dropFlow {
+  0%, 100% {
+    transform: translateX(0) scaleX(1);
+    opacity: 0.65;
+  }
+  50% {
+    transform: translateX(2px) scaleX(1.08);
+    opacity: 0.85;
+  }
+}
+
+/* ========================================
+   먼지 (Layer_11)
+======================================== */
+.logo-good.animated #Layer_11 circle.cls-good-2 {
+  animation: dustBounce 2s ease-in-out infinite;
+}
+
+@keyframes dustBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* ========================================
+   클릭 효과
+======================================== */
+.logo-good:active {
+  transform: scale(0.98);
+}
+
+/* ========================================
+   크기 옵션
+======================================== */
+.logo-good-small {
+  width: 80px;
+}
+
+.logo-good-medium {
+  width: 150px;
+}
+
+.logo-good-large {
+  width: 300px;
+}
+
+.logo-good-xlarge {
+  width: 400px;
+}

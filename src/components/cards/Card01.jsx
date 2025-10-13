@@ -1,4 +1,8 @@
 import "./Card01.css";
+import LogoGood from '../commons/LogoGood';
+import LogoModerate from '../commons/LogoModerate';
+import LogoBad from '../commons/LogoBad';
+import LogoVeryBad from '../commons/LogoVeryBad';
 
 function Card01() {
   return (
@@ -9,7 +13,22 @@ function Card01() {
           <div className="card01-result-item">
             <p>미세먼지</p>
             <p>1023㎍/㎥</p>
-            <Logo />
+            <LogoGood animated />
+          </div>
+          <div className="card01-result-item">
+            <p>미세먼지</p>
+            <p>1023㎍/㎥</p>
+            <LogoModerate animated />
+          </div>
+          <div className="card01-result-item">
+            <p>미세먼지</p>
+            <p>1023㎍/㎥</p>
+            <LogoBad animated />
+          </div>
+          <div className="card01-result-item">
+            <p>미세먼지</p>
+            <p>1023㎍/㎥</p>
+            <LogoVeryBad animated />
           </div>
         </div>
       </div>
