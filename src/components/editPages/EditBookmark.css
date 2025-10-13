@@ -100,3 +100,32 @@
   justify-content: space-between;
   gap: 8px;
 }
+
+.bookmark-items-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 북마크 저장 버튼 */
+.bookmark-save-btn-container {
+  margin-top: 40px;
+}
+
+.bookmark-save-btn {
+  background-color: #fff;
+  font-size: 16px;
+  font-weight: 900;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid var(--deep-blue);
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+/* 북마크 드래그앤드롭 햄버거 */
+.bookmark-hamburger {
+  cursor: grab;
+  color: #888;
+}

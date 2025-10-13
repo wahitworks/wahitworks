@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { 
     DndContext,
     closestCenter,
@@ -35,12 +34,12 @@ function SortableItem (props) {
 
     return (
         <div ref={setNodeRef} style={style} 
-         className="card">
+         className="editcard-card">
             <div {...attributes} {...listeners} 
-            className="hambger">&#x2630; {/* 햄버거 아이콘 */}</div>
-            <p className="card-name">{props.id}</p>
+            className="editcard-hamburger">&#x2630; {/* 햄버거 아이콘 */}</div>
+            <p className="editcard-card-name">{props.id}</p>
             <input checked={props.checked} type="checkbox" 
-              className="switch" onChange={props.onToggle} // 스위치
+              className="editcard-switch" onChange={props.onToggle} // 스위치
               onPointerDown = {(e) => e.stopPropagation()}></input>
         </div>
     );
@@ -58,6 +57,7 @@ function EditCard () {
     
     const sensors = useSensors(
         useSensor(PointerSensor, {
+          // 드래그를 시작하기 위해 필요한 마우스 움직임 거리(단위:px)
           activationConstraint: {
             delat: 100,
             tolerance: 5,
@@ -98,12 +98,12 @@ function EditCard () {
     return (
       <>
       {/* 초기화 버튼 */}
-      <div className="reset-btn-container">
-        {<button className="reset-btn" type="button" onClick={handleReset}>
+      <div className="editcard-reset-btn-container">
+        {<button className="editcard-reset-btn" type="button" onClick={handleReset}>
           초기화하기
         </button>}
       </div>
-      <div className='card-container'>
+      <div className='editcard-card-container'>
           <DndContext
               sensors={sensors}
               collisionDetection={closestCenter}
@@ -116,8 +116,8 @@ function EditCard () {
           </DndContext>
       </div>  
       {/* 저장하기 버튼 */}
-      <div className="card-save-btn-container">
-        <button className='card-save-btn' type="button" onClick={handleSave}>
+      <div className="editcard-card-save-btn-container">
+        <button className='editcard-card-save-btn' type="button" onClick={handleSave}>
           저장하기
         </button>
       </div>

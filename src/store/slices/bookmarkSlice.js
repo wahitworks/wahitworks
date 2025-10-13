@@ -27,6 +27,10 @@ const bookmarkSlice = createSlice({
     setBookmarkFilteredList(state, action) {
       state.bookmarkFilteredList = action.payload;
     },
+    updateBookmarkedRegions(state, action) {
+      state.bookmarkedRegions = action.payload;
+      localStorageUtil.setBookmarkedRegions(state.bookmarkedRegions);
+    },
   }
 })
 
@@ -36,6 +40,7 @@ export const {
   setBookmarkSearchInput,
   setBookmarkSearchKeyword,
   setBookmarkFilteredList,
+  updateBookmarkedRegions,
 } = bookmarkSlice.actions;
 
 export default bookmarkSlice.reducer;

@@ -1,13 +1,13 @@
-.card-container {
+.editcard-card-container {
     width: 500;
     padding: 30px;    
 }
 
-.card {
+.editcard-card {
     background-color: white;
     padding: 10px 20px;
     margin-bottom: 10px;
-    border: 1px solid #000;
+    border: 1px solid var(--deep-blue);
     border-radius: 15px;
     display: flex;
     flex-direction: row;
@@ -15,59 +15,70 @@
     align-items: center;
 }
 
-.hambger { 
+.editcard-hamburger { 
     cursor: grab;
     padding-right: 10px;
     font-size: 20px;
     color: #888;
 }
 
-.card:last-child{
+.editcard-card:last-child{
     margin-bottom: 0;
 }
 
-.card-name {
+.editcard-card-name {
     margin: 0;
     font-weight: bold;
 }
 
 /* 초기화 버튼 */
-.reset-btn-container {
+.editcard-reset-btn-container {
   width: 500;
   padding: 10px 30px 0 30px; 
   display: flex;
   justify-content: flex-end;
 }
 
-.reset-btn{
+.editcard-reset-btn{
   font-size: 13px;
   padding: 10px;
   background-color: #fff;
-  border: 1px solid #000;
+  border: 1px solid var(--deep-blue);
   border-radius: 15px;
 }
 
+/* .editcard-reset-btn:hover {
+  background-color: var(--light-blue);
+  color: #fff;
+} */
+
 /* 저장하기 버튼 */
-.card-save-btn-container {
+.editcard-card-save-btn-container {
   width: 500;
-  padding: 30px;  
+  padding: 30px; 
+  margin-top: 40px; 
 }
 
-.card-save-btn {
+.editcard-card-save-btn {
   background-color: #fff;
   font-size: 16px;
   font-weight: 900;
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
-  border: 1px solid #000;
+  border: 1px solid var(--deep-blue);
   border-radius: 15px;
   cursor: pointer;
 }
 
+/* .editcard-card-save-btn:hover {
+  background-color: var(--light-blue);
+  color: #fff;
+} */
+
 /* 스위치 스타일 */
 /* From Uiverse.io by Yaya12085 */ 
-.switch {
+.editcard-switch {
   position: relative;
   height: 1.5rem;
   width: 3rem;
@@ -79,11 +90,11 @@
   transition: all .3s ease;
 }
 
-.switch:checked {
+.editcard-switch:checked {
   background-color: rgba(32, 151, 243, 1);
 }
 
-.switch::before {
+.editcard-switch::before {
   position: absolute;
   content: "";
   left: calc(1.5rem - 1.6rem);
@@ -99,15 +110,15 @@
   transition: all .3s ease;
 }
 
-.switch:hover::before {
+.editcard-switch:hover::before {
   box-shadow: 0 0 0px 8px rgba(0, 0, 0, .15)
 }
 
-.switch:checked:hover::before {
+.editcard-switch:checked:hover::before {
   box-shadow: 0 0 0px 8px rgba(32, 151, 243, .15)
 }
 
-.switch:checked:before {
+.editcard-switch:checked:before {
   transform: translateX(100%);
   border-color: rgba(32, 151, 243, 1);
 }
