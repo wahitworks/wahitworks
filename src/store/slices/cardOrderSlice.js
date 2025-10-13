@@ -1,4 +1,4 @@
-import { loadCardOrder, saveCardOrder } from "../../utils/localStorageUtil";
+import { loadCardOrder } from "../../utils/localStorageUtil";
 import { createSlice } from "@reduxjs/toolkit";
 
 // 기본 템플릿 순서 (상수)

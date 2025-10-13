@@ -1,5 +1,93 @@
 .card02-container {
   width: 90%;
-  border: 1px solid black;
-  margin: 0 auto;
+  margin: 20px auto;
+  border: 1px solid var(--deep-blue);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-family: sans-serif;
+}
+
+.card02-container h2 {
+  margin: 0 0 16px 0;
+  color: #333;
+  font-size: 1.5em;
+}
+
+/* 날짜 이동 섹션 */
+.day-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0 10px;
+}
+
+.day-navigation h3 {
+  margin: 0;
+  color: #1c5c86;
+  font-size: 1.2em;
+}
+
+.day-navigation button {
+  padding: 8px 16px;
+  border: 1px solid #1c5c86;
+  background-color: white;
+  color: #1c5c86;
+  border-radius: 4px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+.day-navigation button:hover:not(:disabled) {
+  background-color: #1c5c86;
+  color: white;
+}
+
+.day-navigation button:disabled {
+  border-color: #ccc;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+/* 시간대별 예보 그리드 */
+.forecasts-grid {
+  display: grid;
+  /* 화면 크기가 작아지면 2개씩, 보통은 4개씩 보이도록 설정 */
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 16px; /* 아이템 사이의 간격 */
+}
+
+/* 개별 예보 아이템 */
+.forecast-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  background-color: #fafafa;
+}
+
+.forecast-item h4 {
+  margin: 0 0 8px 0;
+  font-size: 1em;
+  color: #555;
+}
+
+.forecast-item p {
+  margin: 8px 0 0 0;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+/* 예보 이미지 */
+.forecast-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%; /* 이미지를 원형으로 만듭니다 */
 }

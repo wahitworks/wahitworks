@@ -6,7 +6,7 @@ import locationReducer from "./slices/locationSlice.js";
 import bookmarkReducer from "./slices/bookmarkSlice.js";
 
 import cardOrderReducer from "./slices/cardOrderSlice.js";
-
+import airQualityReducer from "./slices/airQualitySlice.js";
 export default configureStore({
   reducer: {
     headerSlice: headerReducer,
@@ -14,5 +14,6 @@ export default configureStore({
     locationSlice: locationReducer,
     bookmarkSlice: bookmarkReducer,
     cardOrder: cardOrderReducer,
+    airQuality: airQualityReducer,
   },
 });
