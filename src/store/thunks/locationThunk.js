@@ -63,8 +63,21 @@ export const getCurrentLocation = createAsyncThunk(
         };
       } 
     } catch (error) {
-      console.error("위치정보 가져오기 실패:", error);
-      return rejectWithValue(error.message);
+      console.error("위치정보 가져오기 실패 : ", error, '기본 값으로 설정합니다.');
+      return {
+        currentGPS: {
+          lat: 35.874465,
+          lng: 128.584301,
+          currentRegion: '중구 성내동',
+        },
+        nearestStation: {
+          stationCode: 422114,
+          stationName: "수창동",
+          district: '중구',
+          address: '중구 달성로 22길 30(수창초등학교 4층 옥상)',
+          distance: 0,
+        }
+      };
     }
   }
 )

@@ -184,7 +184,6 @@ function EditBookmark () {
           }
         </motion.div>
       </div>
-      {/* 북마크 리스트 영역 todo: drag and drop */}
       <div className='bookmark-list-container'>
         <p className='bookmark-title'>내 장소</p>
 
@@ -204,7 +203,11 @@ function EditBookmark () {
             }    
             {
               bookmarkedRegions.length === 0 &&
-              <div className="bookmark-nothing">북마크가 없습니다.</div>
+              <div className="bookmark-nothing">
+                <p>
+                  저장된 내 장소가 없습니다.
+                </p>
+              </div>
             }
         </div>
           </SortableContext>

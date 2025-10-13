@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const headerSlice = createSlice({
   name: 'headerSlice',
   initialState: {
-    headerTitle: '중구 삼덕동',
+    headerTitle: '중구 성내동',
     searchFlg: false,
     menuFlg: false,
   },

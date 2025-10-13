@@ -1,0 +1,69 @@
+import './LogoWite.css';
+
+            // 구조 분해 할당 으로 className이랑 animated 여부 받아오기
+function Logo({ className = '', animated = false }) {
+  return (
+    <svg 
+      // 애니메이션 적용 중 클래스네임 'animated' 추가 (클래스 네임으로 animated 주면 true로 받아올 수 있음)
+      // 클래스 네임 추가
+      className={`logo ${animated ? 'animated' : ''} ${className}`}
+      id="Layer_13" data-name="Layer 13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1112.01 852">
+      <defs>
+        <style> {`
+          .cls-1 {
+            fill: none;
+          }
+
+          .cls-1, .cls-2, .cls-3 {
+            stroke: #fff;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-width: 50px;
+          }
+
+          .cls-2 {
+            fill: #fff;
+          }
+
+          .cls-3 {
+            fill: #fff;
+          }
+        `} </style>
+      </defs>
+      <title>deagumalguem-logo-1024-2</title>
+      <g id="Layer_3" data-name="Layer 3">
+        <path className="cls-1" d="M540.28,737.91H302.51S145.58,722.05,125,577.81s99.87-236.19,180.71-217.17c0,0,42-194.18,191-218s244.11,95.11,258.38,171.2c0,0,153.76,4.75,152.17,161.68" transform="translate(-97.64 -105)"/>
+      </g>
+      <g id="Layer_4" data-name="Layer 4">
+        <path className="cls-1" d="M602.22,476.18a48.79,48.79,0,0,1,95.11,0" transform="translate(-97.64 -105)"/>
+        <path className="cls-1" d="M475.29,552.44a80.35,80.35,0,0,0,72.92,41.22c43.6-1.73,65.38-39.09,66.57-41.22" transform="translate(-97.64 -105)"/>
+        <path className="cls-1" d="M395.5,477.21a48.79,48.79,0,0,1,95.11,0" transform="translate(-97.64 -105)"/>
+      </g>
+      <g id="Layer_7" data-name="Layer 7">
+        <path className="cls-1" d="M591,693.52s125.22,91.94,271.06,93.53,141.08,71.33,141.08,71.33,7.92,60.23-42.8,68.16-84-11.1-72.92-53.9" transform="translate(-97.64 -105)"/>
+      </g>
+      <g id="Layer_6" data-name="Layer 6">
+        <path className="cls-1" d="M634.6,795.76s103,44.39,115.71,53.9,30.12,33.29,9.51,65-58.65,12.68-66.57,0" transform="translate(-97.64 -105)"/>
+      </g>
+      <g id="Layer_8" data-name="Layer 8">
+        <path className="cls-1" d="M698,680.05s66.58,42.8,193.39,31.7S1011.86,623,1011.86,623s4.76-57.06-63.4-66.57-68.16,61.82-61.82,74.5" transform="translate(-97.64 -105)"/>
+      </g>
+      <g id="Layer_9" data-name="Layer 9">
+        <path className="cls-1" d="M1034.06,499.34s41.21-118.89,150.59-139.49C1184.65,359.85,1170.38,491.41,1034.06,499.34Z" transform="translate(-97.64 -105)"/>
+      </g>
+      <g id="Layer_10" data-name="Layer 10">
+        <path className="cls-1" d="M1064.17,239.38S967.48,274.25,975.41,390C975.41,390,1083.2,366.19,1064.17,239.38Z" transform="translate(-97.64 -105)"/>
+      </g>
+      <g id="Layer_11" data-name="Layer 11">
+        <path className="cls-2" d="M1034.06,732.36s26.94,14.26,41.21,26.95" transform="translate(-97.64 -105)"/>
+        <circle className="cls-3" cx="746.2" cy="63.04" r="38.04"/>
+        <circle className="cls-2" cx="808.02" cy="167.66" r="12.68"/>
+        <circle className="cls-2" cx="1014.88" cy="474.39" r="13.47"/>
+        <circle className="cls-2" cx="448.19" cy="733.56" r="19.02"/>
+      </g>
+    </svg>
+
+  )
+};
+
+export default Logo;

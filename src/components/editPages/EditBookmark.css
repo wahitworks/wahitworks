@@ -109,7 +109,7 @@
 
 /* 북마크 저장 버튼 */
 .bookmark-save-btn-container {
-  margin-top: 40px;
+  margin-top: 80px;
 }
 
 .bookmark-save-btn {
@@ -128,4 +128,12 @@
 .bookmark-hamburger {
   cursor: grab;
   color: #888;
+}
+
+.bookmark-nothing {
+  font-weight: 900;
+
+  text-align: center;
+
+  padding: 50px;
 }
