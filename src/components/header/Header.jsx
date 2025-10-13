@@ -1,5 +1,5 @@
 import "./Header.css";
-import logoTitle from "../../assets/logo-title-200.svg";
+import logoTitle from "../../assets/logos/logo-title-200.svg";
 
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";

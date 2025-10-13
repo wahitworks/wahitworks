@@ -4,10 +4,10 @@ import { createSlice } from "@reduxjs/toolkit";
 // 기본 템플릿 순서 (상수)
 // 현재 4개, 카드 추가시 수정 필요
 const DEFAULT_ORDER = [
-  {id: `card01`, checked: true},
-  {id: `card02`, checked: true}, 
-  {id: `card03`, checked: true}, 
-  {id: `card04`, checked: true}
+  { id: `card01`, checked: true },
+  { id: `card02`, checked: true },
+  { id: `card03`, checked: true },
+  { id: `card04`, checked: true },
 ];
 
 const initialState = {
@@ -28,15 +28,16 @@ const cardOrderSlice = createSlice({
       state.order = DEFAULT_ORDER; // 해당 리듀서 실행시 default 카드 순서로 변경 후 로컬 스토리지에 저장.
       // saveCardOrder(state.order); // 수동리셋에 불필요
     },
-    // 카드의 checked 상태 토들
+    // 카드의 checked 상태 토글
     toggleCardVisibility: (state, action) => {
       const card = state.order.find((item) => item.id === action.payload);
       if (card) {
         card.checked = !card.checked;
       }
-    }
+    },
   },
 });
 
-export const { setOrder, resetOrder, toggleCardVisibility } = cardOrderSlice.actions;
+export const { setOrder, resetOrder, toggleCardVisibility } =
+  cardOrderSlice.actions;
 export default cardOrderSlice.reducer;
