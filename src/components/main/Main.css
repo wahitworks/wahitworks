@@ -10,3 +10,25 @@
   background-color: aqua;
   /* TODO: 테스트 후 삭제 */
 }
+
+/* card12 */
+.main-add-card-container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.main-add-card{
+  color: #999999;
+  height: 140px;
+  border: 1px solid #999999;
+  border-radius: 15px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-add-card-comment {
+  font-size: 22px;
+  text-align: center;
+}

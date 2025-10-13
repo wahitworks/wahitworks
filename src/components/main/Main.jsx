@@ -7,6 +7,7 @@ import Card01 from "../cards/Card01.jsx";
 import Card02 from "../cards/Card02.jsx";
 import Card03 from "../cards/Card03.jsx";
 import Card04 from "../cards/Card04.jsx";
+import { useNavigate } from "react-router-dom";
 
 // 카드 id와 실제 컴포넌트를 짝지어주는 목록
 const cardList = {
@@ -21,6 +22,12 @@ function Main() {
   // 저장값 있을 시: 저장값 출력
   // 없을시 : DEFAULT_ORDER 적용
   const order = useSelector((state) => state.cardOrder.order);
+  const navigate = useNavigate();
+
+  // card12클릭시 EditCard 페이지로 이동
+  const Navigate = () => {
+    navigate(`/editcard`);
+  };
 
   return (
     <>
@@ -36,6 +43,15 @@ function Main() {
           // 기존 로직과 동일하게 컴포넌트 렌더링
           return CardComponent ? <CardComponent key={cardInfo.id} /> : null;
         })}
+      </div>
+      {/* card12 EditCard 페이지로 이동 */}
+      <div className="main-add-card-container" onClick={Navigate}>
+        <div className="main-add-card">
+          <p className="main-add-card-comment">
+            + <br />
+            카드를 추가해 보세요!
+            </p>
+        </div>
       </div>
     </>
   );

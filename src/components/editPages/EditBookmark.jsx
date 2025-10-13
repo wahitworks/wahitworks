@@ -212,12 +212,10 @@ function EditBookmark () {
 
         
         {/* 내 장소 저장하기 버튼 */}
-        {bookmarkedRegions.length > 0 && (
           <div className="bookmark-save-btn-container">
             <button className='bookmark-save-btn' type="button">저장하기</button> 
           </div>          
-        )}
-      </div>
+        </div>
     </div>
     </AnimatePresence>
     </>
