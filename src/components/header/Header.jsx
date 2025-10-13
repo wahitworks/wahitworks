@@ -15,13 +15,14 @@ import {
   setSearchFlg,
 } from "../../store/slices/headerSlice.js";
 import { LOCATION_LIST } from "../../constants/locationList.js";
-import { getCurrentLocation } from "../../store/thunks/locationThunk.js";
-import { setMatchedLocation } from "../../store/slices/locationSlice.js";
+import { getCurrentLocation, getSearchLocation } from "../../store/thunks/locationThunk.js";
+import { setMatchedLocation, setMeasuringStation, setMeasuringStationDistance } from "../../store/slices/locationSlice.js";
 import { stringUtils } from "../../utils/stringUtil.js";
 
 // 헤더에 들어가는 아이콘
 import { HiChevronLeft } from "react-icons/hi2";
 import { VscMenu } from "react-icons/vsc";
+import { findNearestStation } from "../../utils/geoUtil.js";
 
 function Header() {
   const navigate = useNavigate();
@@ -30,10 +31,10 @@ function Header() {
 
   const headerTitle = useSelector((state) => state.headerSlice.headerTitle);
   const searchFlg = useSelector((state) => state.headerSlice.searchFlg);
+  const searchKeyword = useSelector((state) => state.locationSearchSlice.searchKeyword);
+  const currentLocation = useSelector(state => state.locationSlice.currentLocation);
+  const measuringStation = useSelector(state => state.locationSlice.measuringStation);
 
-  const searchKeyword = useSelector(
-    (state) => state.locationSearchSlice.searchKeyword
-  );
   // const matchedLocation = useSelector(state => state.locationSlice.matchedLocation);
 
   const currentRegion = useSelector(
@@ -58,9 +59,27 @@ function Header() {
   };
   // 측정소 정보 표시를 위한, path값이 없는 = 페이지 타이틀이 없는 경우
   const measuringOn = !pageTitle[location.pathname];
+  
+    /**
+     * headerTitle 클릭 시, searchFlg true ↔ false
+     */
+    const headerTitleClick = () => {
+      if (location.pathname === "/") {
+        dispatch(setSearchFlg(!searchFlg));
+      }
+    };
+    /**
+     * headerMenu 클릭 시, menuFlg true
+     */
+    const headerMenuClick = () => {
+      dispatch(setMenuFlg(true));
+    };
 
   useEffect(() => {
-    // 특정 path값 존재 시, 타이틀 출력
+    // =============================================
+    // ||        특정 path값 존재 시, 
+    // =============================================
+    //       -> 해당 페이지 타이틀 출력
     if (pageTitle[location.pathname]) {
       dispatch(setHeaderTitle(pageTitle[location.pathname]));
       return;
@@ -70,59 +89,53 @@ function Header() {
       return;
     }
 
-    // 메인페이지 + 검색어 있을 시!!!
+    // =============================================
+    // ||         메인페이지 '/' 일 경우,
+    // =============================================
+    // ||         검색어 있을 시!!!
+    // =============================================
+
     // 매칭된 검색어 담을 변수
     let foundLocation = null;
     if (searchKeyword?.trim) {
-      // 검색어로 데이터에서 찾기
-      // 검색어 띄어쓰기 제거
+
+      // 검색어로 데이터에서 찾기 (띄어쓰기 제외한 값을 서로 비교)
       const keywordNoSpace = stringUtils.removeSpaces(searchKeyword);
       foundLocation = LOCATION_LIST.find((location) => {
-        // 장소 리스트 띄어쓰기 제거
         const locationNoSpace = stringUtils.removeSpaces(location);
-        // (띄어쓰기 제거한) 입력값이 포함된 데이터 반환
         return locationNoSpace.includes(keywordNoSpace);
       });
-      // 데이터에서 검색어 값이 있다면 타이틀로 출력
+      //  -> 데이터에서 검색어 값이 있다면 타이틀로 출력
       if (foundLocation) {
         dispatch(setHeaderTitle(foundLocation));
         dispatch(setMatchedLocation(foundLocation));
+        dispatch(getSearchLocation(searchKeyword))
+
         return;
       } else {
         console.log(
           "검색어가 없거나 매칭 지역이 없습니다. 현재위치를 가져옵니다."
         );
-        // 매칭된 지역이 없을 경우, 현재 위치 가져오기 + 현재 위치를 기반으로 타이틀 출력하기
+        //  -> 매칭된 지역이 없을 경우,
+        //     현재 위치 가져오기 + 현재 위치를 기반으로 타이틀 출력하기
         dispatch(getCurrentLocation());
-        // dispatch(setHeaderTitle(currentRegion));
       }
     } else {
-      // 메인페이지 + 검색어 없을 시,
+    // =============================================
+    // ||         검색어 없을 시!!!
+    // =============================================
       console.log("검색어가 없습니다. 현재위치를 가져옵니다.");
-      // 현재 위치 가져오기 + 현재 위치를 기반으로 타이틀 출력하기
+      //   -> 현재 위치 가져오기 + 현재 위치를 기반으로 타이틀 출력하기
       dispatch(getCurrentLocation());
-      // dispatch(setHeaderTitle(currentRegion));
     }
+    //          + 재검색 대비!!!
     // 현재 위치 정보 있고, (매칭에 실패했거나, 검색어 없음)
     if (currentRegion && !foundLocation) {
       dispatch(setHeaderTitle(currentRegion));
     }
   }, [location.pathname, searchKeyword, currentRegion]);
 
-  /**
-   * headerTitle 클릭 시, searchFlg true ↔ false
-   */
-  const headerTitleClick = () => {
-    if (location.pathname === "/") {
-      dispatch(setSearchFlg(!searchFlg));
-    }
-  };
-  /**
-   * headerMenu 클릭 시, menuFlg true
-   */
-  const headerMenuClick = () => {
-    dispatch(setMenuFlg(true));
-  };
+  console.log('측정소:', measuringStation);
 
   return (
     <>
@@ -142,7 +155,7 @@ function Header() {
         )}
         <div className="header-center" onClick={() => headerTitleClick()}>
           <p className="header-title">{headerTitle}</p>
-          {measuringOn && <span className="header-title-info">ooo 측정소</span>}
+        {measuringOn && measuringStation && <span className="header-title-info">{measuringStation} 측정소</span>}
         </div>
         <div className="header-menu" onClick={() => headerMenuClick()}>
           <VscMenu size={35} />

@@ -1,285 +1,363 @@
 // 측정소 정보 수제 데이터
 export const MEASURING_STATIONS = [
   {
-    id: 1,
+    stationCode: 422121,
+    stationName: "서호동",
     district: '동구',
     dong: '서호동',
     address: '동구 안심로49길 70(반야월초등학교 3층 옥상)',
     established: 2001,
     measures: ['PM-10', 'PM-2.5', 'O₃', 'NO₂', 'CO', 'SO₂'],
     coordinates: {
-      x: 886280.0,      // 카카오 원본 (정확한 위치)
+      x: 886280.0,
       y: 661951.0,
-      lat: 35.897234,   // 변환한 값 (범용)
-      lng: 128.721456,
+      dmX: 128.711277,
+      dmY: 35.869139,
     },
   },
   {
-    id: 2,
+    stationCode: 422154,
+    stationName: "신암동",
     district: '동구',
     dong: '신암동',
     address: '동구 아양로 37길 92(신암5동 행정복지센터 3층 옥상)',
     established: 1997,
     measures: ['PM-10', 'PM-2.5', 'O₃', 'NO₂', 'CO', 'SO₂'],
     coordinates: {
-      x: 868634.0,      // 카카오 원본 (정확한 위치)
+      x: 868634.0,
       y: 667613.0,
-      lat: 35.890497,   // 변환한 값 (범용)
-      lng: 128.633018,
+      dmX: 128.632927,
+      dmY: 35.889785,
     },
   },
   {
-    id: 3,
+    stationCode: 422207,
+    stationName: "내당동",
     district: '서구',
     dong: '내당동',
     address: '서구 서대구로3길 46(내당4동 행정복지센터 3층 옥상)',
     established: 2020,
     measures: ['PM-10', 'PM-2.5', 'O₃', 'NO₂', 'CO', 'SO₂'],
     coordinates: {
-      x: 850410.0,      // 카카오 원본 (정확한 위치)
+      x: 850410.0,
       y: 658775.0,
-      lat: 35.859382,   // 변환한 값 (범용)
-      lng: 128.551872,
+      dmX: 128.551840,
+      dmY: 35.859017,
     },
   },
   {
-    id: 4,
+    stationCode: 422132,
+    stationName: "이현동",
     district: '서구',
     dong: '이현동',
     address: '서구 국채보상로 135(중리초등학교 4층 옥상)',
     established: 2003,
     measures: ['PM-10', 'PM-2.5', 'O₃', 'NO₂', 'CO', 'SO₂', '중금속'],
     coordinates: {
-      x: 848938.0,      // 카카오 원본 (정확한 위치)
+      x: 848938.0,
       y: 661731.0,
-      lat: 35.869652,   // 변환한 값 (범용)
-      lng: 128.545276,
+      dmX: 128.545357,
+      dmY: 35.869471,
     },
   },
   {
-    id: 5,
+    stationCode: 422141,
+    stationName: "대명동",
     district: '남구',
     dong: '대명동',
     address: '남구 성당로30길55(성명초등학교 별관 3층 옥상)',
     established: 1981,
     measures: ['PM-10', 'PM-2.5', 'O₃', 'NO₂', 'CO', 'SO₂', '중금속'],
     coordinates: {
-      x: 854830.0,      // 카카오 원본 (정확한 위치)
+      x: 854830.0,
       y: 655110.0,
-      lat: 35.845638,   // 변환한 값 (범용)
-      lng: 128.571036,
+      dmX: 128.570879,
+      dmY: 35.845400,
     },
   },
   {
-    id: 6,
+    stationCode: 422158,
+    stationName: "산격동",
     district: '북구',
     dong: '산격동',
     address: '북구 연암로 40(서성 산격청사 105동 3층 옥상)',
     established: 2020,
     measures: ['PM-10', 'PM-2.5', 'O₃', 'NO₂', 'CO', 'SO₂'],
     coordinates: {
-      x: 861274.0,      // 카카오 원본 (정확한 위치)
+      x: 861274.0,
       y: 668247.0,
-      lat: 35.892515,   // 변환한 값 (범용)
-      lng: 128.600434,
+      dmX: 128.600560,
+      dmY: 35.892520,
     },
   },
   {
-    id: 7,
+    stationCode: 422208,
+    stationName: "침산동",
     district: '북구',
     dong: '침산동',
     address: '북구 옥산로17길 21(대구일중학교)',
     established: 2000,
     measures: ['PM-10', 'PM-2.5', 'O₃', 'NO₂', 'CO', 'SO₂'],
     coordinates: {
-      x: 857809.0,      // 카카오 원본 (정확한 위치)
+      x: 857809.0,
       y: 666736.0,
-      lat: 35.886147,   // 변환한 값 (범용)
-      lng: 128.584973,
+      dmX: 128.584478,
+      dmY: 35.887089,
     },
   },
   {
-    id: 8,
+    stationCode: 422155,
+    stationName: "태전동",
     district: '북구',
     dong: '태전동',
     address: '북구 칠곡중앙대로 52길 56(태암초등학교 남관 4층 옥상)',
     established: 2003,
     measures: ['PM-10', 'PM-2.5', 'O₃', 'NO₂', 'CO', 'SO₂'],
     coordinates: {
-      x: 849852.0,      // 카카오 원본 (정확한 위치)
+      x: 849852.0,
       y: 676522.0,
-      lat: 35.923092,   // 변환한 값 (범용)
-      lng: 128.550355,
+      dmX: 128.550508,
+      dmY: 35.922971,
     },
   },
   {
-    id: 9,
+    stationCode: 422112,
+    stationName: "남산1동",
     district: '중구',
     dong: '남산1동',
     address: '중구 남산로2길 125(명덕초등학교 3층 옥상)',
     established: 2021,
     measures: ['PM-10', 'PM-2.5', 'O₃', 'NO₂', 'CO', 'SO₂'],
     coordinates: {
-      x: 858839.0,      // 카카오 원본 (정확한 위치)
+      x: 858839.0,
       y: 658509.0,
-      lat: 35.857907,   // 변환한 값 (범용)
-      lng: 128.589486,
+      dmX: 128.589492,
+      dmY: 35.858319,
     },
   },
   {
-    id: 10,
+    stationCode: 422114,
+    stationName: "수창동",
     district: '중구',
     dong: '수창동',
     address: '중구 달성로 22길 30(수창초등학교 4층 옥상)',
     established: 1999,
     measures: ['PM-10', 'PM-2.5', 'O₃', 'NO₂', 'CO', 'SO₂', '중금속'],
     coordinates: {
-      x: 857661.0,      // 카카오 원본 (정확한 위치)
+      x: 857661.0,
       y: 663073.0,
-      lat: 35.874287,   // 변환한 값 (범용)
-      lng: 128.584137,
+      dmX: 128.584301,
+      dmY: 35.874465,
     },
   },
   {
-    id: 11,
+    stationCode: 422161,
+    stationName: "만촌동",
     district: '수성구',
     dong: '만촌동',
     address: '수성구 국채보상로 1000(동원초등학교 3층 옥상)',
     established: 1995,
     measures: ['PM-10', 'PM-2.5', 'O₃', 'NO₂', 'CO', 'SO₂'],
     coordinates: {
-      x: 870343.0,      // 카카오 원본 (정확한 위치)
+      x: 870343.0,
       y: 660751.0,
-      lat: 35.865480,   // 변환한 값 (범용)
-      lng: 128.639647,
+      dmX: 128.640100,
+      dmY: 35.865170,
     },
   },
   {
-    id: 12,
+    stationCode: 422203,
+    stationName: "시지동",
     district: '수성구',
     dong: '시지동',
     address: '수성구 노변공원로 52(노변초등학교 4층 옥상)',
     established: 2017,
     measures: ['PM-10', 'PM-2.5', 'O₃', 'NO₂', 'CO', 'SO₂'],
     coordinates: {
-      x: 883471.0,      // 카카오 원본 (정확한 위치)
+      x: 883471.0,
       y: 653397.0,
-      lat: 35.837625,   // 변환한 값 (범용)
-      lng: 128.697569,
+      dmX: 128.697489,
+      dmY: 35.837515,
     },
   },
   {
-    id: 13,
+    stationCode: 422115,
+    stationName: "지산동",
     district: '수성구',
     dong: '지산동',
     address: '수성구 무학로 209(한국환경공단 대구경북지역본부 3층 옥상)',
     established: 1999,
     measures: ['PM-10', 'PM-2.5', 'O₃', 'NO₂', 'CO', 'SO₂', '중금속'],
     coordinates: {
-      x: 868566.0,      // 카카오 원본 (정확한 위치)
+      x: 868566.0,
       y: 651163.0,
-      lat: 35.830474,   // 변환한 값 (범용)
-      lng: 128.631560,
+      dmX: 128.631666,
+      dmY: 35.830462,
     },
   },
   {
-    id: 14,
+    stationCode: 422206,
+    stationName: "본동",
     district: '달서구',
     dong: '본동',
     address: '달서구 구마로26길 62(본동행정복지센터 2층 옥상)',
     established: 2019,
     measures: ['PM-10', 'PM-2.5', 'O₃', 'NO₂', 'CO', 'SO₂'],
     coordinates: {
-      x: 848108.0,      // 카카오 원본 (정확한 위치)
+      x: 848108.0,
       y: 651923.0,
-      lat: 35.834449,   // 변환한 값 (범용)
-      lng: 128.541085,
+      dmX: 128.541038,
+      dmY: 35.834423,
     },
   },
   {
-    id: 15,
+    stationCode: 422204,
+    stationName: "진천동",
     district: '달서구',
     dong: '진천동',
     address: '달서구 월배로 131(월배초등학교 3층 옥상)',
     established: 2017,
     measures: ['PM-10', 'PM-2.5', 'O₃', 'NO₂', 'CO', 'SO₂'],
     coordinates: {
-      x: 845357.0,      // 카카오 원본 (정확한 위치)
+      x: 845357.0,
       y: 646904.0,
-      lat: 35.816557,   // 변환한 값 (범용)
-      lng: 128.528451,
+      dmX: 128.528456,
+      dmY: 35.816786,
     },
   },
   {
-    id: 16,
+    stationCode: 422171,
+    stationName: "호림동",
     district: '달서구',
     dong: '호림동',
     address: '달서구 성서공단로 11길 32(대구기계부품연구원 1동 2층 옥상)',
     established: 2014,
     measures: ['PM-10', 'PM-2.5', 'O₃', 'NO₂', 'CO', 'SO₂'],
     coordinates: {
-      x: 836277.0,      // 카카오 원본 (정확한 위치)
+      x: 836277.0,
       y: 652622.0,
-      lat: 35.837604,   // 변환한 값 (범용)
-      lng: 128.488764,
+      dmX: 128.488673,
+      dmY: 35.838201,
     },
   },
   {
-    id: 17,
+    stationCode: 422201,
+    stationName: "유가읍",
     district: '달성군',
     dong: '유가읍',
-    stationName: '유가읍',
     address: '달성군 유가읍 태그노북로6길 20(비슬공원)',
     established: 2003,
     measures: ['PM-10', 'PM-2.5', 'O₃', 'NO₂', 'CO', 'SO₂'],
     coordinates: {
-      x: 830527.0,      // 카카오 원본 (정확한 위치)
+      x: 830527.0,
       y: 613053.0,
-      lat: 35.695306,   // 변환한 값 (범용)
-      lng: 128.459260,
+      dmX: 128.459245,
+      dmY: 35.695306,
     },
   },
   {
-    id: 18,
+    stationCode: 422205,
+    stationName: "다사읍",
     district: '달성군',
     dong: '다사읍',
     address: '달성군 다사읍 매곡로12길 37(다사읍주민자치센터 3층 옥상)',
     established: 2018,
     measures: ['PM-10', 'PM-2.5', 'O₃', 'NO₂', 'CO', 'SO₂'],
     coordinates: {
-      x: 829061.0,      // 카카오 원본 (정확한 위치)
+      x: 829061.0,
       y: 660062.0,
-      lat: 35.864912,   // 변환한 값 (범용)
-      lng: 128.457162,
+      dmX: 128.457304,
+      dmY: 35.864806,
     },
   },
   {
-    id: 19,
+    stationCode: 422209,
+    stationName: "화원읍",
     district: '달성군',
     dong: '화원읍',
-    stationName: '화원읍',
     address: '달성군 화원읍 인흥1길 12(화원명곡체육공원)',
     established: 2020,
     measures: ['PM-10', 'PM-2.5', 'O₃', 'NO₂', 'CO', 'SO₂'],
     coordinates: {
-      x: 839802.0,      // 카카오 원본 (정확한 위치)
+      x: 839802.0,
       y: 641600.0,
-      lat: 35.797435,   // 변환한 값 (범용)
-      lng: 128.503780,
+      dmX: 128.503951,
+      dmY: 35.798233,
     },
   },
   {
-    id: 20,
+    stationCode: 422212,
+    stationName: "군위읍",
     district: '군위군',
     dong: '군위읍',
     address: '군위군 군위읍 군청로 158(군위종합테니스장 옥상)',
     established: 2020,
     measures: ['PM-10', 'PM-2.5', 'O₃', 'NO₂', 'CO', 'SO₂'],
     coordinates: {
-      x: 853745.0,      // 카카오 원본 (정확한 위치)
+      x: 853745.0,
       y: 763927.0,
-      lat: 36.237281,   // 변환한 값 (범용)
-      lng: 128.574411,
+      dmX: 128.573856,
+      dmY: 36.237837,
     },
+  },
+  {
+    stationCode: 422133,
+    stationName: "평리동",
+    district: '서구',
+    dong: '평리3동',
+    address: "대구 서구 평리3동",
+    mangName: "도로변대기",
+    coordinates: {
+      dmX: 128.559253,
+      dmY: 35.871763,
+    }
+  },
+  {
+    stationCode: 422211,
+    stationName: "충혼탑",
+    district: '남구',
+    dong: '대명동',
+    address: "대구광역시 남구 앞산순환로 540",
+    mangName: "도로변대기",
+    coordinates: {
+      dmX: 128.583729,
+      dmY: 35.832245,
+    }
+  },
+  {
+    stationCode: 422202,
+    stationName: "이곡동",
+    district: '달서구',
+    dong: '이곡동',
+    address: "대구 달서구 이곡동",
+    mangName: "도로변대기",
+    coordinates: {
+      dmX: 128.500017,
+      dmY: 35.850570,
+    }
+  },
+  {
+    stationCode: 422160,
+    stationName: "연호동",
+    district: '수성구',
+    dong: '연호동',
+    address: "대구광역시 수성구 달구벌대로 지하2950 (연호동)",
+    mangName: "도로변대기",
+    coordinates: {
+      dmX: 128.709374,
+      dmY: 35.840457,
+    }
+  },
+  {
+    stationCode: 422159,
+    stationName: "서변동",
+    district: '북구',
+    dong: '서변동',
+    address: "대구광역시 북구 서변동 124",
+    mangName: "도로변대기",
+    coordinates: {
+      dmX: 128.598912,
+      dmY: 35.930116,
+    }
   },
 ];
