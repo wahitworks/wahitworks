@@ -1,3 +1,4 @@
+/* 카드04 기본 */
 .card04-container {
   padding: 15px;
   background-color: var(--personal-blue);
@@ -8,11 +9,27 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
 }
 
 .card04-title {
   color: #fff;
+  margin-bottom: 15px;
+}
+
+/* 북마크가 있을시 나타나는 것 */
+.card04-bookmark-item-container {
+  background-color: var(--personal-blue);
+  width: 95%;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.card04-bookmark-list-title {
+  font-weight: 900;
 }
 
 .card04-bookmark-list {
@@ -26,12 +43,48 @@
   cursor: pointer;
 }
 
-.card04-bookmark-list-toggle {
+/* 토글했을 때 */
+.card04-bookmark-list.toggled {
+  width: 100%;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 20px 20px 0 0;
   display: flex;
-  flex-direction: row; 
+  flex-direction: row;
   justify-content: space-between;
+  cursor: pointer;
 }
 
-.card04-bookmark-list-toggle-info {
+.card04-bookmark-list-toggle {
+  width: 100%;
   background-color: #fff;
+  padding: 15px;
+  border-radius: 0 0 20px 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.card04-bookmark-list-toggle.show {
+  max-height: 500px;
+  opacity: 1;
+  padding: 15px;
+}
+
+.card04-bookmark-list-toggle-info{
+  flex: 1;
+  text-align: center;
+}
+
+.card04-bookmark-list-toggle-info:nth-child(2) {
+  border-left: 1px solid var(--deep-blue);
+  border-right: 1px solid var(--deep-blue);
+}
+
+/* 즐겨찾기 목록 없을 때 */
+.card04-bookmark-list-comment {
+  color: #fff;
+  font-size: 20px;
+  padding-bottom: 20px;
 }
