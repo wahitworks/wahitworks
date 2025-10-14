@@ -1,5 +1,10 @@
-.card03-container {
+.card01-container {
   width: 90%;
-  border: 1px solid black;
+  border: 1px solid var(--deep-blue);
+  border-radius: 15px;
   margin: 0 auto;
+}
+
+.card01-result-item {
+  width: 100px;
 }
