@@ -29,8 +29,8 @@ const currentAirConditionSlice = createSlice({
       state.currentCO = lastData.coValue;
       state.currentSO2 = lastData.so2Value;
       state.dataTime = lastData.dataTime;
-      console.log(lastData);
-      console.log('미세먼지:', state.currentPM10, '초미세먼지:', state.currentPM25, '오존:', state.currentO3, '이산화질소:', state.currentNO2, '일산화탄소:', state.currentCO, '아황산가스:', state.currentSO2);
+      // console.log(lastData);
+      // console.log('미세먼지:', state.currentPM10, '초미세먼지:', state.currentPM25, '오존:', state.currentO3, '이산화질소:', state.currentNO2, '일산화탄소:', state.currentCO, '아황산가스:', state.currentSO2);
     })
     // 오류 처리
     .addMatcher(

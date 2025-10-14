@@ -7,6 +7,10 @@ import bookmarkReducer from "./slices/bookmarkSlice.js";
 
 import cardOrderReducer from "./slices/cardOrderSlice.js";
 import airQualityReducer from "./slices/airQualitySlice.js";
+import currentAirConditionReducer from "./slices/currentAirConditionSlice.js";
+import fineDustReducer from "./slices/fineDustSlice.js";
+
+
 export default configureStore({
   reducer: {
     headerSlice: headerReducer,
@@ -15,7 +19,7 @@ export default configureStore({
     bookmarkSlice: bookmarkReducer,
     cardOrder: cardOrderReducer,
     airQuality: airQualityReducer,
-    import currentAirConditionReducer from "./slices/currentAirConditionSlice.js";
-    import fineDustReducer from "./slices/fineDustSlice.js";
+    currentAirCondition: currentAirConditionReducer,
+    fineDust: fineDustReducer,
   },
 });

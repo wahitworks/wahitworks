@@ -4,10 +4,10 @@ import axios from "axios";
 
 export const getCurrentAirCondition = createAsyncThunk(
   'currentAirCondition/getCurrentAirCondition',
-  async(measuringStation, { getState, rejectWithValue }) => {
+  async(measuringStation, { rejectWithValue }) => {
     try {
-      const state = getState();
-      console.log('thunkAPI로 받아온 측정소:', state.locationSlice.measuringStation);
+      // const state = getState();
+      // console.log('thunkAPI로 받아온 측정소:', state.locationSlice.measuringStation);
 
       const url = `${axiosAirConfig.BASE_URL}/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty`;
       const params = {

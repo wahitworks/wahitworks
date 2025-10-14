@@ -30,7 +30,7 @@ function Card03() {
     // ||     측정소 값이 없을 경우 -> 종료
     // =====================================
     if(!measuringStation) {
-      console.log('아직 측정소 저장 안됨!');
+      // console.log('아직 측정소 저장 안됨!');
       return;
     }
 
