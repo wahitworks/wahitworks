@@ -1,4 +1,4 @@
-import Logo from "../commons/Logo";
+import Logo from "../logo/Logo.jsx";
 import "./Introduce.css";
 import logoTitle from "../../assets/logos/logo-title-200.svg";
 

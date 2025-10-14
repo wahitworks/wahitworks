@@ -1,0 +1,32 @@
+.logo-bad {
+  overflow: visible !important;
+}
+
+/* ========================================
+   구름 통통 튀기 - 레이어 2-몸, 3-눈)
+======================================== */
+.logo-bad.animated #Layer_2_bad,
+.logo-bad.animated #Layer_3_bad {
+  animation: heavySink 4s ease-in-out infinite;
+}
+
+/* ========================================
+   입 표정 애니메이션 적용 - 레이어 4
+======================================== */
+.logo-bad.animated #Layer_4_bad {
+  animation: mouthFlip 4s ease-in-out infinite;
+}
+
+/* ========================================
+   바람 (Layer_5)
+======================================== */
+.logo-bad.animated #Layer_5_bad path {
+  animation: windFlow 2s ease-in-out infinite;
+}
+
+/* ========================================
+   먼지 (Layer_7)
+======================================== */
+.logo-bad.animated #Layer_7_bad {
+  animation: dustBounce-bad 2s ease-in-out infinite;
+}

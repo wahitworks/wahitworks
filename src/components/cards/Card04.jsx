@@ -3,10 +3,10 @@ import { FaStar } from "react-icons/fa";
 import "./Card04.css";
 import { useDispatch, useSelector } from "react-redux";
 // 로고
-import LogoGood from '../commons/LogoGood';
-import LogoModerate from '../commons/LogoModerate';
-import LogoBad from '../commons/LogoBad';
-import LogoVeryBad from '../commons/LogoVeryBad';
+import LogoGood from '../logo/LogoGood.jsx';
+import LogoModerate from '../logo/LogoModerate.jsx';
+import LogoBad from '../logo/LogoBad.jsx';
+import LogoVeryBad from '../logo/LogoVeryBad.jsx';
 
 import { fetchFineDustData } from "../../store/thunks/fineDustThunk";
 import { GRADE_CLASS } from "../../constants/ultraFineDustLevel";

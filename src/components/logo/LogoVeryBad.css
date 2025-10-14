@@ -1,0 +1,10 @@
+.logo-verybad {
+  overflow: visible !important;
+}
+
+/* ========================================
+   먼지 (Layer_7)
+======================================== */
+.logo-verybad.animated #Layer_7_verybad {
+  animation: dustBounce-verybad 2s ease-in-out infinite;
+}

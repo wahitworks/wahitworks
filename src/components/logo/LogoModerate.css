@@ -1,0 +1,26 @@
+.logo-moderate {
+  overflow: visible !important;
+}
+
+/* ========================================
+   구름 통통 튀기 - 일반 레이어 (2-몸, 3-눈, 4-입)
+======================================== */
+.logo-moderate.animated #Layer_2_moderate,
+.logo-moderate.animated #Layer_3_moderate,
+.logo-moderate.animated #Layer_4_moderate {
+  animation: shakeLittleLR 2s ease-in-out infinite;
+}
+
+/* ========================================
+   바람 (Layer_5)
+======================================== */
+.logo-moderate.animated #Layer_5_moderate path {
+  animation: windFlow 3s ease-in-out infinite;
+}
+
+/* ========================================
+   먼지 (Layer_7)
+======================================== */
+.logo-moderate.animated #Layer_7_moderate {
+  animation: dustBounce-moderate 2s ease-in-out infinite;
+}
