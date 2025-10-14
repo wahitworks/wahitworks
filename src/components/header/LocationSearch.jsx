@@ -11,6 +11,7 @@ import { setFilteredLocationList, setSearchInput, setSearchKeyword } from '../..
 import { LOCATION_LIST } from '../../constants/locationList.js';
 import { stringUtils } from '../../utils/stringUtil.js';
 import { addBookmark, removeBookmark } from '../../store/slices/bookmarkSlice.js';
+import { setSelectedLocationByUser } from '../../store/slices/locationSlice.js';
 
 function LocationSearch () {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ function LocationSearch () {
   const handleSelectLocation = (searchWord) => {
     dispatch(setSearchKeyword(searchWord));
     dispatch(setSearchFlg(false));
+    dispatch(setSelectedLocationByUser(searchWord));
   }
 
   // console.log('검색어: ', searchKeyword);

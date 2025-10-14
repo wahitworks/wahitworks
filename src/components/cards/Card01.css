@@ -1,5 +1,39 @@
-.card03-container {
+.action-guide-container {
   width: 90%;
-  border: 1px solid black;
+  height: 300px;
+  border: 1px solid var(--deep-blue);
   margin: 0 auto;
+  background-color: var(--personal-blue);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+.action-guide-intro {
+  padding-top: 15px;
+  font-size: 20px;
+}
+.action-guide-content {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 10px 20px;
+  color: black;
+}
+
+.action-guide-icon-container {
+  width: 100%;
+  height: 300px;
+}
+
+.action-guide-icon {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.action-guide-weather {
+  padding-bottom: 15px;
 }

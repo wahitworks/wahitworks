@@ -11,6 +11,7 @@ const locationSlice = createSlice({
     measuringStation: '',
     measuringStationDistance: 0,
     error: null,
+    selectedLocationByUser: null,
   },
   reducers: {
     setCurrentLocation(state, action) {
@@ -24,7 +25,10 @@ const locationSlice = createSlice({
     },
     setMeasuringStationDistance(state, action) {
       state.measuringStationDistance = action.payload;
-    }
+    },
+    setSelectedLocationByUser(state, action) {
+      state.selectedLocationByUser = action.payload;
+    },
   },
   extraReducers: builder => {
     builder
@@ -68,6 +72,7 @@ export const {
   setMatchedLocation,
   setMeasuringStation,
   setMeasuringStationDistance,
+  setSelectedLocationByUser,
 } = locationSlice.actions;
 
 export default locationSlice.reducer;
