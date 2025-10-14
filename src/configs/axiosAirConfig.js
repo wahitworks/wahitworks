@@ -1,13 +1,16 @@
-// 통합 대기 현황
+// 현재 대기 상태
 
-const aixosAirConfig = {
+const axiosAirConfig = {
   // 필수
-  SERVICE_KEY: "서비스키 입력",
+  BASE_URL: "https://app12.green-meerkat.kro.kr/B552584",
+  SERVICE_KEY: "834qgh90a2304fj23985yfg2w3ryfci8g32trict6jni56",
   STATION_NAME: "종로구",
 
   // 선택
   RETURN_TYPE: "json",
-  NUM_OF_ROWS: "10",
+  NUM_OF_ROWS: "48",
+  VER: "1.5",
+  DATA_TERM: "DAILY",
 };
 
-export default aixosAirConfig;
+export default axiosAirConfig;

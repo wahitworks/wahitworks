@@ -3,13 +3,14 @@ import './LogoModerate.css';
 // 보통(Moderate) 상태를 나타내는 로고 아이콘
 // className props 받고 animated 적용 가능
 // 색상: 연두색 (#91e986)
-function LogoModerate({ className = '', animated = false }) {
+function LogoModerate({ className = '', animated = false, style }) {
   return (
     <svg
       // logo-moderate 클래스 + animated 클래스 + 추가 className
       className={`logo-moderate ${animated ? 'animated' : ''} ${className}`}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 460.94 352.6"
+      style={style}
     >
       <defs>
         <style>{`

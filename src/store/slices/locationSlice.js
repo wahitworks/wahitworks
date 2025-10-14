@@ -40,10 +40,10 @@ const locationSlice = createSlice({
     .addCase(getCurrentLocation.fulfilled, (state, action) => {
       state.currentLocation = { lat: action.payload.currentGPS.lat, lng: action.payload.currentGPS.lng };
       state.currentRegion = action.payload.currentGPS.currentRegion;
-      console.log('slice에서 담은 것: currentLocation-', state.currentLocation, 'currentRegion-', state.currentRegion);
+      // console.log('slice에서 담은 것: currentLocation-', state.currentLocation, 'currentRegion-', state.currentRegion);
       state.measuringStation = action.payload.nearestStation.stationName;
       state.measuringStationDistance = action.payload.nearestStation.distance;
-      console.log('slice에서 담은 것: measuringStation-', state.measuringStation, 'measuringDistance-', state.measuringStationDistance);
+      // console.log('slice에서 담은 것: measuringStation-', state.measuringStation, 'measuringDistance-', state.measuringStationDistance);
     })
 
     // 주소로 측정소 가져오기
@@ -54,7 +54,7 @@ const locationSlice = createSlice({
     .addCase(getSearchLocation.fulfilled, (state, action) => {
       state.measuringStation = action.payload.nearestStation.stationName;
       state.measuringStationDistance = action.payload.nearestStation.distance;
-      console.log('slice에서 담은 것: measuringStation-', state.measuringStation, 'measuringDistance-', state.measuringStationDistance);
+      // console.log('slice에서 담은 것: measuringStation-', state.measuringStation, 'measuringDistance-', state.measuringStationDistance);
     })
 
     // 오류 처리

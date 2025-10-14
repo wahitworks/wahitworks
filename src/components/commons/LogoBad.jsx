@@ -3,13 +3,14 @@ import './LogoBad.css';
 // 나쁨(Bad) 상태를 나타내는 로고 아이콘
 // className props 받고 animated 적용 가능
 // 색상: 노란색 (#ecd049)
-function LogoBad({ className = '', animated = false }) {
+function LogoBad({ className = '', animated = false, style }) {
   return (
     <svg
       // logo-bad 클래스 + animated 클래스 + 추가 className
       className={`logo-bad ${animated ? 'animated' : ''} ${className}`}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 460.94 352.6"
+      style={style}
     >
       <defs>
         <style>{`
