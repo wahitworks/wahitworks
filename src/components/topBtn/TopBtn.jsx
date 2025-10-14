@@ -26,7 +26,7 @@ function Topbtn() {
       window.removeEventListener("scroll", checkScroll);
       window.removeEventListener("resize", checkScroll);
     };
-  }, [location.pathname]);
+  }, []);
 
   // 버튼 클릭시 최상단으로 부드럽게 이동 기능
   const scrollToTop = () => {

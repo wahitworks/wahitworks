@@ -1,3 +1,5 @@
+// 이름 바꿀까 하다가 안바꿈. axiosUltraFineDust라기보단
+// axiosAirQuailty로 보면 맞을거같음.
 import axios from "axios";
 
 //오늘 날짜를 YYYY-MM-DD 형식으로 반환

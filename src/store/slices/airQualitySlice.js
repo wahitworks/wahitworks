@@ -2,10 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import { fetchAirQuality } from "../thunks/airQualityThunk.js";
 
 const initialState = {
-  dailyForecasts: [], // Thunk로부터 받은 3일치 예보 데이터
-  currentIndex: 0,    // 현재 보여주고 있는 날짜 인덱스 (0: 오늘, 1: 내일, 2: 모레)
-  loading: false,     // 로딩 상태
-  error: null,        // 에러 상태
+  dailyForecasts: [], // Thunk로부터 받은 3일치 예보 데이터 들어갈 예정
+  currentIndex: 0, // 현재 보여주고 있는 날짜 인덱스 (0: 오늘, 1: 내일, 2: 모레)
+  loading: false, // 로딩 상태
+  error: null, // 에러 상태
 };
 
 const airQualitySlice = createSlice({
