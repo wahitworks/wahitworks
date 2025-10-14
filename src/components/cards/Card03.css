@@ -3,7 +3,7 @@
   border: 2px solid var(--deep-blue);
   border-radius: 15px;
 
-  padding: 20px 10px;
+  padding: 20px 10px 10px;
   margin: 0 auto;
 }
 .card03-title {
@@ -34,6 +34,10 @@
   scroll-snap-align: start;
 }
 
+.card03-swipe-container-no-station {
+  text-align: center;
+}
+
 .card03-result-item {
   width: 27%;
   
@@ -41,10 +45,23 @@
   flex-direction: column;
   align-items: center;
 }
+
 .card03-font-b {
   font-weight: bold;
 }
 .card03-font-small {
   color: gray;
   font-size: 12px;
+}
+
+.card03-pagination-dots-container {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+.card03-pagination-activate {
+  color: var(--deep-blue);
+}
+.card03-pagination-disabled {
+  color: #ccc;
 }

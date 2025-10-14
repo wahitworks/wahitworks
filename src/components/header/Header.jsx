@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import LocationSearch from "./LocationSearch.jsx";
 import HeaderMenu from "./HeaderMenu.jsx";
-import Logo from "../commons/Logo.jsx";
+import Logo from "../Logo/Logo.jsx";
 
 import {
   setHeaderTitle,
@@ -29,7 +29,6 @@ import { stringUtils } from "../../utils/stringUtil.js";
 // 헤더에 들어가는 아이콘
 import { HiChevronLeft } from "react-icons/hi2";
 import { VscMenu } from "react-icons/vsc";
-import { findNearestStation } from "../../utils/geoUtil.js";
 
 function Header() {
   const navigate = useNavigate();

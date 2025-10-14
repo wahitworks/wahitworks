@@ -1,18 +1,20 @@
 import "./Card03.css";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { GoDot } from "react-icons/go";
+import { GoDotFill } from "react-icons/go";
 
-import LogoGood from '../commons/LogoGood.jsx';
-import LogoModerate from '../commons/LogoModerate.jsx';
-import LogoBad from '../commons/LogoBad.jsx';
-import LogoVeryBad from '../commons/LogoVeryBad.jsx';
+import LogoGood from '../logo/LogoGood.jsx';
+import LogoModerate from '../logo/LogoModerate.jsx';
+import LogoBad from '../logo/LogoBad.jsx';
+import LogoVeryBad from '../logo/LogoVeryBad.jsx';
 
 import { getCurrentAirCondition } from "../../store/thunks/currentAirConditionThunk.js";
-import { p } from "framer-motion/client";
 
 function Card03() {
   const dispatch = useDispatch();
 
+  // ===== 전역 state =====
   const currentPM10 = useSelector(state => state.currentAirCondition.currentPM10)
   const currentPM25 = useSelector(state => state.currentAirCondition.currentPM25)
   const currentO3 = useSelector(state => state.currentAirCondition.currentO3)
@@ -24,6 +26,28 @@ function Card03() {
   const loading = useSelector(state => state.currentAirCondition.loading);
 
   const measuringStation = useSelector(state => state.locationSlice.measuringStation);
+
+  // ===== 컴포넌트 State ==========
+  const [page, setPage] = useState(0);
+
+  // ===== 랜더링 필요없는 Ref ============
+  const containerRef = useRef(null);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+
+  //
+  const handleScroll = () => {
+    if(!containerRef.current) return;
+    // 현재 스크롤 위치
+    const scrollLeft = containerRef.current.scrollLeft;
+    // 컨테이너 너비
+    const containerWidth = containerRef.current.offsetWidth;
+    // 현재 페이지 (반올림)
+    const currentPage = Math.round(scrollLeft/containerWidth);
+
+    setPage(currentPage);
+    console.log(currentPage);
+  }
 
   useEffect(() => {
     // =====================================
@@ -43,10 +67,11 @@ function Card03() {
       <div className="card03-container">
         <h1 className="card03-title">지금 대기 상태</h1>
         <p className="card03-title-sub card03-font-small">{dataTime} 측정</p>
-        <div className="card03-result-cotainer">
 
           { measuringStation 
-          ? <div className="card03-swipe-container">
+          ? <div className="card03-swipe-container"
+              ref={containerRef} onScroll={handleScroll}
+            >
               <div className="card03-swipe-page">
                 <div className="card03-result-item">
                   <p className="card03-font-b">미세먼지</p>
@@ -94,9 +119,19 @@ function Card03() {
                 </div>
               </div>
             </div>
-          : <p> 측정소 정보가 없습니다. </p>
+          : <div className="card03-swipe-container-no-station">
+              <p> 측정소 정보가 없습니다. </p>
+            </div>
           }
-        </div>
+          <div className="card03-pagination-dots-container">
+            {
+              Array(2).fill(0).map((dot, index) => (
+                <div className={`card03-pagination-dot card03-pagination-${index === page ? 'activate' : 'disabled'}`} key={index} >
+                  ▪
+                </div>
+              ))
+            }
+          </div>
       </div>
     </>
   );

@@ -11,6 +11,7 @@ const currentAirConditionSlice = createSlice({
     currentNO2: 0,
     currentCO: 0,
     currentSO2: 0,
+    page: 0,
     loading: false,
     error: null,
   },
