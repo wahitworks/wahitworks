@@ -5,3 +5,4 @@ import good from "../assets/weather-indicators/good.jpg";
 
 export const GRADE_LABEL = { 1: "좋음", 2: "보통", 3: "나쁨", 4: "매우나쁨" };
 export const GRADE_IMAGE = { 1: good, 2: normal, 3: bad, 4: veryBad };
+export const GRADE_CLASS = { 1: "good", 2: "normal", 3: "bad", 4: "very-bad" }

@@ -1,20 +1,19 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import axiosFineDustConfig from '../../configs/axiosFineDustConfig';
 import axios from 'axios';
-import aixosFineDustConfig from '../../configs/axiosFineDustConfig';
-
-const API_BASE_URL = "https://app12.green-meerkat.kro.kr/B552584/getMsrstnAcctoRltmMesureDnsty";
 
 export const fetchFineDustData = createAsyncThunk(
   'fineDust/fetchFineDustData',
-  async (stationName, { rejectWithValue }) => {
+  async (payload, { rejectWithValue }) => {
     try {
-      const response = await axios.get(API_BASE_URL, {
+      const stationName = typeof payload === 'string' ? payload : payload.stationName;
+      const response = await axiosFineDustConfig.get('getMsrstnAcctoRltmMesureDnsty', {
         params: {
-          serviceKey: decodeURIComponent(aixosFineDustConfig.SERVICE_KEY),
+          serviceKey: axiosFineDustConfig.SERVICE_KEY,
           stationName: stationName,
-          dataTerm: "DAILY",
-          returnType: "json",
-          ver: "1.0",
+          dataTerm: axiosFineDustConfig.DATA_TERM,
+          returnType: axiosFineDustConfig.RETURN_TYPE,
+          ver: axiosFineDustConfig.VER,
         }
       });
 
@@ -31,4 +30,4 @@ export const fetchFineDustData = createAsyncThunk(
       return rejectWithValue(error.response?.data || '알 수 없는 에러가 발생했습니다.');
     }
   }
-);
+); 

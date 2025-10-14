@@ -75,6 +75,9 @@
 .card04-bookmark-list-toggle-info{
   flex: 1;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .card04-bookmark-list-toggle-info:nth-child(2) {
@@ -82,9 +85,54 @@
   border-right: 1px solid var(--deep-blue);
 }
 
+.card04-bookmark-list-toggle-info-title {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.card04-bookmark-list-toggle-info-value {
+  font-size: 16px;
+}
+
+.card04-air-log {
+  padding: 15px;
+}
+
+/* 에러 */
+.card04-bookmark-list-comment-err {
+  color: var(--red);
+  padding: 15px;
+  width: 100%;
+  text-align: center;
+}
+
+/* 로딩 */
+.card04-bookmark-list-comment-loading {
+  padding: 15px;
+  width: 100%;
+  text-align: center;
+}
+
 /* 즐겨찾기 목록 없을 때 */
 .card04-bookmark-list-comment {
   color: #fff;
   font-size: 20px;
   padding-bottom: 20px;
+}
+
+/* 단계별 ● 컬러 */
+.card04-air-status.good {
+  color: var(--personal-blue);
+}
+
+.card04-air-status.normal {
+  color: var(--green);
+}
+
+.card04-air-status.bad {
+  color: var(--yellow);
+}
+
+.card04-air-status.very-bad {
+  color: var(--red);
 }

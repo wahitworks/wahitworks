@@ -3,6 +3,7 @@ import {
     closestCenter,
     KeyboardSensor,
     PointerSensor,
+    TouchSensor,
     useSensor,
     useSensors, } from '@dnd-kit/core';
 import { 
@@ -59,12 +60,19 @@ function EditCard () {
         useSensor(PointerSensor, {
           // 드래그를 시작하기 위해 필요한 마우스 움직임 거리(단위:px)
           activationConstraint: {
-            delat: 100,
+            delay: 100,
             tolerance: 5,
           },
         }),
         useSensor(KeyboardSensor, {
           coordinateGetter: sortableKeyboardCoordinates,
+        }),
+        useSensor(TouchSensor, {
+          // 터치로 사용
+          activationConstraint: {
+            delay: 100,
+            tolerance: 5,
+          }
         })
     );
 

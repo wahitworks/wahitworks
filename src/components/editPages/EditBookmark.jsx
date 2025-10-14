@@ -4,6 +4,7 @@ import {
     closestCenter,
     KeyboardSensor,
     PointerSensor,
+    TouchSensor,
     useSensor,
     useSensors, } from '@dnd-kit/core';
 import { 
@@ -26,6 +27,7 @@ import { addBookmark, removeBookmark, setBookmarkFilteredList, setBookmarkSearch
 import { useEffect } from 'react';
 import { LOCATION_LIST } from '../../constants/locationList.js';
 import { stringUtils } from '../../utils/stringUtil';
+import { localStorageUtil } from '../../utils/localStorageUtil.js';
 // import { div } from 'framer-motion/client';
 
 // 각 북마크 아이템을 위한 컴포넌트
@@ -68,12 +70,19 @@ function EditBookmark () {
         useSensor(PointerSensor, {
           // 드래그를 시작하기 위해 필요한 마우스 움직임 거리(단위:px)
           activationConstraint: {
-            delat: 100,
+            delay: 100,
             tolerance: 5,
           },
         }),
         useSensor(KeyboardSensor, {
           coordinateGetter: sortableKeyboardCoordinates,
+        }),
+        useSensor(TouchSensor, {
+          // 터치로 사용
+          activationConstraint: {
+            delay: 100,
+            tolerance: 5,
+          }
         })
     );
 
@@ -140,6 +149,13 @@ function EditBookmark () {
       console.log('추가:', bookmarkedRegions);
     }
   };
+
+  // 저장하기 버튼 클릭시
+  const handleSave = () => {
+    // 현재 상태를 localStorage에 저장
+    localStorageUtil.setBookmarkedRegions(bookmarkedRegions);
+    alert(`저장되었습니다!`) // 저장알림
+  }
 
   return(
     <>
@@ -216,7 +232,7 @@ function EditBookmark () {
         
         {/* 내 장소 저장하기 버튼 */}
           <div className="bookmark-save-btn-container">
-            <button className='bookmark-save-btn' type="button">저장하기</button> 
+            <button className='bookmark-save-btn' type="button" onClick={handleSave}>저장하기</button> 
           </div>          
         </div>
     </div>
