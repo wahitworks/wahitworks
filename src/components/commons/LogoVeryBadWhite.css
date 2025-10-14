@@ -1,0 +1,15 @@
+/* LogoVeryBadWhite 크기 옵션 */
+.logo-very-bad-white-small {
+  width: 80px;
+  height: auto;
+}
+
+.logo-very-bad-white-medium {
+  width: 150px;
+  height: auto;
+}
+
+.logo-very-bad-white-large {
+  width: 300px;
+  height: auto;
+}

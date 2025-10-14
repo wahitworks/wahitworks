@@ -1,0 +1,32 @@
+.introduce-container {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    margin: 50px 0;
+    text-align: center;
+}
+
+.introduce-logo-container {
+    width: 200px;
+    height: 100px;
+}
+
+.introduce-info {
+    font-weight: 900;
+}
+.introduce-content {
+    font-size: 18px;
+    font-weight: 600;
+    word-break: keep-all;
+    line-height: 1.6;
+    max-width: 500px;
+}
+
+.introduce-logo-title {
+    width: 100px;
+    height: 50px;
+    background-repeat: no-repeat;
+    margin: 10px auto;
+}
