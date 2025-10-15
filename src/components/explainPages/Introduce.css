@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center;
     gap: 30px;
-    margin: 50px 0;
+    margin: 50px auto;
     text-align: center;
 }
 
@@ -15,6 +15,7 @@
 
 .introduce-info {
     font-weight: 900;
+    color: var(--personal-blue);
 }
 .introduce-content {
     font-size: 18px;
@@ -29,4 +30,8 @@
     height: 50px;
     background-repeat: no-repeat;
     margin: 10px auto;
+}
+
+.introduse-app-title {
+    color: var(--personal-blue);
 }

@@ -36,9 +36,11 @@ function SortableItem (props) {
     return (
         <div ref={setNodeRef} style={style} 
          className="editcard-card">
+          <div className="editcard-card-info">
             <div {...attributes} {...listeners} 
             className="editcard-hamburger">&#x2630; {/* 햄버거 아이콘 */}</div>
-            <p className="editcard-card-name">{props.id}</p>
+            <p className="editcard-card-name">{props.name}</p>
+          </div>
             <input checked={props.checked} type="checkbox" 
               className="editcard-switch" onChange={props.onToggle} // 스위치
               onPointerDown = {(e) => e.stopPropagation()}></input>
@@ -118,7 +120,7 @@ function EditCard () {
               onDragEnd={handleDragEnd}>
               <SortableContext items={order.map(item => item.id)} 
               strategy={verticalListSortingStrategy}>
-                  {order.map(item => (<SortableItem key={item.id} id={item.id} 
+                  {order.map(item => (<SortableItem key={item.id} id={item.id} name={item.name} 
                     checked={item.checked} onToggle={() => handleToggle(item.id)} />))}
               </SortableContext>
           </DndContext>

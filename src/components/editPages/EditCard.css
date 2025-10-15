@@ -1,34 +1,40 @@
 .editcard-card-container {
-    width: 500;
-    padding: 30px;    
+  width: 500;
+  padding: 30px;    
 }
 
 .editcard-card {
-    background-color: white;
-    padding: 10px 20px;
-    margin-bottom: 10px;
-    border: 1px solid var(--deep-blue);
-    border-radius: 15px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  background-color: white;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  border: 1px solid var(--deep-blue);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.editcard-card-info{ 
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 .editcard-hamburger { 
-    cursor: grab;
-    padding-right: 10px;
-    font-size: 20px;
-    color: #888;
+  cursor: grab;
+  padding-right: 10px;
+  font-size: 20px;
+  color: #888;
 }
 
 .editcard-card:last-child{
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .editcard-card-name {
-    margin: 0;
-    font-weight: bold;
+  margin: 0;
+  font-weight: bold;
 }
 
 /* 초기화 버튼 */
