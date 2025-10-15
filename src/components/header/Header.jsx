@@ -29,6 +29,7 @@ import { stringUtils } from "../../utils/stringUtil.js";
 // 헤더에 들어가는 아이콘
 import { HiChevronLeft } from "react-icons/hi2";
 import { VscMenu } from "react-icons/vsc";
+import LogoOrigin from "../logo/LogoOrigin.jsx";
 
 function Header() {
   const navigate = useNavigate();
@@ -157,7 +158,7 @@ function Header() {
       <div className="header-container">
         {location.pathname === "/" ? (
           <div className="header-logo-container" onClick={() => goHome()}>
-            <Logo animated className="header-logo" />
+            <LogoOrigin animated className="header-logo" />
             <div
               className="header-logo-title"
               style={{ backgroundImage: `url(${logoTitle})` }}

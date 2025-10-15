@@ -1,0 +1,120 @@
+.logo-origin {
+  overflow: visible !important;
+}
+
+/* ========================================
+   등장 애니메이션
+======================================== */
+.logo-origin {
+  animation: entranceFallSway 3s ease-out;
+}
+
+/* ========================================
+   구름 몸통 숨쉬기 : 2-몸
+======================================== */
+.logo-origin.animated #Layer_2_origin {
+  animation: cloudBreathe 4s ease-in-out infinite;
+}
+
+/* ========================================
+   구름 둥실둥실 : 4-입
+======================================== */
+.logo-origin.animated #Layer_4_origin {
+  animation: cloudFloat 5s ease-in-out infinite;
+}
+
+/* ========================================
+   눈 깜빡이기 : 3-눈
+======================================== */
+.logo-origin.animated #Layer_3_origin {
+  animation: eyeBlink 8s ease-in-out infinite;
+}
+
+
+/* ========================================
+   바람 효과 : 5-바람
+======================================== */
+.logo-origin.animated #Layer_5_origin {
+  animation: windFlow2 8s ease-in-out infinite;
+}
+/* 왼쪽바람 */
+.logo-origin.animated #Layer_5_origin path:nth-of-type(1) {
+  animation: windFlow4 6s ease-in-out infinite;
+}
+/* 끝 작은 바람 */
+.logo-origin.animated #Layer_5_origin path:nth-of-type(4) {
+  animation: windFlow4 5s ease-in-out infinite;
+}
+/* 위 바람 */
+.logo-origin.animated #Layer_5_origin path:nth-of-type(3) {
+  animation: windFlow5 6s ease-in-out infinite;
+}
+
+@keyframes windFlow4 {
+  0%, 100% {
+    transform: translateX(-10px) translateY(-75px) scaleX(1);
+    opacity: 0.7;
+  }
+  40% {
+    transform: translateX(-20px) translateY(-70px) scaleX(1.08);
+    opacity: 0.95;
+  }
+  70% {
+    transform: translateX(-30px)  translateY(-73px) scaleX(1.03);
+    opacity: 0.8;
+  }
+}
+@keyframes windFlow5 {
+  0%, 100% {
+    transform: translateX(-10px) translateY(-85px) scaleX(1);
+    opacity: 0.7;
+  }
+  40% {
+    transform: translateX(-20px) translateY(-80px) scaleX(1.08);
+    opacity: 0.95;
+  }
+  70% {
+    transform: translateX(-30px)  translateY(-83px) scaleX(1.03);
+    opacity: 0.8;
+  }
+}
+
+/* ========================================
+   물방울 효과 (Layer_12, Layer_13)
+======================================== */
+/* Layer_12: 오른쪽 물방울 */
+.logo-origin.animated #Layer_6_origin {
+  animation: dropFlow1 6s ease-in-out infinite;
+}
+
+
+/* ========================================
+   먼지 흩날리기 (Layer_11 circle)
+======================================== */
+/* 1번 먼지 - 오른쪽 위로 */
+.logo-origin.animated #Layer_7_origin circle:nth-of-type(1) {
+  animation: dustFloat1 9s ease-in-out infinite;
+}
+/* 2번 먼지 - 왼쪽 위로 */
+.logo-origin.animated #Layer_7_origin circle:nth-of-type(2) {
+  animation: dustFloat2 7s ease-in-out infinite 0.8s;
+}
+/* 3번 먼지 - 위쪽으로 크게 */
+.logo-origin.animated #Layer_7_origin circle:nth-of-type(3) {
+  animation: dustFloat3 7s ease-in-out infinite 1.5s;
+}
+/* 4번 먼지 - 아래로만 살짝 */
+.logo-origin.animated #Layer_7_origin circle:nth-of-type(4) {
+  animation: dustFloat4 7s ease-in-out infinite 1.5s;
+}
+
+/* ========================================
+   클릭 효과
+======================================== */
+.logo-origin:active {
+  transform: scale(0.95);
+}
+/* 위로 도망 */
+.logo-origin.animated:active {
+  animation: clickEscape 1s ease;
+}

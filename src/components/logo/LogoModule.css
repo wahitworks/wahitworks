@@ -4,8 +4,101 @@
 ======================================== */
 
 /* ========================================
-   구름 통통 튀기 애니메이션
+   등장 애니메이션 4종
 ======================================== */
+
+/* 1. 왼쪽에서 둥실둥실 등장 */
+@keyframes entranceBounceLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px) translateY(-20px) scale(0.8);
+  }
+  60% {
+    transform: translateX(10px) translateY(-5px) scale(1.05);
+  }
+  80% {
+    transform: translateX(-5px) translateY(2px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1);
+  }
+}
+
+/* 2. 하늘에서 살랑살랑 낙하 */
+@keyframes entranceFallSway {
+  0% {
+    opacity: 0;
+    transform: translateY(-60px) translateX(-20px) rotate(-5deg) scale(0.6);
+  }
+  30% {
+    opacity: 0.5;
+    transform: translateY(-30px) translateX(15px) rotate(3deg) scale(0.8);
+  }
+  60% {
+    opacity: 0.8;
+    transform: translateY(-10px) translateX(-8px) rotate(-2deg) scale(0.95);
+  }
+  80% {
+    transform: translateY(5px) translateX(3px) rotate(1deg) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) translateX(0) rotate(0deg) scale(1);
+  }
+}
+
+/* 3. 멀리서 둥실둥실 다가오기 (구름 느낌!) */
+@keyframes entranceFromFar {
+  0% {
+    opacity: 0;
+    transform: translateX(-200px) translateY(30px) scale(0.3);
+    /* filter: blur(8px); */
+  }
+  50% {
+    opacity: 0.6;
+    transform: translateX(-80px) translateY(-10px) scale(0.7);
+    /* filter: blur(3px); */
+  }
+  75% {
+    transform: translateX(-15px) translateY(5px) scale(1.05);
+    /* filter: blur(0px); */
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1);
+    /* filter: blur(0px); */
+  }
+}
+
+/* 4. 아래에서 풍선처럼 떠오르기 */
+@keyframes entranceBalloonUp {
+  0% {
+    opacity: 0;
+    transform: translateY(150px) scale(0.7);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateY(-20px) scale(1.05);
+  }
+  70% {
+    transform: translateY(10px) scale(0.95);
+  }
+  85% {
+    transform: translateY(-5px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+/* ========================================
+   구름 몸통 애니메이션
+======================================== */
+
+/* 1. 통통 튀기 애니메이션 */
 @keyframes cloudBounce {
   0%, 100% {
     transform: translateY(0);
@@ -15,82 +108,69 @@
   }
 }
 
-
-/* ========================================
-   바람 흐르기 애니메이션
-======================================== */
-@keyframes windFlow {
-  0%, 100% {
-    transform: translate(-23.06px, -80.69px) translateX(5px);
-    opacity: 0.7;
-  }
-  50% {
-    transform: translate(-23.06px, -80.69px) translateX(15px);
-    opacity: 0.9;
-  }
+/* 2. 좌우로 산들산들 흔들기  */
+@keyframes shakeLittleLR {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  25% { transform: translateX(-3px) rotate(-1deg); }
+  75% { transform: translateX(3px) rotate(1deg); }
 }
 
-/* ========================================
-   물방울 흐르기 애니메이션
-======================================== */
-@keyframes dropFlow {
-  0%, 100% {
-    transform: translate(-24.06px, -82.69px) translateX(5px) scaleX(1);
-    opacity: 0.65;
-  }
-  50% {
-    transform: translate(-25.06px, -83.69px) translateX(-10px) scaleX(1.08);
-    opacity: 0.85;
-  }
+/* 3. 무겁게 가라앉기 */
+@keyframes heavySink {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(15px); }
 }
 
-/* ========================================
-   먼지 통통 튀기 애니메이션
-======================================== */
-@keyframes dustBounce-good {
-  0%, 100% {
-    transform: translateY(8px);
-    opacity: 0.15;
-  }
-  50% {
-    transform: translateY(3px);
-    opacity: 0.35;
-  }
+/* 4. 천천히 좌우 흔들림 (진동) */
+@keyframes slowSway {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-2deg); }
+  75% { transform: rotate(2deg); }
 }
-@keyframes dustBounce-moderate {
+
+/* 5. 둥실둥실 */
+@keyframes cloudFloat {
   0%, 100% {
-    transform: translateY(8px);
-    opacity: 0.35;
+    transform: translateY(0);
   }
   50% {
-    transform: translateY(3px);
-    opacity: 0.55;
-  }
-}
-@keyframes dustBounce-bad {
-  0%, 100% {
-    transform: translateY(8px);
-    opacity: 0.55;
-  }
-  50% {
-    transform: translateY(3px);
-    opacity: 0.75;
-  }
-}
-@keyframes dustBounce-verybad {
-  0%, 100% {
-    transform: translateY(8px);
-    opacity: 0.75;
-  }
-  50% {
-    transform: translateY(3px);
-    opacity: 0.95;
+    transform: translateY(-8px);
   }
 }
 
+/* 6. 숨쉬기 */
+@keyframes cloudBreathe {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+
 /* ========================================
-   입 표정 뒤집기 애니메이션 (웃음 ↔ 울상)
+   눈 애니메이션
 ======================================== */
+
+/* 1. 눈 깜빡이기 */
+@keyframes eyeBlink {
+  0%, 48%, 52%, 100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(0, 0);
+    opacity: 0.1;
+  }
+}
+
+
+/* ========================================
+   입 애니메이션
+======================================== */
+
+/* 1. 입 표정 뒤집기 애니메이션 (웃음 ↔ 울상) */
 @keyframes mouthFlip {
   0%, 40% {
     transform: scaleY(1);
@@ -106,28 +186,365 @@
   }
 }
 
+/* 2. 입 미소 */
+@keyframes smile {
+  0%, 80%, 100% {
+    transform: scaleY(1);
+  }
+  85%, 95% {
+    transform: scaleY(1.1);
+  }
+}
+
+
 /* ========================================
-   좌우로 산들산들 흔들기 
+   바람 애니메이션
 ======================================== */
-@keyframes shakeLittleLR {
-  0%, 100% { transform: translateX(0) rotate(0deg); }
-  25% { transform: translateX(-3px) rotate(-1deg); }
-  75% { transform: translateX(3px) rotate(1deg); }
+
+/* 1. 바람 흐르기 애니메이션 */
+@keyframes windFlow {
+  0%, 100% {
+    transform: translate(-23.06px, -80.69px) translateX(5px);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-23.06px, -80.69px) translateX(15px);
+    opacity: 0.9;
+  }
+}
+
+/* 바람효과 - 선 긋기 + 둥실둥실 */
+@keyframes windFlow1 {
+  0%, 100% {
+    transform: translateX(0) scaleX(1);
+    opacity: 0.8;
+  }
+  25% {
+    transform: translateX(4px) scaleX(1.1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(2px) scaleX(1.05);
+    opacity: 0.9;
+  }
+  75% {
+    transform: translateX(-1px) scaleX(0.98);
+    opacity: 0.7;
+  }
+}
+
+@keyframes windFlow2 {
+  0%, 100% {
+    transform: translateX(0) scaleX(1);
+    opacity: 0.75;
+  }
+  30% {
+    transform: translateX(5px) scaleX(1.12);
+    opacity: 0.95;
+  }
+  60% {
+    transform: translateX(3px) scaleX(1.06);
+    opacity: 0.85;
+  }
+  80% {
+    transform: translateX(-1px) scaleX(0.97);
+    opacity: 0.65;
+  }
+}
+
+@keyframes windFlow3 {
+  0%, 100% {
+    transform: translateX(0) scaleX(1);
+    opacity: 0.8;
+  }
+  35% {
+    transform: translateX(6px) scaleX(1.15);
+    opacity: 1;
+  }
+  65% {
+    transform: translateX(3px) scaleX(1.08);
+    opacity: 0.9;
+  }
+  85% {
+    transform: translateX(-2px) scaleX(0.96);
+    opacity: 0.7;
+  }
+}
+
+@keyframes windFlow3 {
+  0%, 100% {
+    transform: translateX(0) scaleX(1);
+    opacity: 0.8;
+  }
+  35% {
+    transform: translateX(6px) scaleX(1.15);
+    opacity: 1;
+  }
+  65% {
+    transform: translateX(3px) scaleX(1.08);
+    opacity: 0.9;
+  }
+  85% {
+    transform: translateX(-2px) scaleX(0.96);
+    opacity: 0.7;
+  }
+}
+
+
+/* ========================================
+   물방울 애니메이션
+======================================== */
+
+/* 1. 물방울 흐르기 애니메이션 */
+@keyframes dropFlow {
+  0%, 100% {
+    transform: translate(-24.06px, -82.69px) translateX(5px) scaleX(1);
+    opacity: 0.65;
+  }
+  50% {
+    transform: translate(-25.06px, -83.69px) translateX(-10px) scaleX(1.08);
+    opacity: 0.85;
+  }
+}
+
+/* 물방울 애니메이션 */
+@keyframes dropFlow1 {
+  0%, 100% {
+    transform: translateX(0) scaleX(1);
+    opacity: 0.7;
+  }
+  25% {
+    transform: translateX(3px) scaleX(1.08);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateX(1px) scaleX(1.04);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translateX(-1px) scaleX(0.98);
+    opacity: 0.6;
+  }
+}
+
+@keyframes dropFlow2 {
+  0%, 100% {
+    transform: translateX(0) scaleX(1);
+    opacity: 0.75;
+  }
+  30% {
+    transform: translateX(4px) scaleX(1.1);
+    opacity: 0.95;
+  }
+  60% {
+    transform: translateX(2px) scaleX(1.05);
+    opacity: 0.85;
+  }
+  80% {
+    transform: translateX(-1px) scaleX(0.97);
+    opacity: 0.65;
+  }
+}
+
+
+/* ========================================
+   먼지 통통 튀기 애니메이션
+======================================== */
+
+/* 1. 투명도 15~35 */
+@keyframes dustBounce-good {
+  0%, 100% {
+    transform: translateY(8px);
+    opacity: 0.15;
+  }
+  50% {
+    transform: translateY(3px);
+    opacity: 0.35;
+  }
+}
+
+/* 2. 투명도 35~33 */
+@keyframes dustBounce-moderate {
+  0%, 100% {
+    transform: translateY(8px);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateY(3px);
+    opacity: 0.55;
+  }
+}
+
+/* 3. 투명도 55~75 */
+@keyframes dustBounce-bad {
+  0%, 100% {
+    transform: translateY(8px);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(3px);
+    opacity: 0.75;
+  }
+}
+
+/* 4. 투명도 75~95 */
+@keyframes dustBounce-verybad {
+  0%, 100% {
+    transform: translateY(8px);
+    opacity: 0.75;
+  }
+  50% {
+    transform: translateY(3px);
+    opacity: 0.95;
+  }
+}
+
+/* 5. 먼지 흩날리기 */
+@keyframes dustFloat1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: translate(12px, -15px) scale(1.4);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(18px, -22px) scale(1.8);
+    opacity: 0.3;
+  }
+  75% {
+    transform: translate(8px, -12px) scale(1.2);
+    opacity: 0.7;
+  }
+}
+
+@keyframes dustFloat2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  30% {
+    transform: translate(-15px, -18px) scale(1.5);
+    opacity: 0.5;
+  }
+  60% {
+    transform: translate(-20px, -12px) scale(1.3);
+    opacity: 0.4;
+  }
+  80% {
+    transform: translate(-6px, -8px) scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes dustFloat3 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  35% {
+    transform: translate(-8px, -25px) scale(2);
+    opacity: 0.4;
+  }
+  70% {
+    transform: translate(5px, -30px) scale(1.6);
+    opacity: 0.3;
+  }
+  85% {
+    transform: translate(-3px, -15px) scale(1.3);
+    opacity: 0.6;
+  }
+}
+
+@keyframes dustFloat4 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.3;
+  }
+  30% {
+    transform: translate(-8px, 8px) scale(1.2);
+    opacity: 0.25;
+  }
+  65% {
+    transform: translate(6px, 12px) scale(1.15);
+    opacity: 0.2;
+  }
+  85% {
+    transform: translate(-3px, 5px) scale(1.1);
+    opacity: 0.28;
+  }
 }
 
 /* ========================================
-   무겁게 가라앉기
+   클릭 효과
 ======================================== */
-@keyframes heavySink {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(15px); }
+
+/* 1. 기본 통통 튀기 */
+@keyframes clickBounce {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  40% {
+    transform: translateY(-8px) scale(1.03);
+  }
+  70% {
+    transform: translateY(-4px) scale(0.98);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
 }
 
-/* ========================================
-   천천히 좌우 흔들림 (진동)
-======================================== */
-@keyframes slowSway {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-2deg); }
-  75% { transform: rotate(2deg); }
+/* 2. 위로 도망가기 (입장의 반대) */
+@keyframes clickEscape {
+  0% {
+    opacity: 1;
+    transform: translateY(0) translateX(0) rotate(0deg) scale(1);
+  }
+  30% {
+    opacity: 0.9;
+    transform: translateY(-18px) translateX(5px) rotate(-2deg) scale(1.05);
+  }
+  60% {
+    opacity: 0.6;
+    transform: translateY(-35px) translateX(-10px) rotate(3deg) scale(0.9);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-60px) translateX(15px) rotate(-5deg) scale(0.7);
+  }
+}
+
+@keyframes dustExplode1 {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  50% { transform: translate(18px, -18px) scale(1.6); opacity: 0.4; }
+  100% { transform: translate(0, 0) scale(1); opacity: 1; }
+}
+
+@keyframes dustExplode2 {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  50% { transform: translate(-20px, -15px) scale(1.5); opacity: 0.4; }
+  100% { transform: translate(0, 0) scale(1); opacity: 1; }
+}
+
+@keyframes dustExplode3 {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  50% { transform: translate(-8px, -28px) scale(1.8); opacity: 0.3; }
+  100% { transform: translate(0, 0) scale(1); opacity: 1; }
+}
+
+@keyframes dustExplode4 {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+  50% { transform: translate(-10px, 15px) scale(1.3); opacity: 0.15; }
+  100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+}
+
+@keyframes windStrong {
+  0%, 100% {
+    transform: translateX(0) scaleX(1);
+  }
+  50% {
+    transform: translateX(8px) scaleX(1.3);
+  }
 }

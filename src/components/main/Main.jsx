@@ -8,6 +8,7 @@ import Card02 from "../cards/Card02.jsx";
 import Card03 from "../cards/Card03.jsx";
 import Card04 from "../cards/Card04.jsx";
 import { useNavigate } from "react-router-dom";
+import LogoOrigin from "../logo/LogoOrigin.jsx";
 
 // 카드 id와 실제 컴포넌트를 짝지어주는 목록
 const cardList = {
@@ -31,6 +32,7 @@ function Main() {
 
   return (
     <>
+      <LogoOrigin animated />
       <div id="main-container">
         {/* 전체 카드 목록을 순회 */}
         {order.map((cardInfo) => {
