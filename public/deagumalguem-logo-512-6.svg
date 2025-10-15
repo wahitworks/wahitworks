@@ -1,0 +1,39 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 394.95 303.15">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        stroke: #7eafe3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 20px;
+      }
+
+      .cls-2 {
+        fill: #87aad5;
+      }
+
+      .cls-3 {
+        fill: #7eafe3;
+      }
+    </style>
+  </defs>
+  <title>deagumalguem-logo-512-6</title>
+  <path class="cls-1" d="M217.5,228.81H133.56s-55.41-5.6-62.68-56.53,35.25-83.38,63.8-76.67c0,0,14.83-68.55,67.43-76.95S288.3,52.24,293.34,79.1c0,0,54.28,1.68,53.72,57.09" transform="translate(-60.05 -4.18)"/>
+  <path class="cls-1" d="M239.37,136.4a17.23,17.23,0,0,1,33.58,0" transform="translate(-60.05 -4.18)"/>
+  <path class="cls-1" d="M194.56,163.33a28.35,28.35,0,0,0,25.74,14.55c15.4-.61,23.09-13.8,23.51-14.55" transform="translate(-60.05 -4.18)"/>
+  <path class="cls-1" d="M166.39,136.77a17.23,17.23,0,0,1,33.58,0" transform="translate(-60.05 -4.18)"/>
+  <path class="cls-1" d="M235.41,213.14s44.21,32.46,95.7,33,49.81,25.18,49.81,25.18,2.8,21.27-15.11,24.07-29.66-3.92-25.74-19" transform="translate(-60.05 -4.18)"/>
+  <path class="cls-1" d="M250.8,249.24s36.38,15.67,40.86,19S302.29,280,295,291.21s-20.7,4.48-23.5,0" transform="translate(-60.05 -4.18)"/>
+  <path class="cls-1" d="M273.19,208.38s23.5,15.11,68.28,11.19S384,188.23,384,188.23s1.68-20.14-22.39-23.5-24.06,21.83-21.82,26.3" transform="translate(-60.05 -4.18)"/>
+  <path class="cls-1" d="M391.83,144.58s14.55-42,53.17-49.25C445,95.33,440,141.78,391.83,144.58Z" transform="translate(-60.05 -4.18)"/>
+  <path class="cls-1" d="M402.47,52.8S368.33,65.11,371.13,106C371.13,106,409.18,97.57,402.47,52.8Z" transform="translate(-60.05 -4.18)"/>
+  <path class="cls-2" d="M391.83,226.85s9.52,5,14.55,9.51" transform="translate(-60.05 -4.18)"/>
+  <circle class="cls-3" cx="264.62" cy="23.43" r="13.43"/>
+  <circle class="cls-2" cx="286.45" cy="60.37" r="4.48"/>
+  <circle class="cls-2" cx="359.48" cy="168.66" r="4.76"/>
+  <circle class="cls-2" cx="159.41" cy="260.16" r="6.72"/>
+</svg>
