@@ -26,6 +26,7 @@ function BookmarkItem({ region }) {
   }, [dispatch, region]);
 
   const stationName = useSelector((state) => state.bookmarkCard04.regionStationMap[region]);
+  const station = useSelector(state => state.bookmarkCard04.regionStationMap);
 
   // 미세먼지 정보 호출
   useEffect(() => {
@@ -86,6 +87,7 @@ function BookmarkItem({ region }) {
              <FaStar color='var(--deep-blue)' />
           </span>
           <p className="card04-bookmark-list-title">{region}</p>
+          <p className="card04-bookmark-list-station">{station[region]} 측정소</p>
           <div className="card04-bookmark-list-air-status">
           {/* 데이터 불러오기 성공시 출력 */}
           {card04Loading && <small>로딩 중...</small>}
@@ -119,6 +121,7 @@ function BookmarkItem({ region }) {
                 <div className="card04-bookmark-list-toggle-info">
                   <p className="card04-bookmark-list-toggle-info-title">미세먼지</p>
                   <p className="card04-bookmark-list-toggle-info-value">{dustValue}㎍/㎥</p>
+                  <p></p>
                   <div className="card04-air-log">
                     <AirQualityLogo grade={dustGrade} />
                   </div>
