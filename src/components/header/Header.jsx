@@ -35,23 +35,23 @@ function Header() {
   const dispatch = useDispatch();
   const location = useLocation();
 
+  // ===== 전역 state =====
   const headerTitle = useSelector((state) => state.headerSlice.headerTitle);
   const searchFlg = useSelector((state) => state.headerSlice.searchFlg);
+  const menuFlg = useSelector(state => state.headerSlice.menuFlg);
   const searchKeyword = useSelector(
     (state) => state.locationSearchSlice.searchKeyword
-  );
-  const currentLocation = useSelector(
-    (state) => state.locationSlice.currentLocation
   );
   const measuringStation = useSelector(
     (state) => state.locationSlice.measuringStation
   );
-
-  // const matchedLocation = useSelector(state => state.locationSlice.matchedLocation);
-
   const currentRegion = useSelector(
     (state) => state.locationSlice.currentRegion
   );
+
+  // ======================================================
+  // ||     검색어 관련 함수
+  // ======================================================
 
   /**
    * path '/'로 이동시키는 함수
@@ -87,9 +87,13 @@ function Header() {
     dispatch(setMenuFlg(true));
   };
 
+
+  // ======================================================
+  // ||     useEffect : 주소/pathname, 검색어, 현재지역(GPS)에 따른 변화
+  // ======================================================
   useEffect(() => {
     // =============================================
-    // ||        특정 path값 존재 시,
+    // ||        CASE.1 특정 path값 존재 시,
     // =============================================
     //       -> 해당 페이지 타이틀 출력
     if (pageTitle[location.pathname]) {
@@ -102,9 +106,9 @@ function Header() {
     }
 
     // =============================================
-    // ||         메인페이지 '/' 일 경우,
+    // ||         CASE.2 메인페이지 '/' 일 경우,
     // =============================================
-    // ||         검색어 있을 시!!!
+    // ||         1. 검색어 있을 시!!!
     // =============================================
 
     // 매칭된 검색어 담을 변수
@@ -116,37 +120,36 @@ function Header() {
         const locationNoSpace = stringUtils.removeSpaces(location);
         return locationNoSpace.includes(keywordNoSpace);
       });
-      //  -> 데이터에서 검색어 값이 있다면 타이틀로 출력
+      //        -> 데이터에서 검색어 값이 있다면 타이틀로 출력
       if (foundLocation) {
         dispatch(setHeaderTitle(foundLocation));
         dispatch(setMatchedLocation(foundLocation));
         dispatch(getSearchLocation(searchKeyword));
-
         return;
       } else {
+      //        -> 매칭된 지역이 없을 경우, 현재 위치 가져오기 + 현재 위치를 기반으로 타이틀 출력하기
         console.log(
           "검색어가 없거나 매칭 지역이 없습니다. 현재위치를 가져옵니다."
         );
-        //  -> 매칭된 지역이 없을 경우,
-        //     현재 위치 가져오기 + 현재 위치를 기반으로 타이틀 출력하기
         dispatch(getCurrentLocation());
       }
     } else {
+
       // =============================================
-      // ||         검색어 없을 시!!!
+      // ||         2. 검색어 없을 시!!!
       // =============================================
+      //        -> 현재 위치 가져오기 + 현재 위치를 기반으로 타이틀 출력하기
       console.log("검색어가 없습니다. 현재위치를 가져옵니다.");
-      //   -> 현재 위치 가져오기 + 현재 위치를 기반으로 타이틀 출력하기
       dispatch(getCurrentLocation());
     }
-    //          + 재검색 대비!!!
-    // 현재 위치 정보 있고, (매칭에 실패했거나, 검색어 없음)
+    // =============================================
+    // ||         재검색 대비!!!  : 현재 위치 정보 있고, 매칭 주소 없음 (매칭에 실패했거나, 검색어 없음)
+    // =============================================
     if (currentRegion && !foundLocation) {
       dispatch(setHeaderTitle(currentRegion));
     }
   }, [location.pathname, searchKeyword, currentRegion]);
 
-  console.log("측정소:", measuringStation);
 
   return (
     <>
@@ -174,8 +177,8 @@ function Header() {
           <VscMenu size={35} />
         </div>
       </div>
-      <LocationSearch />
-      <HeaderMenu />
+      { searchFlg && <LocationSearch />}
+      { menuFlg && <HeaderMenu />}
     </>
   );
 }

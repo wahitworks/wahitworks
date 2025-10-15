@@ -1,5 +1,4 @@
 import './HeaderMenu.css';
-
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { motion, AnimatePresence } from 'framer-motion';
@@ -10,6 +9,7 @@ function HeaderMenu () {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // ===== 전역 State =====
   const menuFlg = useSelector(state => state.headerSlice.menuFlg);
 
   /**

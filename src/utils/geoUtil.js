@@ -1,4 +1,10 @@
-import { MEASURING_STATIONS } from "../constants/measuringStation";
+import { MEASURING_STATIONS } from "../constants/measuringStation.js";
+
+// =================================================================
+// ||    1. 좌표(위도, 경도)로 거리 계산 함수
+// ||    2. 각도를 라디안으로 변환하는 함수
+// ||    3. 좌표(위도, 경도)로 가장 가까운 거리의 측정소를 찾는 함수
+// =================================================================
 
 /**
  * haversine공식을 사용,

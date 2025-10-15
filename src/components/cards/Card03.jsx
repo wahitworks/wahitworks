@@ -36,7 +36,6 @@ function Card03() {
   const containerRef = useRef(null);
 
 
-
   // ===== 등급에 맞는 아이콘 컴포넌트 반환 =====
   const getAirQualityIcon = (grade) => {
     const icons = {
@@ -55,13 +54,12 @@ function Card03() {
       <div className="card03-result-item">
         <p className="card03-font-b">{label}</p>
         <p className="card03-font-small-gray card03-margin-bottom">{unit}</p>
-        <p className="card03-font-b card03-margin-bottom card03-font-small">{value}{type.startsWith('PM') ? '㎍/㎥' : 'ppm'}</p>
+        { value && <p className="card03-font-b card03-margin-bottom card03-font-small">{value}{type.startsWith('PM') ? '㎍/㎥' : 'ppm'}</p> }
         <div className="card03-icon-wrapper">{getAirQualityIcon(grade)}</div>
         <p className="card03-font-b card03-margin-top">{getAirQualityGradeKo(grade)}</p>
       </div>
     );
   };
-
 
 
   // ===== 드래그 끝났을 때 ===============
@@ -89,7 +87,6 @@ function Card03() {
       }
     }
   };
-
 
 
   useEffect(() => {

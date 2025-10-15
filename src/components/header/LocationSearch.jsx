@@ -22,22 +22,22 @@ import {
 function LocationSearch() {
   const dispatch = useDispatch();
 
+  // ===== 전역 State =====
   const searchFlg = useSelector((state) => state.headerSlice.searchFlg);
   const searchInput = useSelector(
     (state) => state.locationSearchSlice.searchInput
   );
-  const searchKeyword = useSelector(
-    (state) => state.locationSearchSlice.searchKeyword
-  );
   const filteredLocationList = useSelector(
     (state) => state.locationSearchSlice.filteredLocationList
   );
-
   const bookmarkedRegions = useSelector(
     (state) => state.bookmarkSlice.bookmarkedRegions
   );
 
-  // console.log('실시간 인풋: ', searchInput);
+
+  // ======================================================
+  // ||     검색어 관련 함수
+  // ======================================================
 
   /**
    * 검색어 저장 + OML 창 사라짐 + 실시간 인풋 초기화
@@ -47,35 +47,9 @@ function LocationSearch() {
     dispatch(setSearchFlg(false));
   };
 
-  // console.log('검색어: ', searchKeyword);
-
-  useEffect(() => {
-    // 검색어 없을 경우, 빈 배열 반환
-    if (searchInput.trim() === "") {
-      dispatch(setFilteredLocationList([]));
-      return;
-    }
-    // 위의 조건이 실행되지 않을 경우, 아래 이어서 실행
-    const filteredResult = LOCATION_LIST.filter((location) => {
-      // 데이터 배열, 실시간 입력값 → 띄어쓰기 제거
-      const locationNoSpace = stringUtils.removeSpaces(location);
-      const inputNoSpace = stringUtils.removeSpaces(searchInput);
-      // 띄어쓰기 제거한 값 입력값이 포함된 데이터 배열 반환
-      return locationNoSpace.includes(inputNoSpace);
-    });
-
-    dispatch(setFilteredLocationList(filteredResult));
-  }, [searchInput, dispatch]);
-
-  // console.log('자동완성 담은 배열:', filteredLocationList)
-
-  useEffect(() => {
-    if (!searchFlg) {
-      // 검색창 닫힐 때마다
-      dispatch(setSearchInput("")); // 인풋 비우기
-      dispatch(setFilteredLocationList([])); // 리스트 비우기
-    }
-  }, [searchFlg, dispatch]); // searchFlg 변화 감지!
+  // ======================================================
+  // ||     북마크 관련 함수
+  // ======================================================
 
   /**
    * bookmarkedRegions에 추가되어있는지 아닌지 true/false 반환
@@ -94,12 +68,52 @@ function LocationSearch() {
   const toggleBookmark = (item) => {
     if (isBookmarked(item)) {
       dispatch(removeBookmark(item));
-      console.log("제거:", item);
+      // console.log("제거:", item);
     } else {
       dispatch(addBookmark(item));
-      console.log("추가:", bookmarkedRegions);
+      // console.log("추가:", bookmarkedRegions);
     }
   };
+
+
+
+  // ===== useEffect - 키워드(검색어)에 따른 변화
+  useEffect(() => {
+    // ===== 1. 검색어 없을 경우 -> 빈 배열 반환 =====
+    if (searchInput.trim() === "") {
+      dispatch(setFilteredLocationList([]));
+      return;
+    }
+
+    // ===== 2. 검색어 있을 경우 -> 띄어쓰기 제거 해서 데이터와 비교 후, 포함된 값을 배열로 반환
+    const filteredResult = LOCATION_LIST.filter((location) => {
+      // 데이터 배열, 실시간 입력값 → 띄어쓰기 제거
+      const locationNoSpace = stringUtils.removeSpaces(location);
+      const inputNoSpace = stringUtils.removeSpaces(searchInput);
+      // 띄어쓰기 제거한 값 입력값이 포함된 데이터 배열 반환
+      return locationNoSpace.includes(inputNoSpace);
+    });
+
+    dispatch(setFilteredLocationList(filteredResult));
+  }, [searchInput, dispatch]);
+
+  // ====== useEffect - 검색창 여닫을 때마다(searchFlg) 변화 지정
+  useEffect(() => {
+    if (!searchFlg) {
+      // 검색창 닫힐 때마다
+      dispatch(setSearchInput("")); // 인풋 비우기
+      dispatch(setFilteredLocationList([])); // 리스트 비우기
+    }
+  }, [searchFlg, dispatch]); // searchFlg 변화 감지!
+
+  // ===== 마운트, 언마운트 설정 =====
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    }
+  })
+
 
   return (
     <>

@@ -59,11 +59,11 @@ function SortableItem (props) {
 
 function EditBookmark () {
   const dispatch = useDispatch();
+
+  // ===== 전역 state =====
   const bookmarkedRegions = useSelector(state => state.bookmarkSlice.bookmarkedRegions);
   const bookmarkSearchInput = useSelector(state => state.bookmarkSlice.bookmarkSearchInput);
   const bookmarkFilteredList = useSelector(state => state.bookmarkSlice.bookmarkFilteredList);
-
-  console.log('input: ', bookmarkSearchInput);
 
   // 원본 목록과 저장 여부를 추적하기 위한 ref 생성
   const originalBookmarks = useRef(null);
@@ -86,64 +86,72 @@ function EditBookmark () {
 
   // dnd 센서 설정
   const sensors = useSensors(
-        useSensor(PointerSensor, {
-          // 드래그를 시작하기 위해 필요한 마우스 움직임 거리(단위:px)
-          activationConstraint: {
-            delay: 100,
-            tolerance: 5,
-          },
-        }),
-        useSensor(KeyboardSensor, {
-          coordinateGetter: sortableKeyboardCoordinates,
-        }),
-        useSensor(TouchSensor, {
-          // 터치로 사용
-          activationConstraint: {
-            delay: 100,
-            tolerance: 5,
-          }
-        })
-    );
-
-    // 드래그 종료시
-    function handleDragEnd(event) {
-      const { active, over } = event;
-
-      if (active.id !== over.id) {
-        const oldIndex = bookmarkedRegions.findIndex((item) => item === active.id);
-        const newIndex = bookmarkedRegions.findIndex((item) => item === over.id);
-        // arrayMove 사용 새로운 순서 배열 생성
-        const newOrder = arrayMove(bookmarkedRegions, oldIndex, newIndex);
-        // updateBookmarkedRegions 액션 호출
-        dispatch(updateBookmarkedRegions(newOrder));
+    useSensor(PointerSensor, {
+      // 드래그를 시작하기 위해 필요한 마우스 움직임 거리(단위:px)
+      activationConstraint: {
+        delay: 100,
+        tolerance: 5,
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+    useSensor(TouchSensor, {
+      // 터치로 사용
+      activationConstraint: {
+        delay: 100,
+        tolerance: 5,
       }
-    }
+    })
+  );
 
+  // 드래그 종료시
+  function handleDragEnd(event) {
+    const { active, over } = event;
+
+    if (active.id !== over.id) {
+      const oldIndex = bookmarkedRegions.findIndex((item) => item === active.id);
+      const newIndex = bookmarkedRegions.findIndex((item) => item === over.id);
+      // arrayMove 사용 새로운 순서 배열 생성
+      const newOrder = arrayMove(bookmarkedRegions, oldIndex, newIndex);
+      // updateBookmarkedRegions 액션 호출
+      dispatch(updateBookmarkedRegions(newOrder));
+    }
+  }
+
+  // ======================================================
+  // ||     useEffect : 북마크 검색어에 따라 
+  // ======================================================
   useEffect(() => {
-    // 검색어 없을 경우, 빈 배열 반환
+    // ===== CASE.1 검색어 없을 경우 =====
+    //        -> 빈 배열 반환
     if(bookmarkSearchInput.trim() === '') {
       dispatch(setBookmarkFilteredList([]));
       return;
     }
-    // 위의 조건이 실행되지 않을 경우, 아래 이어서 실행
+    // ===== CASE.2 검색어 있을 경우 =====
+    //        -> 1. 띄어쓰기를 제거해서 매칭된 배열 반환
     const filteredResult = LOCATION_LIST.filter(location => {
-      // 데이터 배열, 실시간 입력값 → 띄어쓰기 제거
       const locationNoSpace = stringUtils.removeSpaces(location);
       const inputNoSpace = stringUtils.removeSpaces(bookmarkSearchInput);
-      // 입력값이 포함된 데이터 배열 반환
       return locationNoSpace.includes(inputNoSpace); 
     });
-    
     dispatch(setBookmarkFilteredList(filteredResult));
 
   }, [bookmarkSearchInput, dispatch])
   
+  // ======================================================
+  // ||     useEffect : 언마운트 마다, 검색어 초기화  
+  // ======================================================
   useEffect(() => {
-    // 언마운트 시, 검색어 초기화 설정
     return () => {
       dispatch(setBookmarkSearchInput(''));
     }
   }, [])
+
+  // ======================================================
+  // ||     handling 관련 함수  
+  // ======================================================
 
   /**
    * bookmarkedRegions에 추가되어있는지 아닌지 true/false 반환
@@ -169,7 +177,9 @@ function EditBookmark () {
     }
   };
 
-  // 저장하기 버튼 클릭시
+  /**
+   * 저장하기 버튼 클릭 시, 현재 상태를 localStorage에 저장
+   */
   const handleSave = () => {
     // 현재 상태를 localStorage에 저장
     localStorageUtil.setBookmarkedRegions(bookmarkedRegions);

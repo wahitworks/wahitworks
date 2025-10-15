@@ -1,7 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "../App";
 import Main from "../components/main/Main.jsx";
-import MainDetail from "../components/mainDetail/MainDetail.jsx";
 import EditBookmark from "../components/editPages/EditBookmark.jsx"
 import EditCard from "../components/editPages/EditCard.jsx";
 import AppTutorial from "../components/explainPages/AppTutorial.jsx";
@@ -35,11 +34,6 @@ const router = createBrowserRouter([
         // 사이트 소개 페이지
         path: "/introduce",
         element: <Introduce />,
-      },
-      {
-        // useNavigate 테스트 용 상세 페이지
-        path: "/detail",
-        element: <MainDetail />,
       },
     ],
   },

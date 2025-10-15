@@ -101,7 +101,7 @@ function Card02() {
         </button>
         <div className="card02-date-flex-container">
           {dayLabels[currentIndex]}{" "}
-          <span className="date-text">({currentDayData.date})</span>
+          <span className="date-text">{currentDayData.date}</span>
         </div>
         <button
           onClick={() => dispatch(nextDay())}

@@ -33,8 +33,9 @@ const locationSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-
-    // 현재 위치로 주소 + 측정소 가져오기
+    // ============================================
+    // ||     현재 위치로 주소 + 측정소 가져오기
+    // ============================================
     .addCase(getCurrentLocation.pending, (state) => {
       state.error = null;
     })
@@ -47,26 +48,28 @@ const locationSlice = createSlice({
       // console.log('slice에서 담은 것: measuringStation-', state.measuringStation, 'measuringDistance-', state.measuringStationDistance);
     })
 
-    // 주소로 측정소 가져오기
+    // ============================================
+    // ||     주소(검색어)로 측정소 가져오기
+    // ============================================
     .addCase(getSearchLocation.pending, (state) => {
-      console.log('현재 주소로 측정소를 가져오고 있는 중...');
+      // console.log('현재 주소로 측정소를 가져오고 있는 중...');
       state.error = null;
     })
     .addCase(getSearchLocation.fulfilled, (state, action) => {
-      // 검색한 지역(action.meta.arg)을 key로, 찾은 측정소 이름을 value로 저장
+      // 검색한 지역(action.meta.arg-thunk에서 자동으로 입력된 값)을 key로, 찾은 측정소 이름을 value로 저장
       if (action.meta.arg && action.payload.nearestStation) {
         state.regionStationMap[action.meta.arg] = action.payload.nearestStation.stationName;
       }
-      // state.measuringStation = action.payload.nearestStation.stationName;
-      // state.measuringStationDistance = action.payload.nearestStation.distance;
       // console.log('slice에서 담은 것: measuringStation-', state.measuringStation, 'measuringDistance-', state.measuringStationDistance);
     })
 
-    // 오류 처리
+    // ============================================
+    // ||     오류 처리
+    // ============================================
     .addMatcher(
       action => action.type.endsWith('/rejected'),
       (state, action) => {
-        console.log('thunk함수 실패', action.error);
+        console.log('현재 주소와 측정소 가져오기 실패 : ', action.error);
         // 특정 지역 검색 실패 시, 맵에 에러 상태 저장
         if (action.meta.arg) {
           state.regionStationMap[action.meta.arg] = 'error';

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axiosFineDustConfig from '../../configs/axiosFineDustConfig';
+import axiosFineDustConfig from '../../configs/axiosFineDustConfig.js';
 import axios from 'axios';
 
 export const fetchFineDustData = createAsyncThunk(

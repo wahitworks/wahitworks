@@ -71,7 +71,7 @@
   display: grid;
   /* 화면 크기가 작아지면 2개씩, 보통은 4개씩 보이도록 설정 */
   grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-  gap: 16px; /* 아이템 사이의 간격 */
+  gap: 3%; /* 아이템 사이의 간격 */
 }
 
 /* 예보 이미지 */
