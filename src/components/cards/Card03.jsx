@@ -1,10 +1,8 @@
 import "./Card03.css";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { GoDot } from "react-icons/go";
 import { GoDotFill } from "react-icons/go";
 import { motion, AnimatePresence } from 'framer-motion';
-
 
 import LogoGood from '../logo/LogoGood.jsx';
 import LogoModerate from '../logo/LogoModerate.jsx';

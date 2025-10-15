@@ -12,6 +12,11 @@ import bad from "../../assets/weather-indicators/bad.jpg";
 import normal from "../../assets/weather-indicators/normal.jpg";
 import good from "../../assets/weather-indicators/good.jpg";
 
+import LogoGood from '../logo/LogoGood.jsx';
+import LogoModerate from '../logo/LogoModerate.jsx';
+import LogoBad from '../logo/LogoBad.jsx';
+import LogoVeryBad from '../logo/LogoVeryBad.jsx';
+
 // 등급별 텍스트와 이미지를 매핑하는 헬퍼 객체
 const labelByGrade = { 1: "좋음", 2: "보통", 3: "나쁨", 4: "매우나쁨" };
 const imgByGrade = { 1: good, 2: normal, 3: bad, 4: veryBad };
@@ -65,6 +70,17 @@ function Card02() {
     );
   }
 
+  // ++ grade 별 아이콘 컴포넌트 출력을 위한 함수
+  const getAirQualityIcon = (grade) => {
+    const icons = {
+      'good': <LogoGood animated />,
+      'moderate': <LogoModerate animated />,
+      'bad': <LogoBad animated />,
+      'very-bad': <LogoVeryBad animated />,
+    };
+    return icons[grade] || <LogoGood animated />;
+  };
+
   // 4. 성공적으로 데이터를 불러왔을 때 표시할 메인 화면 용
   // idx로 연결하여 api의 특정 날짜의 데이터를 오늘, 내일, 모레 3가지 중 한개로 표기
   const currentDayData = dailyForecasts[currentIndex]; //버튼 입력시 idx 변경
@@ -115,12 +131,15 @@ function Card02() {
               {/* 객체 프로퍼티 동적 추가 */}
               {/* pollutantKey가 맵을 돌며 pollutantNames의 키에 해당하는 값을 꺼내 출력 */}
               <h4>{pollutantNames[pollutantKey]}</h4>
-              <img
+              <div className="forecast-img-wrapper">
+                { getAirQualityIcon(grade) }
+              </div>      
+              {/* <img
                 // text, img 매핑 헬퍼 객체 숫자 키값에 해당하는 value를 grade를 사용해서 뽑아옴
                 src={imgByGrade[grade]}
                 alt={labelByGrade[grade]}
                 className="forecast-img"
-              />
+              /> */}
               <p>{labelByGrade[grade]}</p>
             </div>
           );
