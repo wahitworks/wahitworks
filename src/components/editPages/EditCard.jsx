@@ -60,6 +60,9 @@ function EditCard () {
   const [showToast, setShowToast] = useState(false)
   // 타이머 id저장 ref
   const toastTimerRef = useRef(null);
+  
+  // 초기화 버튼 상태관리
+  const [modalOpen, setModalOpen] = useState(false) ;
 
   // 2초후 사라지게하기
   useEffect(() => {
@@ -131,9 +134,16 @@ function EditCard () {
 
   // 초기화 버튼 클릭시
   const handleReset = () => {
-    if (window.confirm(`카드 순서와 설정을 초기화하시겠습니까?`)) {
-      dispatch(resetOrder());
-    }
+    setModalOpen(true); // 확인창 모달로 열기
+  }
+  // 모달에서 '예' 클릭
+  const yesReset = () => {
+    dispatch(resetOrder());
+    setModalOpen(false);
+  }
+  // 모달에서 '아니오' 클릭
+  const cancelReset = () => {
+    setModalOpen(false);
   }
 
   return (
@@ -164,6 +174,20 @@ function EditCard () {
     </div>
 
     <Toast message='저장되었습니다!' show={showToast}></Toast>
+
+    {
+      modalOpen && (
+        <div className="editcard-modal-background">
+          <div className="editcard-modal-content">
+            <p className="editcard-modal-comment" >초기하 하시겠습니까?</p>
+            <div className="editcard-modal-btn">
+              <button onClick={yesReset} className="editcard-modal-yes" type="button">예</button>
+              <button onClick={cancelReset} className="editcard-modal-cancel" type="button">아니오</button>
+            </div>
+          </div>
+        </div>
+      )
+    }
     </> 
   );
 };

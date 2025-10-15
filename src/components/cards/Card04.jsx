@@ -18,6 +18,26 @@ import { GRADE_CLASS } from "../../constants/ultraFineDustLevel";
 function BookmarkItem({ region }) {
   const dispatch = useDispatch();
 
+  // 등급을 계산하는 함수 
+  const getGradeNumberFromValue = (value, type) => {
+    const standards = {
+      PM10: { good: 30, moderate: 80, bad: 150 },
+      PM25: { good: 15, moderate: 35, bad: 75 },
+      O3: { good: 0.030, moderate: 0.090, bad: 0.150 },
+    }
+  
+  if (value === null || value === undefined || value === '' || value === '-') {
+    return null;}
+  
+  const standard = standards[type];
+  if (!standard) {return null;}
+
+  if (value <= standard.good) return '1';
+  if (value <= standard.moderate) return '2';
+  if (value <= standard.bad) return '3';
+  return '4';
+  }
+
   // 지역이름으로 측정소이름 찾기 위한 Thunk호출
   useEffect(() => {
     if (region) {
@@ -56,12 +76,14 @@ function BookmarkItem({ region }) {
   const card04Error = stationName === 'error' || error;
 
   // 로딩 성공
-  const dustGrade = data?.pm10Grade; // 미세먼지 단계
-  const dustValue = data?.pm10Value; // 미세먼지 수치
-  const ultraDustGrade = data?.pm25Grade; // 초미세먼지 단계
-  const ultraDustValue = data?.pm25Value; // 초미세먼지 수치
-  const o3Grade = data?.o3Grade; // 오존 단계
-  const o3Value = data?.o3Value; // 오존 수치
+  const dustValue = data?.pm10Value;
+  const ultraDustValue = data?.pm25Value;
+  const o3Value = data?.o3Value;
+  
+  // 등급 계산
+  const dustGrade = getGradeNumberFromValue(dustValue, 'PM10');
+  const ultraDustGrade = getGradeNumberFromValue(ultraDustValue, 'PM25');
+  const o3Grade = getGradeNumberFromValue(o3Value, 'O3');
 
   const pm10ClassName = GRADE_CLASS[dustGrade];  
   const pm25ClassName = GRADE_CLASS[ultraDustGrade];
@@ -121,7 +143,6 @@ function BookmarkItem({ region }) {
                 <div className="card04-bookmark-list-toggle-info">
                   <p className="card04-bookmark-list-toggle-info-title">미세먼지</p>
                   <p className="card04-bookmark-list-toggle-info-value">{dustValue}㎍/㎥</p>
-                  <p></p>
                   <div className="card04-air-log">
                     <AirQualityLogo grade={dustGrade} />
                   </div>

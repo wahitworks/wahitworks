@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axiosFineDustConfig from '../../configs/axiosFineDustConfig.js';
+import axiosFineDustConfig, { fineDustParams } from '../../configs/axiosFineDustConfig.js';
 import axios from 'axios';
 
 export const fetchFineDustData = createAsyncThunk(
@@ -10,6 +10,7 @@ export const fetchFineDustData = createAsyncThunk(
     try {
       const response = await axiosFineDustConfig.get('getMsrstnAcctoRltmMesureDnsty', {
         params: {
+          ...fineDustParams,
           stationName: stationName, // 동적으로 변하는 stationName만 제공
         }
       });
@@ -17,7 +18,9 @@ export const fetchFineDustData = createAsyncThunk(
       const items = response.data.response.body.items;
 
       if (items && items.length > 0) {
-        return { stationName: stationName, data: items[0] };
+        // 최신데이터 불러오기
+        const mostRecentData = items[items.length -1];
+        return { stationName: stationName, data: mostRecentData };
       } else {
         const noDataError = 'API에서 해당 측정소 데이터를 제공하지 않습니다.';
         return rejectWithValue({ stationName: stationName, error: noDataError });
