@@ -4,7 +4,7 @@ import "./Card02.css";
 
 // 우리가 만든 Thunk와 Slice의 액션들을 가져옵니다.
 import { fetchAirQuality } from "../../store/thunks/airQualityThunk.js";
-import { nextDay, prevDay } from "../../store/slices/airQualitySlice";
+import { nextDay, prevDay } from "../../store/slices/airQualitySlice.js";
 
 // 이미지 에셋들을 가져옵니다.
 import veryBad from "../../assets/weather-indicators/verybad.jpg";
@@ -73,10 +73,10 @@ function Card02() {
   // ++ grade 별 아이콘 컴포넌트 출력을 위한 함수
   const getAirQualityIcon = (grade) => {
     const icons = {
-      'good': <LogoGood animated />,
-      'moderate': <LogoModerate animated />,
-      'bad': <LogoBad animated />,
-      'very-bad': <LogoVeryBad animated />,
+      'good': <LogoGood animated style={{ margin: '20px'}}/>,
+      'moderate': <LogoModerate animated  style={{ margin: '10px'}}/>,
+      'bad': <LogoBad animated  style={{ margin: '10px'}}/>,
+      'very-bad': <LogoVeryBad animated  style={{ margin: '10px'}}/>,
     };
     return icons[grade] || <LogoGood animated />;
   };
@@ -89,7 +89,7 @@ function Card02() {
   return (
     <div className="card02-container">
       <h2>대구 대기질 3일 예보</h2>
-      <p className="card02-measure-time">({currentDayData.measuredTime})</p>
+      <p className="card02-measure-time">{currentDayData.measuredTime}</p>
       {/* 날짜와 좌/우 이동 버튼 */}
       <div className="day-navigation">
         <button

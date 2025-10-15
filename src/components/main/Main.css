@@ -1,9 +1,11 @@
-.main-h1 {
-  /* css import 확인 */
-  color: green;
-  cursor: pointer;
+#main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
 }
 
+/* 탑버튼 */
 .topbtn-test-div {
   width: 100%;
   height: 500px;
@@ -14,7 +16,7 @@
 /* card12 */
 .main-add-card-container {
   width: 90%;
-  margin: 0 auto;
+  margin: 15px auto 150px;
 }
 
 .main-add-card{
