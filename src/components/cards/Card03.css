@@ -1,11 +1,33 @@
 .card03-container {
   width: 90%;
-  border: 2px solid var(--deep-blue);
+  border: 1px solid var(--deep-blue);
   border-radius: 15px;
-
+  
   padding: 20px 10px 10px;
   margin: 0 auto;
 }
+
+/* ===== 글자 스타일 ===== */
+.card03-font-b {
+  font-weight: bold;
+}
+.card03-font-small-gray {
+  color: gray;
+  font-size: 12px;
+}
+.card03-font-small {
+  font-size: 14px;
+}
+
+/* ===== 마진 ===== */
+.card03-margin-top {
+  margin-top: 5px;
+}
+.card03-margin-bottom {
+  margin-bottom: 8px;
+}
+
+/* ===== 타이틀 ===== */
 .card03-title {
   font-size: 24px;
   text-align: center;
@@ -13,47 +35,55 @@
 }
 .card03-title-sub {
   text-align: center;
-  margin-bottom: 20px;
-
+  margin-bottom: 30px;
+  
 }
 
+
+/* ===== 정보 출력 영역 ===== */
+.card03-swipe-wrapper {
+  width: 100%;
+
+  overflow: hidden;
+}
 .card03-swipe-container {
   display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
+  cursor: grab;
+  user-select: none;
 }
-.card03-swipe-container::-webkit-scrollbar {
-  display: none;
+.card03-swipe-container:active {
+  cursor: grabbing;
 }
+
 .card03-swipe-page {
+  min-width: 100%;
+
   display: flex;
   justify-content: space-around;
   flex: 0 0 100%;
-  scroll-snap-align: start;
 }
-
-.card03-swipe-container-no-station {
-  text-align: center;
-}
-
 .card03-result-item {
-  width: 27%;
+  width: 33%;
+
+  border: 1px solid #EEE;
+  border-radius: 20px;
+
+  padding: 10px;
   
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
-.card03-font-b {
-  font-weight: bold;
+.card03-icon-wrapper {
+  width: 100%;
+  margin: 10px 0;
 }
-.card03-font-small {
-  color: gray;
-  font-size: 12px;
+.card03-swipe-container-no-station {
+  text-align: center;
+  padding: 30px 0;
 }
 
+/* ===== 페이지 네이션 영역 ===== */
 .card03-pagination-dots-container {
   margin-top: 10px;
   display: flex;
@@ -65,3 +95,4 @@
 .card03-pagination-disabled {
   color: #ccc;
 }
+

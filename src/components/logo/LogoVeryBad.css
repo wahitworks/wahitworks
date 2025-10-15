@@ -3,8 +3,31 @@
 }
 
 /* ========================================
+   구름 통통 튀기 - 레이어 2-몸, 3-눈, 4-마스크)
+======================================== */
+.logo-verybad.animated #Layer_2_verybad,
+.logo-verybad.animated #Layer_3_verybad,
+.logo-verybad.animated #Layer_4_verybad {
+  animation: slowSway 2s ease-in-out infinite;
+}
+
+/* ========================================
+   바람 (Layer_5)
+======================================== */
+.logo-verybad.animated #Layer_5_verybad path {
+  animation: windFlow 1s ease-in-out infinite;
+}
+
+/* ========================================
    먼지 (Layer_7)
 ======================================== */
-.logo-verybad.animated #Layer_7_verybad {
-  animation: dustBounce-verybad 2s ease-in-out infinite;
+.logo-veryverybad.animated #Layer_7_veryverybad {
+  animation: dustBounce-veryverybad 2s ease-in-out infinite;
+}
+
+/* ========================================
+물방울 (Layer_6)
+======================================== */
+.logo-verybad.animated #Layer_6_verybad path {
+  animation: dropFlow 2s ease-in-out infinite;
 }

@@ -30,3 +30,10 @@
 .logo-bad.animated #Layer_7_bad {
   animation: dustBounce-bad 2s ease-in-out infinite;
 }
+
+/* ========================================
+물방울 (Layer_6)
+======================================== */
+.logo-bad.animated #Layer_6_bad path {
+  animation: dropFlow 3s ease-in-out infinite;
+}

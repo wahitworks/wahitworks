@@ -24,3 +24,10 @@
 .logo-moderate.animated #Layer_7_moderate {
   animation: dustBounce-moderate 2s ease-in-out infinite;
 }
+
+/* ========================================
+물방울 (Layer_6)
+======================================== */
+.logo-moderate.animated #Layer_6_moderate path {
+  animation: dropFlow 4s ease-in-out infinite;
+}
