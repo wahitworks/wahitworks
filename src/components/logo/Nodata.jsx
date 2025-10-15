@@ -1,1 +1,0 @@
-import './Nodata.css';

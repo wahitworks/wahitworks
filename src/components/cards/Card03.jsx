@@ -9,6 +9,7 @@ import LogoGood from '../logo/LogoGood.jsx';
 import LogoModerate from '../logo/LogoModerate.jsx';
 import LogoBad from '../logo/LogoBad.jsx';
 import LogoVeryBad from '../logo/LogoVeryBad.jsx';
+import LogoError from "../logo/LogoError.jsx";
 
 import { getCurrentAirCondition } from "../../store/thunks/currentAirConditionThunk.js";
 import { getAirQualityGrade, getAirQualityGradeKo } from "../../utils/airQualityGradeUtil.js";
@@ -44,7 +45,7 @@ function Card03() {
       'moderate': <LogoModerate animated />,
       'bad': <LogoBad animated />,
       'very-bad': <LogoVeryBad animated />,
-      'no-data' : <RiFileWarningLine />,
+      'no-data' : <LogoError animated />,
     };
     return icons[grade] || <LogoGood animated />;
   };
