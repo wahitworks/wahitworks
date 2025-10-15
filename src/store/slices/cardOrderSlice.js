@@ -4,10 +4,11 @@ import { createSlice } from "@reduxjs/toolkit";
 // 기본 템플릿 순서 (상수)
 // 현재 4개, 카드 추가시 수정 필요
 const DEFAULT_ORDER = [
-  { id: `card01`, checked: true },
-  { id: `card02`, checked: true },
-  { id: `card03`, checked: true },
-  { id: `card04`, checked: true },
+  // 자유롭게 수정 부탁드립니다.
+  { id: `card01`, name: "오늘의 행동요령", checked: true },
+  { id: `card02`, name: "대구 대기질 3일 예보", checked: true },
+  { id: `card03`, name: "지금 대기 상태", checked: true },
+  { id: `card04`, name: "내 장소", checked: true },
 ];
 
 const initialState = {
