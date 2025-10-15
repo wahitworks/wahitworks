@@ -12,11 +12,11 @@ const bookmarkSlice = createSlice({
   reducers: {
     addBookmark(state, action) {
       state.bookmarkedRegions.push(action.payload);
-      localStorageUtil.setBookmarkedRegions(state.bookmarkedRegions);
+      // localStorageUtil.setBookmarkedRegions(state.bookmarkedRegions);
     },
     removeBookmark(state, action) {
       state.bookmarkedRegions = state.bookmarkedRegions.filter(item => item !== action.payload);
-      localStorageUtil.setBookmarkedRegions(state.bookmarkedRegions);
+      // localStorageUtil.setBookmarkedRegions(state.bookmarkedRegions);
     },    
     setBookmarkSearchInput(state, action) {
       state.bookmarkSearchInput = action.payload;
@@ -29,7 +29,7 @@ const bookmarkSlice = createSlice({
     },
     updateBookmarkedRegions(state, action) {
       state.bookmarkedRegions = action.payload;
-      localStorageUtil.setBookmarkedRegions(state.bookmarkedRegions);
+      // localStorageUtil.setBookmarkedRegions(state.bookmarkedRegions);
     },
   }
 })

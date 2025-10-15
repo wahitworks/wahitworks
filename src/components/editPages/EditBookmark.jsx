@@ -24,7 +24,7 @@ import { CiStar } from "react-icons/ci";
 import { FaStar } from "react-icons/fa";
 
 import { addBookmark, removeBookmark, setBookmarkFilteredList, setBookmarkSearchInput, updateBookmarkedRegions, } from '../../store/slices/bookmarkSlice.js';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { LOCATION_LIST } from '../../constants/locationList.js';
 import { stringUtils } from '../../utils/stringUtil';
 import { localStorageUtil } from '../../utils/localStorageUtil.js';
@@ -64,6 +64,25 @@ function EditBookmark () {
   const bookmarkFilteredList = useSelector(state => state.bookmarkSlice.bookmarkFilteredList);
 
   console.log('input: ', bookmarkSearchInput);
+
+  // 원본 목록과 저장 여부를 추적하기 위한 ref 생성
+  const originalBookmarks = useRef(null);
+  const bookmarkSaved = useRef(false);
+
+  // 컴포넌트 처음 렌더링될 때, 페이지를 벗어날 때 동작 
+  useEffect(() => {
+    // 컴포넌트 렌더링 시, 현재 상태를 원본으로 ref에 저장
+    originalBookmarks.current = bookmarkedRegions;
+
+    // cleanup함수 : 컴포넌트가 화면에서 사라지리 때 실행
+    return () => {
+      // 저장버튼을 누르지 않을 시
+      if (!bookmarkSaved.current) {
+        // 원본으로 되돌림
+        dispatch(updateBookmarkedRegions(originalBookmarks.current));
+      }
+    } 
+  }, []); // 빈배열: 마운트, 언마운트 시 한 번만 실행
 
   // dnd 센서 설정
   const sensors = useSensors(
@@ -154,6 +173,8 @@ function EditBookmark () {
   const handleSave = () => {
     // 현재 상태를 localStorage에 저장
     localStorageUtil.setBookmarkedRegions(bookmarkedRegions);
+    // 저장된 상태를 ref에 기록
+    bookmarkSaved.current = true;
     alert(`저장되었습니다!`) // 저장알림
   }
 

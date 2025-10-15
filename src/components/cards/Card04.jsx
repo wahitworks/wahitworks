@@ -7,23 +7,37 @@ import LogoGood from '../logo/LogoGood.jsx';
 import LogoModerate from '../logo/LogoModerate.jsx';
 import LogoBad from '../logo/LogoBad.jsx';
 import LogoVeryBad from '../logo/LogoVeryBad.jsx';
+// Thunk 
+import { getSearchLocation } from "../../store/thunks/locationThunk.js"; // 측정소 검색 Thunk
+import { fetchFineDustData } from "../../store/thunks/fineDustThunk.js"; // 미세먼지 데이터
 
-import { fetchFineDustData } from "../../store/thunks/fineDustThunk";
 import { GRADE_CLASS } from "../../constants/ultraFineDustLevel";
 
 // 각 북마크 항목 렌더링 컴포넌트
 function BookmarkItem({ region }) {
   const dispatch = useDispatch();
 
-  // region사용 해당 지역 상태 불러오기
-  const data = useSelector((state) => state.fineDust.data[region]);
-  const loading = useSelector((state) => state.fineDust.loading[region]);
-  const error = useSelector((state) => state.fineDust.error[region]);
-
-  // 지역에 해당하는 미세먼지 데이터 불러오기
+  // 지역이름으로 측정소이름 찾기 위한 Thunk호출
   useEffect(() => {
-    dispatch(fetchFineDustData({ stationName: region }))
+    if (region) {
+      dispatch(getSearchLocation(region));
+    }
   }, [dispatch, region]);
+
+  const stationName = useSelector((state) => state.locationSlice.regionStationMap[region]);
+
+  // 미세먼지 정보 호출
+  useEffect(() => {
+    if (stationName && stationName !== 'error') {
+      // 다른 코드와의 통일성을 위해 객체로 넘김
+      dispatch(fetchFineDustData({ stationName: stationName }));
+    }
+  }, [dispatch, stationName]);
+
+  // 해당 측정소의 미세먼지 데이터 호출
+  const data = useSelector((state) => stationName ? state.fineDust.data[stationName] : null);
+  const loading = useSelector((state) => stationName ? state.fineDust.loading[stationName] : false);
+  const error = useSelector((state) => stationName ? state.fineDust.error[stationName] : null);
 
   // 초기값 false(숨김 상태)
   const [listToggle, setListToggle] = useState(false);
@@ -32,6 +46,12 @@ function BookmarkItem({ region }) {
   const handleToggle = () => {
     setListToggle(!listToggle);
   }; 
+
+  // 로딩 및 에러상태
+  // stationName을 찾는 중이거나 fineDust 데이터를 가져오는 중
+  const card04Loading = !stationName || loading;
+  // stationName, fineDust를 찾다가 에러
+  const card04Error = stationName === 'error' || error;
 
   // 로딩 성공
   const dustGrade = data?.pm10Grade; // 미세먼지 단계
@@ -67,9 +87,9 @@ function BookmarkItem({ region }) {
           <p className="card04-bookmark-list-title">{region}</p>
           <div className="card04-bookmark-list-air-status">
           {/* 데이터 불러오기 성공시 출력 */}
-          {loading && <small>로딩 중...</small>}
-          {error && <small>오류</small>}
-          {!loading && !error && data && (
+          {card04Loading && <small>로딩 중...</small>}
+          {card04Error && <small>오류</small>}
+          {!card04Loading && !card04Error && data && (
             <>
             {/* 미세먼지 */}
             <span className={`card04-air-status ${pm10ClassName}`}>●</span>
@@ -84,10 +104,10 @@ function BookmarkItem({ region }) {
         {/* 장소 클릭시 출력 정보 */}
         {listToggle && (
           <div className={`card04-bookmark-list-toggle ${listToggle ? "show" : ""}`}>
-            {error ? (
+            {card04Error ? (
               // 에러 : 에러 메시지
-              <div className="card04-bookmark-list-comment-err">오류: {error}</div>
-            ) : loading ? (
+              <div className="card04-bookmark-list-comment-err">정보를 가져올 수 없습니다.</div>
+            ) : card04Loading ? (
               // 로딩 중 : 로딩 메시지
               <div className="card04-bookmark-list-comment-loading">
                 데이터를 불러오는 중입니다...

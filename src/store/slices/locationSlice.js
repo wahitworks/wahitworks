@@ -10,6 +10,7 @@ const locationSlice = createSlice({
     matchedLocation: '',
     measuringStation: '',
     measuringStationDistance: 0,
+    regionStationMap: {}, // region, station 매핑 객체
     error: null,
     selectedLocationByUser: null,
   },
@@ -52,8 +53,12 @@ const locationSlice = createSlice({
       state.error = null;
     })
     .addCase(getSearchLocation.fulfilled, (state, action) => {
-      state.measuringStation = action.payload.nearestStation.stationName;
-      state.measuringStationDistance = action.payload.nearestStation.distance;
+      // 검색한 지역(action.meta.arg)을 key로, 찾은 측정소 이름을 value로 저장
+      if (action.meta.arg && action.payload.nearestStation) {
+        state.regionStationMap[action.meta.arg] = action.payload.nearestStation.stationName;
+      }
+      // state.measuringStation = action.payload.nearestStation.stationName;
+      // state.measuringStationDistance = action.payload.nearestStation.distance;
       // console.log('slice에서 담은 것: measuringStation-', state.measuringStation, 'measuringDistance-', state.measuringStationDistance);
     })
 
@@ -62,6 +67,10 @@ const locationSlice = createSlice({
       action => action.type.endsWith('/rejected'),
       (state, action) => {
         console.log('thunk함수 실패', action.error);
+        // 특정 지역 검색 실패 시, 맵에 에러 상태 저장
+        if (action.meta.arg) {
+          state.regionStationMap[action.meta.arg] = 'error';
+        }
       }
     )
   }
