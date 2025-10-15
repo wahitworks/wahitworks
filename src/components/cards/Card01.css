@@ -33,15 +33,6 @@
   align-items: center;
 }
 
-.action-guide-weather {
-  padding-bottom: 15px;
-}
-
-.action-guide-icon {
-  width: 150px;
-  margin: 5px auto;
-}
-
 .action-guide-text {
   margin-bottom: 15px;
   font-size: 20px;

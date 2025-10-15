@@ -21,8 +21,8 @@
 /* ========================================
    먼지 (Layer_7)
 ======================================== */
-.logo-veryverybad.animated #Layer_7_veryverybad {
-  animation: dustBounce-veryverybad 2s ease-in-out infinite;
+.logo-verybad.animated #Layer_7_verybad {
+  animation: dustBounce-verybad 2s ease-in-out infinite;
 }
 
 /* ========================================

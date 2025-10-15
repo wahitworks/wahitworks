@@ -24,3 +24,21 @@
 .logo-bad-white.animated #Layer_5 path {
   animation: windFlow 2s ease-in-out infinite;
 }
+/* ========================================
+   크기 옵션
+======================================== */
+.logo-bad-white-small {
+  width: 80px;
+}
+
+.logo-bad-white-medium {
+  width: 150px;
+}
+
+.logo-bad-white-large {
+  width: 300px;
+}
+
+.logo-bad-white-xlarge {
+  width: 400px;
+}

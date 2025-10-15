@@ -1,4 +1,4 @@
-/* LogoVeryBadWhite 크기 옵션 */
+/* Logovery-bad-whiteWhite 크기 옵션 */
 .logo-very-bad-white-small {
   width: 80px;
   height: auto;
@@ -12,4 +12,37 @@
 .logo-very-bad-white-large {
   width: 300px;
   height: auto;
+}
+.logo-verybad {
+  overflow: visible !important;
+}
+
+/* ========================================
+   구름 통통 튀기 - 레이어 2-몸, 3-눈, 4-마스크)
+======================================== */
+.logo-very-bad-white.animated #Layer_2_very-bad-white,
+.logo-very-bad-white.animated #Layer_3_very-bad-white,
+.logo-very-bad-white.animated #Layer_4_very-bad-white {
+  animation: slowSway 2s ease-in-out infinite;
+}
+
+/* ========================================
+   바람 (Layer_5)
+======================================== */
+.logo-very-bad-white.animated #Layer_5_very-bad-white path {
+  animation: windFlow 1s ease-in-out infinite;
+}
+
+/* ========================================
+   먼지 (Layer_7)
+======================================== */
+.logo-very-bad-white.animated #Layer_7_very-bad-white {
+  animation: dustBounce-verybad 2s ease-in-out infinite;
+}
+
+/* ========================================
+물방울 (Layer_6)
+======================================== */
+.logo-very-bad-white.animated #Layer_6_very-bad-white path {
+  animation: dropFlow 2s ease-in-out infinite;
 }
