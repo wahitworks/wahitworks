@@ -13,7 +13,7 @@ function Topbtn() {
     const checkScroll = () => {
       const hasScroll =
         document.documentElement.scrollHeight > window.innerHeight;
-      btn.style.display = hasScroll ? "block" : "none";
+      btn.style.display = hasScroll ? "flex" : "none";
     };
     // window 스크롤 생성 시 버튼 생성 || 숨김
     window.addEventListener("scroll", checkScroll);
@@ -26,7 +26,7 @@ function Topbtn() {
       window.removeEventListener("scroll", checkScroll);
       window.removeEventListener("resize", checkScroll);
     };
-  }, []);
+  }, [location.pathname]);
 
   // 버튼 클릭시 최상단으로 부드럽게 이동 기능
   const scrollToTop = () => {
@@ -34,9 +34,7 @@ function Topbtn() {
   };
   return (
     <>
-      <button id="topBtn" onClick={scrollToTop}>
-        topBtn
-      </button>
+      <button id="topBtn" onClick={scrollToTop}></button>
     </>
   );
 }
