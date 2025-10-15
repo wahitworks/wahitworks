@@ -50,11 +50,16 @@ function Card03() {
   // ===== 대기질 항목 렌더링 함수 =====
   const renderAirQualityItem = (label, unit, value, type) => {
     const grade = getAirQualityGrade(value, type);
+    // console.log('value:', value);
+    // console.log('typeof value:', typeof value);
+    // console.log('value === 0:', value === 0);
+    // console.log('value === "0":', value === "0");
+    // console.log('Number(value):', Number(value));
     return (
       <div className="card03-result-item">
         <p className="card03-font-b">{label}</p>
         <p className="card03-font-small-gray card03-margin-bottom">{unit}</p>
-        { value && <p className="card03-font-b card03-margin-bottom card03-font-small">{value}{type.startsWith('PM') ? '㎍/㎥' : 'ppm'}</p> }
+        { value !== null && value !== undefined && Number(value) !== 0 ? <p className="card03-font-b card03-margin-bottom card03-font-small">{value}{type.startsWith('PM') ? '㎍/㎥' : 'ppm'}</p> : null}
         <div className="card03-icon-wrapper">{getAirQualityIcon(grade)}</div>
         <p className="card03-font-b card03-margin-top">{getAirQualityGradeKo(grade)}</p>
       </div>

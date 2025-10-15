@@ -17,7 +17,7 @@ export const getAirQualityGrade = (value, type) => {
   // type: 'PM10', 'PM25', 'O3', 'NO2', 'CO', 'SO2'
 
   // 데이터가 없을 경우 처리
-  if (value === null || value === undefined || value === '' || value === '-') {
+  if (value === null || value === undefined || value === '' || value === '-' || value === 0) {
     return 'no-data';
   }
 
@@ -43,7 +43,7 @@ export const getAirQualityGradeKo = (grade) => {
     'moderate': '보통',
     'bad': '나쁨',
     'very-bad': '매우나쁨',
-    'no-data': '데이터 없음', // :별: 추가!
+    'no-data': '데이터 없음',
   };
   return texts[grade] || '데이터 없음';
 };

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getCurrentAirCondition } from "../thunks/currentAirConditionThunk.js";
 
 const currentAirConditionSlice = createSlice({
-  name: 'currentAirConditon',
+  name: 'currentAirCondition',
   initialState: {
     dataTime: '',
     currentPM10: 0,

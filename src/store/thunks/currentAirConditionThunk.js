@@ -26,7 +26,7 @@ export const getCurrentAirCondition = createAsyncThunk(
         stationName: measuringStation,
       }
       const currentAir = await axios.get(url, { params });
-      // console.log('Thunk에서 받아온 정보: ', currentAir.data.response.body);
+      console.log('Thunk에서 받아온 정보: ', currentAir.data.response.body);
 
       // ============================================
       // ||     반환!
