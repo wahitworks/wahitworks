@@ -2,6 +2,7 @@ import "./Card03.css";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GoDotFill } from "react-icons/go";
+import { RiFileWarningLine } from "react-icons/ri";
 import { motion, AnimatePresence } from 'framer-motion';
 
 import LogoGood from '../logo/LogoGood.jsx';
@@ -43,6 +44,7 @@ function Card03() {
       'moderate': <LogoModerate animated />,
       'bad': <LogoBad animated />,
       'very-bad': <LogoVeryBad animated />,
+      'no-data' : <RiFileWarningLine />,
     };
     return icons[grade] || <LogoGood animated />;
   };

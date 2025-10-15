@@ -9,6 +9,7 @@ import cardOrderReducer from "./slices/cardOrderSlice.js";
 import airQualityReducer from "./slices/airQualitySlice.js";
 import currentAirConditionReducer from "./slices/currentAirConditionSlice.js";
 import fineDustReducer from "./slices/fineDustSlice.js";
+import bookmarkCard04Reducer from "./slices/bookmarkForCard04Slice.js";
 
 
 export default configureStore({
@@ -21,5 +22,6 @@ export default configureStore({
     airQuality: airQualityReducer,
     currentAirCondition: currentAirConditionReducer,
     fineDust: fineDustReducer,
+    bookmarkCard04: bookmarkCard04Reducer,
   },
 });

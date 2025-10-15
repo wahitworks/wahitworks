@@ -39,6 +39,7 @@ function Header() {
   const headerTitle = useSelector((state) => state.headerSlice.headerTitle);
   const searchFlg = useSelector((state) => state.headerSlice.searchFlg);
   const menuFlg = useSelector(state => state.headerSlice.menuFlg);
+  const matchedLocation = useSelector(state => state.headerSlice.matchedLocation);
   const searchKeyword = useSelector(
     (state) => state.locationSearchSlice.searchKeyword
   );
@@ -124,7 +125,7 @@ function Header() {
       if (foundLocation) {
         dispatch(setHeaderTitle(foundLocation));
         dispatch(setMatchedLocation(foundLocation));
-        dispatch(getSearchLocation(searchKeyword));
+        dispatch(getSearchLocation(foundLocation));
         return;
       } else {
       //        -> 매칭된 지역이 없을 경우, 현재 위치 가져오기 + 현재 위치를 기반으로 타이틀 출력하기

@@ -108,6 +108,7 @@ export const getSearchLocation = createAsyncThunk(
       const geocoder = new window.kakao.maps.services.Geocoder();
       // 비동기이므로 promise로 감싸서 await
       const searchCoordinates = await new Promise((resolve, reject) => {
+        // console.log(`대구 ${searchKeyword}`)
         geocoder.addressSearch(`대구 ${searchKeyword}`, (result, status) => {
           if (status === window.kakao.maps.services.Status.OK) {
             resolve ({
@@ -121,16 +122,17 @@ export const getSearchLocation = createAsyncThunk(
       });
       
       // console.log('좌표 변환 : ', searchCoordinates);
-
-        // ============================================
-        // ||     2. 키워드로 위도&경도 가져오기 (카카오 SDK 사용 : index.html에 스크립트 로드 필요)
-        // ============================================
+      
+      // ============================================
+      // ||     2. 키워드로 위도&경도 가져오기 (카카오 SDK 사용 : index.html에 스크립트 로드 필요)
+      // ============================================
       const nearestStation = findNearestStation(searchCoordinates.lat, searchCoordinates.lng)
       // console.log('좌표로 측정소 찾기 : ', nearestStation);
-            
+      
       // ============================================
       // ||     반환 { 검색주소: {위도, 경도}, 가까운 측정소: {측정소 정보, 거리} }
       // ============================================
+      // console.log(`대구 ${searchKeyword} : lat-`, searchCoordinates.lat, 'lng - ', searchCoordinates.lng)
       return {
         searchLocation: {
           lat: searchCoordinates.lat,

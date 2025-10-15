@@ -7,6 +7,7 @@ import LogoGood from '../logo/LogoGood.jsx';
 import LogoModerate from '../logo/LogoModerate.jsx';
 import LogoBad from '../logo/LogoBad.jsx';
 import LogoVeryBad from '../logo/LogoVeryBad.jsx';
+// Slice
 // Thunk 
 import { getSearchLocation } from "../../store/thunks/locationThunk.js"; // 측정소 검색 Thunk
 import { fetchFineDustData } from "../../store/thunks/fineDustThunk.js"; // 미세먼지 데이터
@@ -24,7 +25,7 @@ function BookmarkItem({ region }) {
     }
   }, [dispatch, region]);
 
-  const stationName = useSelector((state) => state.locationSlice.regionStationMap[region]);
+  const stationName = useSelector((state) => state.bookmarkCard04.regionStationMap[region]);
 
   // 미세먼지 정보 호출
   useEffect(() => {
