@@ -24,10 +24,12 @@ import { CiStar } from "react-icons/ci";
 import { FaStar } from "react-icons/fa";
 
 import { addBookmark, removeBookmark, setBookmarkFilteredList, setBookmarkSearchInput, updateBookmarkedRegions, } from '../../store/slices/bookmarkSlice.js';
-import { useEffect, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { LOCATION_LIST } from '../../constants/locationList.js';
 import { stringUtils } from '../../utils/stringUtil';
 import { localStorageUtil } from '../../utils/localStorageUtil.js';
+// toast관련
+import Toast from '../commons/Toast';
 // import { div } from 'framer-motion/client';
 
 // 각 북마크 아이템을 위한 컴포넌트
@@ -64,6 +66,12 @@ function EditBookmark () {
   const bookmarkedRegions = useSelector(state => state.bookmarkSlice.bookmarkedRegions);
   const bookmarkSearchInput = useSelector(state => state.bookmarkSlice.bookmarkSearchInput);
   const bookmarkFilteredList = useSelector(state => state.bookmarkSlice.bookmarkFilteredList);
+
+  // 알림창용 state, ref
+  const [showToast, setShowToast] = useState(false);
+  const toastTimerRef = useRef(null);
+
+  console.log('input: ', bookmarkSearchInput);
 
   // 원본 목록과 저장 여부를 추적하기 위한 ref 생성
   const originalBookmarks = useRef(null);
@@ -183,9 +191,17 @@ function EditBookmark () {
   const handleSave = () => {
     // 현재 상태를 localStorage에 저장
     localStorageUtil.setBookmarkedRegions(bookmarkedRegions);
-    // 저장된 상태를 ref에 기록
-    bookmarkSaved.current = true;
-    alert(`저장되었습니다!`) // 저장알림
+
+    // 기존 타이머가 있으면 취소
+    if (toastTimerRef.current) {
+      clearTimeout(toastTimerRef.current)
+    }
+    // 알림표시
+    setShowToast(true);
+    // 2초 뒤에 토스트 숨김 타이머
+    toastTimerRef.current = setTimeout(() => {
+      setShowToast(false);
+    }, 1000);
   }
 
   return(
@@ -260,10 +276,11 @@ function EditBookmark () {
           </SortableContext>
         </DndContext>
 
-        
         {/* 내 장소 저장하기 버튼 */}
           <div className="bookmark-save-btn-container">
             <button className='bookmark-save-btn' type="button" onClick={handleSave}>저장하기</button> 
+            {/* 토스트 */}
+            <Toast message="저장되었습니다!" show={showToast} />
           </div>          
         </div>
     </div>
