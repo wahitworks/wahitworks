@@ -3,26 +3,39 @@
 }
 
 /* ========================================
-   무겁게 가라앉기 - (2-몸, 3-눈, 6-눈)
+   구름 통통 튀기 - 레이어 2-몸, 3-눈)
 ======================================== */
-.logo-bad-white.animated #Layer_2,
-.logo-bad-white.animated #Layer_3,
-.logo-bad-white.animated #Layer_6 {
+.logo-bad-white.animated #Layer_2_bad-white,
+.logo-bad-white.animated #Layer_3_bad-white {
   animation: heavySink 4s ease-in-out infinite;
 }
 
 /* ========================================
-   입 표정 뒤집기 - (7-입)
+   입 표정 애니메이션 적용 - 레이어 4
 ======================================== */
-.logo-bad-white.animated #Layer_7 {
+.logo-bad-white.animated #Layer_4_bad-white {
   animation: mouthFlip 4s ease-in-out infinite;
 }
 
 /* ========================================
    바람 (Layer_5)
 ======================================== */
-.logo-bad-white.animated #Layer_5 path {
+.logo-bad-white.animated #Layer_5_bad-white path {
   animation: windFlow 2s ease-in-out infinite;
+}
+
+/* ========================================
+   먼지 (Layer_7)
+======================================== */
+.logo-bad-white.animated #Layer_7_bad-white {
+  animation: dustBounce-bad 2s ease-in-out infinite;
+}
+
+/* ========================================
+물방울 (Layer_6)
+======================================== */
+.logo-bad-white.animated #Layer_6_bad-white path {
+  animation: dropFlow 3s ease-in-out infinite;
 }
 /* ========================================
    크기 옵션

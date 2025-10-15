@@ -19,18 +19,31 @@
 }
 
 /* ========================================
-   좌우 흔들기 - 일반 레이어 (2-몸, 3-눈, 6-눈, 7-입)
+   구름 통통 튀기 - 일반 레이어 (2-몸, 3-눈, 4-입)
 ======================================== */
-.logo-moderate-white.animated #Layer_2,
-.logo-moderate-white.animated #Layer_3,
-.logo-moderate-white.animated #Layer_6,
-.logo-moderate-white.animated #Layer_7 {
+.logo-moderate-white.animated #Layer_2_moderate-white,
+.logo-moderate-white.animated #Layer_3_moderate-white,
+.logo-moderate-white.animated #Layer_4_moderate-white {
   animation: shakeLittleLR 2s ease-in-out infinite;
 }
 
 /* ========================================
    바람 (Layer_5)
 ======================================== */
-.logo-moderate-white.animated #Layer_5 path {
+.logo-moderate-white.animated #Layer_5_moderate-white path {
   animation: windFlow 3s ease-in-out infinite;
+}
+
+/* ========================================
+   먼지 (Layer_7)
+======================================== */
+.logo-moderate-white.animated #Layer_7_moderate-white {
+  animation: dustBounce-moderate 2s ease-in-out infinite;
+}
+
+/* ========================================
+물방울 (Layer_6)
+======================================== */
+.logo-moderate-white.animated #Layer_6_moderate-white path {
+  animation: dropFlow 4s ease-in-out infinite;
 }

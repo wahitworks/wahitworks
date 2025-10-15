@@ -22,12 +22,11 @@
 }
 
 /* ========================================
-   구름 통통 튀기 - 일반 레이어 (2-몸, 3-눈, 6-입, 7-입)
+구름 통통 튀기 - (Layer 2-몸, 3-눈, 4-입)
 ======================================== */
-.logo-good-white.animated #Layer_2,
-.logo-good-white.animated #Layer_3,
-.logo-good-white.animated #Layer_6,
-.logo-good-white.animated #Layer_7
+.logo-good-white.animated #Layer_2_good-white,
+.logo-good-white.animated #Layer_3_good-white,
+.logo-good-white.animated #Layer_4_good-white
 {
   animation: cloudBounce 2s ease-in-out infinite;
 }
@@ -35,6 +34,20 @@
 /* ========================================
 바람 (Layer_5)
 ======================================== */
-.logo-good-white.animated #Layer_5 path {
-  animation: windFlow 3s ease-in-out infinite;
+.logo-good-white.animated #Layer_5_good-white path {
+  animation: windFlow 5s ease-in-out infinite;
+}
+
+/* ========================================
+먼지 (Layer_7)
+======================================== */
+.logo-good-white.animated #Layer_7_good-white {
+  animation: dustBounce-good 2s ease-in-out infinite;
+}
+
+/* ========================================
+물방울 (Layer_6)
+======================================== */
+.logo-good-white.animated #Layer_6_good-white path {
+  animation: dropFlow 5s ease-in-out infinite;
 }
