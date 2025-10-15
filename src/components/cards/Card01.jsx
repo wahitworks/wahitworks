@@ -19,16 +19,11 @@ function Card01() {
   const currentPM10 = useSelector(state => state.currentAirCondition.currentPM10);
 
   useEffect(() => {
-    // 1. Redux에 가장 가까운 측정소 정보(measuringStation)가 있으면,
-    //    해당 측정소의 미세먼지 정보를 요청합니다.
     if (measuringStation) {
       dispatch(getCurrentAirCondition(measuringStation));
-      return; // API를 요청했으므로 훅 실행을 종료합니다.
+      return;
     }
 
-    // 2. 측정소 정보가 아직 없다면, 위치 정보가 있는지 확인합니다.
-    //    위치 정보가 없다면(최초 진입 시), 현재 위치를 가져오는 thunk를 실행합니다.
-    //    (thunk가 성공하면 measuringStation 값이 채워지고, 이 useEffect가 다시 실행될 것입니다.)
     if (!selectedLocationByUser && !currentRegion) {
       dispatch(getCurrentLocation());
     }
@@ -39,7 +34,7 @@ function Card01() {
     if (pm10Value <= 30) {
       return {
         statusText: "좋음",
-        actionGuide: "공기 상쾌해요! 야외 활동을 즐기세요.",
+        actionGuide: "공기가 상쾌해요! 야외 활동을 즐기세요.",
         IconComponent: LogoGoodWhite,
         backgroundColor: "#409dd8",
         className: "logo-good-white-medium",
@@ -87,7 +82,7 @@ function Card01() {
           {IconComponent && <IconComponent className={iconClassName} animated={true} />}
         </div>
         <p className="action-guide-text">
-          미세먼지 {actionGuideDustInfo.statusText}({pm10Value}㎍/㎥)
+          {actionGuideDustInfo.statusText}({pm10Value}㎍/㎥)
         </p>
       </div>
     </>

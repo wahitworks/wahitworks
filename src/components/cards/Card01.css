@@ -11,6 +11,7 @@
   gap: 10px;
   font-weight: 900;
   color: #ffffff;
+  margin-top: 15px;
 }
 
 .action-guide-intro {
@@ -39,4 +40,9 @@
 .action-guide-icon {
   width: 150px;
   margin: 5px auto;
+}
+
+.action-guide-text {
+  margin-bottom: 15px;
+  font-size: 20px;
 }

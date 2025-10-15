@@ -1,15 +1,26 @@
-/* LogoBadWhite 크기 옵션 */
-.logo-bad-white-small {
-  width: 80px;
-  height: auto;
+.logo-bad-white {
+  overflow: visible !important;
 }
 
-.logo-bad-white-medium {
-  width: 150px;
-  height: auto;
+/* ========================================
+   무겁게 가라앉기 - (2-몸, 3-눈, 6-눈)
+======================================== */
+.logo-bad-white.animated #Layer_2,
+.logo-bad-white.animated #Layer_3,
+.logo-bad-white.animated #Layer_6 {
+  animation: heavySink 4s ease-in-out infinite;
 }
 
-.logo-bad-white-large {
-  width: 300px;
-  height: auto;
+/* ========================================
+   입 표정 뒤집기 - (7-입)
+======================================== */
+.logo-bad-white.animated #Layer_7 {
+  animation: mouthFlip 4s ease-in-out infinite;
+}
+
+/* ========================================
+   바람 (Layer_5)
+======================================== */
+.logo-bad-white.animated #Layer_5 path {
+  animation: windFlow 2s ease-in-out infinite;
 }

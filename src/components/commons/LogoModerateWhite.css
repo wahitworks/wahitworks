@@ -13,3 +13,24 @@
   width: 300px;
   height: auto;
 }
+
+.logo-moderate-white {
+  overflow: visible !important;
+}
+
+/* ========================================
+   좌우 흔들기 - 일반 레이어 (2-몸, 3-눈, 6-눈, 7-입)
+======================================== */
+.logo-moderate-white.animated #Layer_2,
+.logo-moderate-white.animated #Layer_3,
+.logo-moderate-white.animated #Layer_6,
+.logo-moderate-white.animated #Layer_7 {
+  animation: shakeLittleLR 2s ease-in-out infinite;
+}
+
+/* ========================================
+   바람 (Layer_5)
+======================================== */
+.logo-moderate-white.animated #Layer_5 path {
+  animation: windFlow 3s ease-in-out infinite;
+}

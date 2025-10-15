@@ -1,4 +1,5 @@
 import './LogoModerateWhite.css';
+import '../logo/LogoModule.css';
 
 // 보통(Moderate) 상태를 나타내는 로고 아이콘
 // className props 받고 animated 적용 가능

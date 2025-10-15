@@ -1,8 +1,8 @@
 import './LogoBadWhite.css';
+import '../logo/LogoModule.css';
 
 // 나쁨(Bad) 상태를 나타내는 로고 아이콘
 // className props 받고 animated 적용 가능
-// 색상: 노란색 (#ecd049)
 function LogoBadWhite({ className = '', animated = false, style }) {
   return (
     <svg
