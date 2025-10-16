@@ -78,6 +78,25 @@ function EditCard() {
   // 초기화 버튼 상태관리
   const [modalOpen, setModalOpen] = useState(false);
 
+  // 컴포넌트 마운트 시점의 원래 순서를 저장할 ref
+  const originalOrderRef = useRef(null);
+  // 저장버튼 클릭시 추적 ref
+  const saveRef = useRef(false);
+
+  useEffect(() => {
+    // 컨포넌트 마운트 시 현재 redux 상태 order 원본 저장
+    originalOrderRef.current = order;
+    saveRef.current = false; // 컴포넌트 마운트 저장 플래그 초기화
+
+    // 컴포넌트 언마운트 시 실행될 클린업
+    return () => {
+      // 저장하기 버튼x 원래 순서로 돌림
+      if (!saveRef.current) {
+        dispatch(setOrder(originalOrderRef.current));
+      }
+    }
+  }, [])
+
   // 2초후 사라지게하기
   useEffect(() => {
     if (showToast) {
@@ -129,6 +148,7 @@ function EditCard() {
   const handleSave = () => {
     // 현재 상태를 localStorage에 저장
     saveCardOrder(order);
+    saveRef.current = true; // 초기화도 저장으로 간주하여 플래그 설정
 
     // 이전에 타이머가 있다면 취소
     if (toastTimerRef.current) {
@@ -153,6 +173,7 @@ function EditCard() {
   const yesReset = () => {
     dispatch(resetOrder());
     setModalOpen(false);
+    saveRef.current = true; // 초기화도 저장으로 간주하여 플래그 설정
   };
   // 모달에서 '아니오' 클릭
   const cancelReset = () => {
