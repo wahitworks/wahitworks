@@ -37,15 +37,15 @@ const style = {
 };
 
 return (
-    <div ref={setNodeRef} style={style} 
+    <div ref={setNodeRef} style={style} {...attributes} {...listeners}
       className="editcard-card">
-      <div className="editcard-card-info">
-        <div {...attributes} {...listeners} 
-        className="editcard-hamburger">&#x2630; {/* 햄버거 아이콘 */}</div>
+      <div className="editcard-card-info" >
+        <p className="editcard-hamburger">&#x2630; {/* 햄버거 아이콘 */}</p>
         <p className="editcard-card-name">{props.name}</p>
-      </div>
+      </div >
         <input checked={props.checked} type="checkbox" 
           className="editcard-switch" onChange={props.onToggle} // 스위치
+          onPointerDown = {(e) => e.stopPropagation()}
         ></input>
     </div>
   );
@@ -84,7 +84,7 @@ function EditCard () {
     useSensor(PointerSensor, {
       // 드래그를 시작하기 위해 필요한 마우스 움직임 거리(단위:px)
       activationConstraint: {
-        delay: 100,
+        delay: 50,
         tolerance: 5,
       },
     }),
@@ -94,7 +94,7 @@ function EditCard () {
     useSensor(TouchSensor, {
       // 터치로 사용
       activationConstraint: {
-        delay: 100,
+        delay: 50,
         tolerance: 5,
       }
     })
@@ -179,7 +179,7 @@ function EditCard () {
       modalOpen && (
         <div className="editcard-modal-background">
           <div className="editcard-modal-content">
-            <p className="editcard-modal-comment" >초기하 하시겠습니까?</p>
+            <p className="editcard-modal-comment" >초기화 하시겠습니까?</p>
             <div className="editcard-modal-btn">
               <button onClick={yesReset} className="editcard-modal-yes" type="button">예</button>
               <button onClick={cancelReset} className="editcard-modal-cancel" type="button">아니오</button>

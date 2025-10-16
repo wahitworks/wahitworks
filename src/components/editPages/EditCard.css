@@ -13,17 +13,20 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  touch-action: none;
+  cursor: grab
 }
 
 .editcard-card-info{ 
   display: flex;
   align-items: center;
   gap: 15px;
+  touch-action: none;
 }
 
 .editcard-hamburger { 
   cursor: grab;
-  padding: 0 15px;
+  padding: 0 15px 0 0;
   font-size: 20px;
   color: #888;
   /* 모바일의 기본 동작이 드래그앤드롭 터치 기능과 충돌 */
@@ -33,11 +36,13 @@
 
 .editcard-card:last-child{
   margin-bottom: 0;
+  touch-action: none;
 }
 
 .editcard-card-name {
   margin: 0;
   font-weight: bold;
+  touch-action: none;
 }
 
 /* 초기화 버튼 */

@@ -49,13 +49,18 @@ function SortableItem (props) {
   };
 
   return (
-      <div className="bookmark-item" ref={setNodeRef} style={style} {...attributes}>
-        <div className="bookmark-hamburger" {...listeners}>&#x2630; {/* 햄버거 아이콘 */}</div>
-        <span>{props.id}</span>
-        <span className="bookmark-icon" onClick={() => props.onToggle(props.id)}>
+    <>
+      <div className="bookmark-item" ref={setNodeRef} style={style} {...attributes} {...listeners}>
+        <div className="bookmark-hamburger">&#x2630; {/* 햄버거 아이콘 */}</div>
+        <span className='bookmark-name'>{props.id}</span>
+            
+        <span className="bookmark-icon" 
+        onClick={() => props.onToggle(props.id)}
+        onPointerDown={(e) => e.stopPropagation()}>
         {props.isBookmarked ? <FaStar color='var(--deep-blue)' /> : <CiStar color='var(--deep-blue)' />}
         </span>
       </div>
+    </>
   );
 }
 
@@ -97,7 +102,7 @@ function EditBookmark () {
     useSensor(PointerSensor, {
       // 드래그를 시작하기 위해 필요한 마우스 움직임 거리(단위:px)
       activationConstraint: {
-        delay: 100,
+        delay: 50,
         tolerance: 5,
       },
     }),
@@ -107,7 +112,7 @@ function EditBookmark () {
     useSensor(TouchSensor, {
       // 터치로 사용
       activationConstraint: {
-        delay: 100,
+        delay: 50,
         tolerance: 5,
       }
     })
