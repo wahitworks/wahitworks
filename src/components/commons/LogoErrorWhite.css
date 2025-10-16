@@ -1,0 +1,52 @@
+.logo-error-white {
+  overflow: visible !important;
+}
+
+/* ========================================
+   구름 통통 튀기 - 레이어 2-몸, 3-눈, 4-입)
+======================================== */
+.logo-error-white.animated #Layer_2_error-white,
+.logo-error-white.animated #Layer_3_error-white,
+.logo-error-white.animated #Layer_4_error-white {
+  animation: slowSway 5s ease-in-out infinite;
+}
+
+/* ========================================
+   바람 (Layer_5)
+======================================== */
+.logo-error-white.animated #Layer_5_error-white path {
+  animation: windFlow 5s ease-in-out infinite;
+}
+
+/* ========================================
+   먼지 (Layer_7)
+======================================== */
+.logo-error-white.animated #Layer_7_error-white {
+  animation: dustBounce-verybad 5s ease-in-out infinite;
+}
+
+/* ========================================
+물방울 (Layer_6)
+======================================== */
+.logo-error-white.animated #Layer_6_error-white path {
+  animation: dropFlow 5s ease-in-out infinite;
+}
+
+/* ========================================
+   크기 옵션
+======================================== */
+.logo-error-white-small {
+  width: 80px;
+}
+
+.logo-error-white-medium {
+  width: 150px;
+}
+
+.logo-error-white-large {
+  width: 300px;
+}
+
+.logo-error-white-xlarge {
+  width: 400px;
+}

@@ -10,6 +10,7 @@ import LogoGoodWhite from "../commons/LogoGoodWhite.jsx";
 import LogoModerateWhite from "../commons/LogoModerateWhite.jsx";
 import LogoBadWhite from "../commons/LogoBadWhite.jsx";
 import LogoVeryBadWhite from "../commons/LogoVeryBadWhite.jsx";
+import LogoErrorWhite from "../commons/LogoErrorWhite.jsx";
 
 function Card01() {
   const dispatch = useDispatch();
@@ -31,6 +32,16 @@ function Card01() {
 
 
   const getDustInfo = (pm10Value) => {
+    if (pm10Value === null || pm10Value === undefined) {
+      return {
+        statusText: "측정 불가",
+        actionGuide: "데이터를 가져올 수 없습니다.",
+        IconComponent: LogoErrorWhite,
+        backgroundColor: "#808080",
+        className: "logo-error-white-medium",
+        valueText: "",
+      };
+    }
     if (pm10Value <= 30) {
       return {
         statusText: "좋음",
@@ -38,6 +49,7 @@ function Card01() {
         IconComponent: LogoGoodWhite,
         backgroundColor: "#409dd8",
         className: "logo-good-white-medium",
+        valueText: `(${pm10Value}㎍/㎥)`,
       };
     } else if (pm10Value <= 80) {
       return {
@@ -46,6 +58,7 @@ function Card01() {
         IconComponent: LogoModerateWhite,
         backgroundColor: "#8add80ff",
         className: "logo-moderate-white-medium",
+        valueText: `(${pm10Value}㎍/㎥)`,
       };
     } else if (pm10Value <= 150) {
       return {
@@ -54,6 +67,7 @@ function Card01() {
         IconComponent: LogoBadWhite,
         backgroundColor: "#ecd049",
         className: "logo-bad-white-medium",
+        valueText: `(${pm10Value}㎍/㎥)`,
       };
     } else {
       return {
@@ -62,12 +76,12 @@ function Card01() {
         IconComponent: LogoVeryBadWhite,
         backgroundColor: "#db1d1c",
         className: "logo-very-bad-white-medium",
+        valueText: `(${pm10Value}㎍/㎥)`,
       };
     }
   };
 
-  const pm10Value = currentPM10 ?? 0;
-  const actionGuideDustInfo = getDustInfo(pm10Value);
+  const actionGuideDustInfo = getDustInfo(currentPM10);
   const { IconComponent, className: iconClassName } = actionGuideDustInfo;
 
   return (
@@ -82,7 +96,7 @@ function Card01() {
           {IconComponent && <IconComponent className={iconClassName} animated={true} />}
         </div>
         <p className="action-guide-text">
-          {actionGuideDustInfo.statusText}({pm10Value}㎍/㎥)
+          {actionGuideDustInfo.statusText}{actionGuideDustInfo.valueText}
         </p>
       </div>
     </>
