@@ -9,30 +9,39 @@ function App() {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showInstallModal, setShowInstallModal] = useState(false);
   const [showManualInstallHint, setShowManualInstallHint] = useState(false); // New state
+  const [isInstalling, setIsInstalling] = useState(false); // 설치 시도 중 상태 플래그
 
   useEffect(() => {
     const handler = (e) => {
+      // 현재 설치 과정이 진행 중이면, 새로운 이벤트를 무시
+      if (isInstalling) {
+        return;
+      }
+
+      // 기본 프롬프트를 막고, '리모콘'을 항상 저장
+      e.preventDefault();
+      setDeferredPrompt(e);
+
       console.log("beforeinstallprompt event fired!", e); // Added console.log for debugging
       // 사용자가 이전에 '아니오'를 선택했는지 확인
       const installDeclined = localStorage.getItem("installDeclined");
       if (installDeclined === "true") {
-        console.log("User has previously declined installation.");
-        return; // 모달을 띄우지 않고 종료
+        console.log(
+          "User has previously declined installation, hiding modal but enabling manual install."
+        );
+        return; // 모달만 띄우지 않고 종료
       }
 
-      // 기본 프롬프트를 막고, '리모콘' 저장
-      e.preventDefault(); // 이벤트 리스너로 받은 e의 메써드
-      setDeferredPrompt(e); // 받은 이벤트 객체로 로컬 state 변경
       // 커스텀 모달을 띄우기 위해 상태 변경
       setShowInstallModal(true);
     };
 
-    window.addEventListener("beforeinstallprompt", handler); //'이벤트이름', '실행할 함수' 이벤트리스너가 이벤트 객체를 handler함수의 첫 인자로 넘겨줌
+    window.addEventListener("beforeinstallprompt", handler);
 
     return () => {
       window.removeEventListener("beforeinstallprompt", handler);
     };
-  }, []);
+  }, [isInstalling]); // isInstalling을 의존성 배열에 추가
 
   // '아니오' 버튼 클릭 시
   const handleInstallDismiss = () => {
@@ -49,15 +58,32 @@ function App() {
   };
 
   const handleInstallAccept = async () => {
-    if (!deferredPrompt) return;
+    if (!deferredPrompt || isInstalling) return;
 
-    // 브라우저 설치창 띄우기
-    deferredPrompt.prompt(); //이벤트 객체의 설치 팝업 꺼내는 함수
-    await deferredPrompt.userChoice;
+    setIsInstalling(true);
+    try {
+      // 사용자가 수동으로 설치를 시도하므로, 과거의 거절 기록은 일단 삭제해준다.
+      localStorage.removeItem("installDeclined");
 
-    // 상태 초기화
-    setDeferredPrompt(null);
-    setShowInstallModal(false);
+      // 브라우저 프롬프트를 띄운다.
+      deferredPrompt.prompt();
+
+      // 사용자의 선택을 기다리고 결과를 받는다.
+      const { outcome } = await deferredPrompt.userChoice;
+
+      // 만약 여기서도 거절했다면, 그 기록을 새로 남긴다.
+      if (outcome === "dismissed") {
+        localStorage.setItem("installDeclined", "true");
+        console.log("User dismissed the browser install prompt.");
+      } else {
+        console.log("User accepted the install prompt.");
+      }
+    } finally {
+      // 모든 과정이 끝나면 상태를 초기화한다.
+      setDeferredPrompt(null);
+      setShowInstallModal(false);
+      setIsInstalling(false);
+    }
   };
 
   return (
@@ -87,7 +113,7 @@ function App() {
           {/* 수동 설치 힌트 메시지 */}
           {showManualInstallHint && (
             <div className="manual-install-hint">
-              추후 수동 설치는 해당 홈페이지 우측 상단 메뉴에서 가능합니다.
+              메뉴에서 수동설치가 가능합니다.
             </div>
           )}
         </main>

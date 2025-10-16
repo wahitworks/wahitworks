@@ -8,7 +8,6 @@ import installIconUrl from "../../assets/icons/install_icon.svg";
 import { PWAInstallContext } from "../../contexts/PWAInstallContext.jsx";
 import { setMenuFlg, setSearchFlg } from "../../store/slices/headerSlice.js";
 
-
 function HeaderMenu() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,11 +27,11 @@ function HeaderMenu() {
 
   // ===== 마운트, 언마운트 - 스크롤 방지 설정 =====
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = 'unset';
-    }
-  }, [])
+      document.body.style.overflow = "unset";
+    };
+  }, []);
 
   return (
     <div className="app-wrapper">
