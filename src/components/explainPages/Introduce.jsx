@@ -17,6 +17,9 @@ function Introduce () {
           </div>
         </div>
         <br />
+        <br />
+        <br />
+        <br />
         <p className="introduce-content">주요 기능</p>
         <p> - 실시간 대기정보</p>
         <p> - 오늘의 행동요령</p>

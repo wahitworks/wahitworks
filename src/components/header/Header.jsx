@@ -69,7 +69,7 @@ function Header() {
     "/editbookmark": "내 장소 관리",
     "/editcard": "카드 관리",
     "/apptutorial": "사용 가이드",
-    "/introduce": "이게 되네",
+    "/introduce": "사이트 소개",
   };
   // 측정소 정보 표시를 위한, path값이 없는 = 페이지 타이틀이 없는 경우
   const measuringOn = !pageTitle[location.pathname];

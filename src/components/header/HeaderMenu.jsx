@@ -146,7 +146,7 @@ function HeaderMenu() {
                     navigate("/introduce");
                   }}
                 >
-                  About
+                  사이트 소개
                 </p>
               </div>
               <div className="header-Menu-container-bottom">
