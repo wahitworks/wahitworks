@@ -12,11 +12,12 @@ import LogoError from "../logo/LogoError.jsx";
 import { getSearchLocation } from "../../store/thunks/locationThunk.js"; // 측정소 검색 Thunk
 import { fetchFineDustData } from "../../store/thunks/fineDustThunk.js"; // 미세먼지 데이터
 
+import LoadingSkeleton from "../commons/LoadingSkeleton.jsx";  // 컴포넌트 임포트
 import { GRADE_CLASS } from "../../constants/ultraFineDustLevel.js";
 
 // 각 북마크 항목 렌더링 컴포넌트
 function BookmarkItem({ region }) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // 등급을 계산하는 함수 
   const getGradeNumberFromValue = (value, type) => {
@@ -26,7 +27,7 @@ function BookmarkItem({ region }) {
       O3: { good: 0.030, moderate: 0.090, bad: 0.150 },
     }
   
-  if (value === null || value === undefined || value === '' || value === '-') {
+  if (value === null || value === undefined || value === '' || value === '-' || value === 0) {
     return null;}
   
   const standard = standards[type];
@@ -39,22 +40,22 @@ function BookmarkItem({ region }) {
   }
 
   // 지역이름으로 측정소이름 찾기 위한 Thunk호출
-  useEffect(() => {
-    if (region) {
-      dispatch(getSearchLocation(region));
-    }
-  }, [dispatch, region]);
+  // useEffect(() => {
+  //   if (region) {
+  //     dispatch(getSearchLocation(region));
+  //   }
+  // }, [dispatch, region]);
 
   const stationName = useSelector((state) => state.bookmarkCard04.regionStationMap[region]);
   const station = useSelector(state => state.bookmarkCard04.regionStationMap);
 
   // 미세먼지 정보 호출
-  useEffect(() => {
-    if (stationName && stationName !== 'error') {
-      // 다른 코드와의 통일성을 위해 객체로 넘김
-      dispatch(fetchFineDustData({ stationName: stationName }));
-    }
-  }, [dispatch, stationName]);
+  // useEffect(() => {
+  //   if (stationName && stationName !== 'error') {
+  //     // 다른 코드와의 통일성을 위해 객체로 넘김
+  //     dispatch(fetchFineDustData({ stationName: stationName }));
+  //   }
+  // }, [dispatch, stationName]);
 
   // 해당 측정소의 미세먼지 데이터 호출
   const data = useSelector((state) => stationName ? state.fineDust.data[stationName] : null);
@@ -146,6 +147,7 @@ function BookmarkItem({ region }) {
                   <div className="card04-air-log">
                     <AirQualityLogo grade={dustGrade} />
                   </div>
+                  <p className="card04-bookmark-list-toggle-info-value">{}</p>
                 </div>
                 <div className="card04-bookmark-list-toggle-info">
                   <p className="card04-bookmark-list-toggle-info-title">초미세먼지</p>
@@ -171,8 +173,68 @@ function BookmarkItem({ region }) {
 
 // 메인 컨포넌트
 function Card04() {
+  const dispatch = useDispatch();
   const bookmarkedRegions = useSelector(state => state.bookmarkSlice.bookmarkedRegions);
+  const regionStationMap = useSelector(state => state.bookmarkCard04.regionStationMap);
+  const fineDustLoading = useSelector(state => state.fineDust.loading);
+  const fineDustData = useSelector(state => state.fineDust.data);
+  const fineDustError = useSelector(state => state.fineDust.error);
+  
+  useEffect(() => {
+    bookmarkedRegions.forEach(region => {
+      const stationName = regionStationMap[region];
 
+      // 측정소 정보가 없을 때
+      if (!stationName) {
+        dispatch(getSearchLocation(region));
+      }
+      // 측정소 정보o 에러x
+      else if (stationName !== 'error') {
+        const isLoading = fineDustLoading[stationName];
+        const hasData = fineDustData[stationName];
+        // 에러 상태를 확인하는 변수
+        const hasError = fineDustError[stationName];
+
+        // 로딩중x 데이터x 에러x
+        if (!isLoading && !hasData && !hasError) {
+          dispatch(fetchFineDustData({ stationName: stationName }));
+        }
+      }
+    });
+  }, [dispatch, bookmarkedRegions, regionStationMap, fineDustData, fineDustLoading, fineDustError]);
+
+  // 카드 높이 계산
+  const skeletonHeight = 60 + (bookmarkedRegions.length * 65);
+
+  // 스켈레톤 라인 갯수
+  const skeletonLines = [
+    // 카드 제목
+    { width: '50%', height: '50px', align: 'center' },
+  ];
+  // 북마크 개수만큼 라인 추가
+  for (let i = 0; i < bookmarkedRegions.length; i++) {
+    // 각 북마크 아이템을 표현
+    skeletonLines.push({ width: '95%', height: '50px', align: 'center' });
+  }
+
+  const card04Loading = bookmarkedRegions.length > 0 && bookmarkedRegions.some(region => {
+    const stationName = regionStationMap[region];
+    return !stationName || (stationName && fineDustLoading[stationName] === true);
+  })
+
+  // ===== 로딩 스켈레톤 =====
+  if(card04Loading) {
+    return (
+        <LoadingSkeleton
+          width="90%" // 스켈레톤의 전체 너비 -> 고칠 필요 없음
+          height={`${skeletonHeight}px`} // 높이 계산해야함
+          borderRadius="15px" // 모서리 둥근 정도 -> 고칠 필요 없음
+          backgroundColor="#e6e9ecff" // 기본 배경색  -> 고칠 필요 없음
+          highlightColor="#F8F9FA" // 하이라이트 애니메이션 색상  -> 고칠 필요 없음
+          lines={skeletonLines} // 스켈레돈 라인 생성
+        />
+    );
+  }
   return (
     <div className="card04-container">
       <h2 className="card04-title">내 장소</h2>
