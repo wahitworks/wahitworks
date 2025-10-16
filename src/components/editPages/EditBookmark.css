@@ -110,6 +110,7 @@
 /* 북마크 저장 버튼 */
 .bookmark-save-btn-container {
   margin-top: 80px;
+  margin-bottom: 100px;
 }
 
 .bookmark-save-btn {
@@ -128,6 +129,10 @@
 .bookmark-hamburger {
   cursor: grab;
   color: #888;
+  padding: 0 15px;
+  /* 모바일의 기본 동작이 드래그앤드롭 터치 기능과 충돌 */
+  /* 브라우저의 기본 터치 동작 비활성화 */
+  touch-action: none; /* 드래그앤드롭 해결 */
 }
 
 .bookmark-nothing {

@@ -7,6 +7,7 @@ import LogoGood from '../logo/LogoGood.jsx';
 import LogoModerate from '../logo/LogoModerate.jsx';
 import LogoBad from '../logo/LogoBad.jsx';
 import LogoVeryBad from '../logo/LogoVeryBad.jsx';
+import LogoError from "../logo/LogoError.jsx";
 // Slice
 // Thunk 
 import { getSearchLocation } from "../../store/thunks/locationThunk.js"; // 측정소 검색 Thunk
@@ -96,7 +97,7 @@ function BookmarkItem({ region }) {
       case "2": return <LogoModerate animated />;
       case "3": return <LogoBad animated />;
       case "4": return <LogoVeryBad animated />;
-      default: return null;
+      default: return <LogoError />;
     }
   }; 
 

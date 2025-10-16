@@ -23,9 +23,12 @@
 
 .editcard-hamburger { 
   cursor: grab;
-  padding-right: 10px;
+  padding: 0 15px;
   font-size: 20px;
   color: #888;
+  /* 모바일의 기본 동작이 드래그앤드롭 터치 기능과 충돌 */
+  /* 브라우저의 기본 터치 동작 비활성화 */
+  touch-action: none; /* 드래그앤드롭 해결 */
 }
 
 .editcard-card:last-child{
@@ -127,11 +130,6 @@
   border-radius: 15px;
   cursor: pointer;
 }
-
-/* .editcard-card-save-btn:hover {
-  background-color: var(--light-blue);
-  color: #fff;
-} */
 
 /* 스위치 스타일 */
 /* From Uiverse.io by Yaya12085 */ 

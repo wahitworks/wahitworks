@@ -12,6 +12,7 @@
   gap: 15px;
 }
 
+/* 카드04 타이틀 */
 .card04-title {
   color: #fff;
   margin-bottom: 15px;
@@ -124,6 +125,10 @@
 }
 
 /* 단계별 ● 컬러 */
+.card04-air-status {
+  color: #929292
+}
+
 .card04-air-status.good {
   color: var(--personal-blue);
 }

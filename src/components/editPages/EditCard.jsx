@@ -46,7 +46,7 @@ return (
       </div>
         <input checked={props.checked} type="checkbox" 
           className="editcard-switch" onChange={props.onToggle} // 스위치
-          onPointerDown = {(e) => e.stopPropagation()}></input>
+        ></input>
     </div>
   );
 }
@@ -89,7 +89,7 @@ function EditCard () {
       },
     }),
     useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
+      coordinateGetter: sortableKeyboardCoordinates, 
     }),
     useSensor(TouchSensor, {
       // 터치로 사용
