@@ -32,7 +32,6 @@ function Main() {
 
   return (
     <>
-      <LogoOrigin animated />
       <div id="main-container">
         {/* 전체 카드 목록을 순회 */}
         {order.map((cardInfo) => {
