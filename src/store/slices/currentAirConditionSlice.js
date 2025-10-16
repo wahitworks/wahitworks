@@ -31,6 +31,8 @@ const currentAirConditionSlice = createSlice({
       state.error = null;
     })
     .addCase (getCurrentAirCondition.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
       const lastData = action.payload?.[action.payload.length - 1];
       if (lastData) {
         state.currentPM10 = lastData.pm10Value;
@@ -56,6 +58,7 @@ const currentAirConditionSlice = createSlice({
     .addMatcher(
       action => action.type.endsWith('/rejected'),
       (state, action) => {
+        state.loading = false;
         console.log('현재 대기 정보 가져오기 실패 : ', action.error);
       }
     )

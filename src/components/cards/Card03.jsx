@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { GoDotFill } from "react-icons/go";
 import { RiFileWarningLine } from "react-icons/ri";
 import { motion, AnimatePresence } from 'framer-motion';
+import Skeleton from 'react-loading-skeleton';
 
 import LogoGood from '../logo/LogoGood.jsx';
 import LogoModerate from '../logo/LogoModerate.jsx';
@@ -13,8 +14,11 @@ import LogoError from "../logo/LogoError.jsx";
 
 import { getCurrentAirCondition } from "../../store/thunks/currentAirConditionThunk.js";
 import { getAirQualityInfo } from "../../utils/airQualityGradeUtil.js";
+import LoadingSkeleton from "../commons/LoadingSkeleton.jsx";
+import { CiTextAlignCenter } from "react-icons/ci";
 
 function Card03() {
+  
   const dispatch = useDispatch();
 
   // ===== 전역 state =====
@@ -24,6 +28,7 @@ function Card03() {
   const currentNO2 = useSelector(state => state.currentAirCondition.currentNO2)
   const currentCO = useSelector(state => state.currentAirCondition.currentCO)
   const currentSO2 = useSelector(state => state.currentAirCondition.currentSO2)
+  
   const dataTime = useSelector(state => state.currentAirCondition.dataTime);
   const pm10Flag = useSelector(state => state.currentAirCondition.pm10Flag);
   const pm25Flag = useSelector(state => state.currentAirCondition.pm25Flag);
@@ -31,20 +36,20 @@ function Card03() {
   const no2Flag = useSelector(state => state.currentAirCondition.no2Flag);
   const coFlag = useSelector(state => state.currentAirCondition.coFlag);
   const so2Flag = useSelector(state => state.currentAirCondition.so2Flag);
-  console.log(pm10Flag, pm25Flag, o3Flag, no2Flag, coFlag, so2Flag)
-
-  const loading = useSelector(state => state.currentAirCondition.loading);
-
+  
   const measuringStation = useSelector(state => state.locationSlice.measuringStation);
-
+  
+  const loading = useSelector(state => state.currentAirCondition.loading);
+  
+  
   // ===== 컴포넌트 State ================
   const [page, setPage] = useState(0);
   const totalPages = 2;
-
+  
   // ===== 랜더링 필요없는 Ref ============
   const containerRef = useRef(null);
-
-
+  
+  
   // ===== 등급에 맞는 아이콘 컴포넌트 반환 =====
   const getAirQualityIcon = (grade) => {
     const icons = {
@@ -57,7 +62,7 @@ function Card03() {
     };
     return icons[grade] || <LogoGood animated />;
   };
-
+  
   // ===== 대기질 항목 렌더링 함수 =====
   const renderAirQualityItem = (label, unit, value, type, flg) => {
     const info = getAirQualityInfo(value, type, flg);
@@ -76,12 +81,12 @@ function Card03() {
       </div>
     );
   };
-
-
+  
+  
   // ===== 드래그 끝났을 때 ===============
   const handleDragEnd = (event, info) => {
     if (!containerRef.current) return;
-
+    
     const containerWidth = containerRef.current.offsetWidth;
     const offset = info.offset.x; // 드래그한 거리
     const velocity = info.velocity.x; // 드래그 속도
@@ -103,8 +108,9 @@ function Card03() {
       }
     }
   };
-
-
+  
+  
+  
   useEffect(() => {
     // =====================================
     // ||     측정소 값이 없을 경우 -> 종료
@@ -118,9 +124,25 @@ function Card03() {
     // ||     측정소 값이 있을 경우 -> api 받아오기
     // =====================================
     dispatch(getCurrentAirCondition(measuringStation));
-
+    
   }, [measuringStation])
-
+  
+  // ===== 로딩 스켈레톤 =====
+  if(loading) {
+    return (
+        <LoadingSkeleton
+          width="90%"
+          height="330px"
+          borderRadius="15px"
+          backgroundColor="#e6e9ecff"
+          highlightColor="#f8f9fa"
+          lines={[
+            { width: '50%', height: '50px', align: 'center' },
+            { width: '100%', height: '150px' },
+          ]}
+        />
+    );
+  }
   return (
     <>
       <div className="card03-container">
@@ -131,20 +153,20 @@ function Card03() {
           <div className="card03-swipe-wrapper">
           { measuringStation 
           ? <motion.div className="card03-swipe-container"
-              ref={containerRef}
-              drag = "x"
-              dragConstraints={{ left: 0, right: 0 }} // 드래그 범위
-              dragElastic={0.5}  // 탄성효과
-              onDragEnd={handleDragEnd}
-              animate={{
-                x: -page * (containerRef.current?.offsetWidth || 0) // 페이지 전환 애니메이션
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 300,
-                damping: 30,
-              }}
-            >
+          ref={containerRef}
+          drag = "x"
+          dragConstraints={{ left: 0, right: 0 }} // 드래그 범위
+          dragElastic={0.5}  // 탄성효과
+          onDragEnd={handleDragEnd}
+          animate={{
+            x: -page * (containerRef.current?.offsetWidth || 0) // 페이지 전환 애니메이션
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 300,
+            damping: 30,
+          }}
+          >
               <div className="card03-swipe-page">
                 {renderAirQualityItem('미세먼지', 'PM-10', currentPM10, 'PM10', pm10Flag)}
                 {renderAirQualityItem('초미세먼지', 'PM-2.5', currentPM25, 'PM25', pm25Flag)}
@@ -167,10 +189,10 @@ function Card03() {
             {
               Array(2).fill(0).map((_, index) => (
                 <motion.div 
-                  className={`card03-pagination-dot card03-pagination-${index === page ? 'activate' : 'disabled'}`} 
-                  key={index}
-                  onClick={() => setPage(index)}
-                  whileTap={{ scale: 1.2 }}
+                className={`card03-pagination-dot card03-pagination-${index === page ? 'activate' : 'disabled'}`} 
+                key={index}
+                onClick={() => setPage(index)}
+                whileTap={{ scale: 1.2 }}
                   style={{ cursor: 'pointer' }} 
                 >
                   <GoDotFill />
