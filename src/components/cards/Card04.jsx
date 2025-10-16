@@ -8,12 +8,11 @@ import LogoModerate from '../logo/LogoModerate.jsx';
 import LogoBad from '../logo/LogoBad.jsx';
 import LogoVeryBad from '../logo/LogoVeryBad.jsx';
 import LogoError from "../logo/LogoError.jsx";
-// Slice
 // Thunk 
 import { getSearchLocation } from "../../store/thunks/locationThunk.js"; // 측정소 검색 Thunk
 import { fetchFineDustData } from "../../store/thunks/fineDustThunk.js"; // 미세먼지 데이터
 
-import { GRADE_CLASS } from "../../constants/ultraFineDustLevel";
+import { GRADE_CLASS } from "../../constants/ultraFineDustLevel.js";
 
 // 각 북마크 항목 렌더링 컴포넌트
 function BookmarkItem({ region }) {

@@ -82,7 +82,7 @@
   border: 1px solid var(--personal-blue);
   border-radius: 10px;
   
-  padding: 10px 15px;
+  padding: 8px 15px;
 
   display: flex;
   align-items: center;
@@ -103,4 +103,11 @@
 .header-search-list::-webkit-scrollbar-thumb {
   background: var(--deep-blue); /* 스크롤바 색상 */
   border-radius: 5px;
+}
+.bookmark-icon {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

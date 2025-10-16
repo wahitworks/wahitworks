@@ -2,11 +2,12 @@ import "./HeaderMenu.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
-import { useContext } from "react";
-import { PWAInstallContext } from "../../contexts/PWAInstallContext.jsx";
-import installIconUrl from "../../assets/icons/install_icon.svg";
+import { useContext, useEffect } from "react";
 
+import installIconUrl from "../../assets/icons/install_icon.svg";
+import { PWAInstallContext } from "../../contexts/PWAInstallContext.jsx";
 import { setMenuFlg, setSearchFlg } from "../../store/slices/headerSlice.js";
+
 
 function HeaderMenu() {
   const dispatch = useDispatch();
@@ -24,6 +25,14 @@ function HeaderMenu() {
     dispatch(setMenuFlg(false));
     dispatch(setSearchFlg(false));
   };
+
+  // ===== 마운트, 언마운트 - 스크롤 방지 설정 =====
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    }
+  }, [])
 
   return (
     <div className="app-wrapper">

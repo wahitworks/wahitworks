@@ -132,17 +132,20 @@ function Card03() {
     return (
         <LoadingSkeleton
           width="90%"
-          height="330px"
+          height="328px"
           borderRadius="15px"
           backgroundColor="#e6e9ecff"
           highlightColor="#f8f9fa"
           lines={[
-            { width: '50%', height: '50px', align: 'center' },
-            { width: '100%', height: '150px' },
+            { width: '60%', height: '50px', align: 'center' },
+            { width: '50%', height: '20px', align: 'center' },
+            { width: '100%', height: '191px' },
+            { width: '20%', height: '20px', align: 'center' },
           ]}
         />
     );
   }
+
   return (
     <>
       <div className="card03-container">
