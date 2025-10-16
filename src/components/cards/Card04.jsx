@@ -17,8 +17,7 @@ import { GRADE_CLASS } from "../../constants/ultraFineDustLevel.js";
 
 // 각 북마크 항목 렌더링 컴포넌트
 function BookmarkItem({ region }) {
-  // const dispatch = useDispatch();
-
+  
   // 등급을 계산하는 함수 
   const getGradeNumberFromValue = (value, type) => {
     const standards = {
@@ -39,23 +38,8 @@ function BookmarkItem({ region }) {
   return '4';
   }
 
-  // 지역이름으로 측정소이름 찾기 위한 Thunk호출
-  // useEffect(() => {
-  //   if (region) {
-  //     dispatch(getSearchLocation(region));
-  //   }
-  // }, [dispatch, region]);
-
   const stationName = useSelector((state) => state.bookmarkCard04.regionStationMap[region]);
   const station = useSelector(state => state.bookmarkCard04.regionStationMap);
-
-  // 미세먼지 정보 호출
-  // useEffect(() => {
-  //   if (stationName && stationName !== 'error') {
-  //     // 다른 코드와의 통일성을 위해 객체로 넘김
-  //     dispatch(fetchFineDustData({ stationName: stationName }));
-  //   }
-  // }, [dispatch, stationName]);
 
   // 해당 측정소의 미세먼지 데이터 호출
   const data = useSelector((state) => stationName ? state.fineDust.data[stationName] : null);
@@ -100,6 +84,17 @@ function BookmarkItem({ region }) {
       default: return <LogoError />;
     }
   }; 
+  
+  // 등급별 텍스트
+  const getGradeText = (grade) => {
+    switch (grade) {
+      case "1": return "좋음";
+      case "2": return "보통";
+      case "3": return "나쁨";
+      case "4": return "매우 나쁨";
+      default: return "데이터 없음";
+    }
+  }
 
   return (
       <div className="card04-bookmark-item-container">
@@ -147,7 +142,7 @@ function BookmarkItem({ region }) {
                   <div className="card04-air-log">
                     <AirQualityLogo grade={dustGrade} />
                   </div>
-                  <p className="card04-bookmark-list-toggle-info-value">{}</p>
+                  <p>{getGradeText(dustGrade)}</p>
                 </div>
                 <div className="card04-bookmark-list-toggle-info">
                   <p className="card04-bookmark-list-toggle-info-title">초미세먼지</p>
@@ -155,6 +150,7 @@ function BookmarkItem({ region }) {
                   <div className="card04-air-log">
                     <AirQualityLogo grade={ultraDustGrade} />
                   </div>
+                  <p>{getGradeText(ultraDustGrade)}</p>
                 </div>
                 <div className="card04-bookmark-list-toggle-info">
                   <p className="card04-bookmark-list-toggle-info-title">오존O₃</p>
@@ -162,6 +158,7 @@ function BookmarkItem({ region }) {
                   <div className="card04-air-log">
                     <AirQualityLogo grade={o3Grade} />
                   </div>
+                  <p>{getGradeText(o3Grade)}</p>
                 </div>
               </>
             ) : null }

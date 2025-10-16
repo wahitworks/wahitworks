@@ -12,11 +12,11 @@ const bookmarkSlice = createSlice({
   reducers: {
     addBookmark(state, action) {
       state.bookmarkedRegions.push(action.payload);
-      // localStorageUtil.setBookmarkedRegions(state.bookmarkedRegions);
+      localStorageUtil.setBookmarkedRegions(state.bookmarkedRegions);
     },
     removeBookmark(state, action) {
       state.bookmarkedRegions = state.bookmarkedRegions.filter(item => item !== action.payload);
-      // localStorageUtil.setBookmarkedRegions(state.bookmarkedRegions);
+      localStorageUtil.setBookmarkedRegions(state.bookmarkedRegions);
     },    
     setBookmarkSearchInput(state, action) {
       state.bookmarkSearchInput = action.payload;
@@ -31,6 +31,10 @@ const bookmarkSlice = createSlice({
       state.bookmarkedRegions = action.payload;
       // localStorageUtil.setBookmarkedRegions(state.bookmarkedRegions);
     },
+    // 저장하기 버튼 순서 저장
+    saveBookmarkOrder(state) {
+      localStorageUtil.setBookmarkedRegions(state.bookmarkedRegions);
+    },
   }
 })
 
@@ -41,6 +45,7 @@ export const {
   setBookmarkSearchKeyword,
   setBookmarkFilteredList,
   updateBookmarkedRegions,
+  saveBookmarkOrder,
 } = bookmarkSlice.actions;
 
 export default bookmarkSlice.reducer;
