@@ -70,3 +70,15 @@
   font-size: 14px;
   text-align: right;
 }
+
+.header-Menu-item-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-Menu-item-with-icon img {
+  width: 20px;
+  height: 20px;
+  transform: translateY(2px);
+}

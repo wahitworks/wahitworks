@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Card02.css";
+import LogoError from "../logo/LogoError.jsx";
 
 // 우리가 만든 Thunk와 Slice의 액션들을 가져옵니다.
 import { fetchAirQuality } from "../../store/thunks/airQualityThunk.js";
@@ -12,10 +13,10 @@ import bad from "../../assets/weather-indicators/bad.jpg";
 import normal from "../../assets/weather-indicators/normal.jpg";
 import good from "../../assets/weather-indicators/good.jpg";
 
-import LogoGood from '../logo/LogoGood.jsx';
-import LogoModerate from '../logo/LogoModerate.jsx';
-import LogoBad from '../logo/LogoBad.jsx';
-import LogoVeryBad from '../logo/LogoVeryBad.jsx';
+import LogoGood from "../logo/LogoGood.jsx";
+import LogoModerate from "../logo/LogoModerate.jsx";
+import LogoBad from "../logo/LogoBad.jsx";
+import LogoVeryBad from "../logo/LogoVeryBad.jsx";
 
 // 등급별 텍스트와 이미지를 매핑하는 헬퍼 객체
 const labelByGrade = { 1: "좋음", 2: "보통", 3: "나쁨", 4: "매우나쁨" };
@@ -54,11 +55,10 @@ function Card02() {
     return (
       <div className="card02-container">
         <h2>초미세먼지 예보</h2>
-        <p>에러가 발생했습니다: {error}</p>
+        <LogoError />
       </div>
     );
   }
-
   // 3. 데이터가 비어있을 때 표시할 화면
   // 서버가 불안정할시의 가드
   if (!dailyForecasts || dailyForecasts.length === 0) {
@@ -73,10 +73,10 @@ function Card02() {
   // ++ grade 별 아이콘 컴포넌트 출력을 위한 함수
   const getAirQualityIcon = (grade) => {
     const icons = {
-      'good': <LogoGood animated style={{ margin: '20px'}}/>,
-      'moderate': <LogoModerate animated  style={{ margin: '10px'}}/>,
-      'bad': <LogoBad animated  style={{ margin: '10px'}}/>,
-      'very-bad': <LogoVeryBad animated  style={{ margin: '10px'}}/>,
+      good: <LogoGood animated style={{ margin: "20px" }} />,
+      moderate: <LogoModerate animated style={{ margin: "10px" }} />,
+      bad: <LogoBad animated style={{ margin: "10px" }} />,
+      "very-bad": <LogoVeryBad animated style={{ margin: "10px" }} />,
     };
     return icons[grade] || <LogoGood animated />;
   };
@@ -132,8 +132,8 @@ function Card02() {
               {/* pollutantKey가 맵을 돌며 pollutantNames의 키에 해당하는 값을 꺼내 출력 */}
               <h4>{pollutantNames[pollutantKey]}</h4>
               <div className="forecast-img-wrapper">
-                { getAirQualityIcon(grade) }
-              </div>      
+                {getAirQualityIcon(grade)}
+              </div>
               {/* <img
                 // text, img 매핑 헬퍼 객체 숫자 키값에 해당하는 value를 grade를 사용해서 뽑아옴
                 src={imgByGrade[grade]}

@@ -3,6 +3,7 @@ import Header from "./components/header/Header.jsx";
 import { Outlet } from "react-router-dom";
 import Topbtn from "./components/topBtn/topBtn.jsx";
 import "./App.css";
+import { PWAInstallContext } from "./contexts/PWAInstallContext.jsx";
 
 function App() {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -20,13 +21,13 @@ function App() {
       }
 
       // 기본 프롬프트를 막고, '리모콘' 저장
-      e.preventDefault();
-      setDeferredPrompt(e);
+      e.preventDefault(); // 이벤트 리스너로 받은 e의 메써드
+      setDeferredPrompt(e); // 받은 이벤트 객체로 로컬 state 변경
       // 커스텀 모달을 띄우기 위해 상태 변경
       setShowInstallModal(true);
     };
 
-    window.addEventListener("beforeinstallprompt", handler);
+    window.addEventListener("beforeinstallprompt", handler); //'이벤트이름', '실행할 함수' 이벤트리스너가 이벤트 객체를 handler함수의 첫 인자로 넘겨줌
 
     return () => {
       window.removeEventListener("beforeinstallprompt", handler);
@@ -51,7 +52,7 @@ function App() {
     if (!deferredPrompt) return;
 
     // 브라우저 설치창 띄우기
-    deferredPrompt.prompt();
+    deferredPrompt.prompt(); //이벤트 객체의 설치 팝업 꺼내는 함수
     await deferredPrompt.userChoice;
 
     // 상태 초기화
@@ -60,36 +61,38 @@ function App() {
   };
 
   return (
-    <>
-      <Header />
-      <main>
-        <Outlet />
-        <Topbtn />
-        {/* 커스텀 앱 설치 모달 */}
-        {showInstallModal && (
-          <div className="modal-backdrop">
-            <div className="modal-content">
-              <p>'대구맑음' 앱을 홈 화면에 추가하시겠습니까?</p>
-              <button
-                onClick={handleInstallAccept}
-                className="modal-button primary"
-              >
-                설치
-              </button>
-              <button onClick={handleInstallDismiss} className="modal-button">
-                나중에
-              </button>
+    <PWAInstallContext.Provider value={{ deferredPrompt, handleInstallAccept }}>
+      <>
+        <Header />
+        <main>
+          <Outlet />
+          <Topbtn />
+          {/* 커스텀 앱 설치 모달 */}
+          {showInstallModal && (
+            <div className="modal-backdrop">
+              <div className="modal-content">
+                <p>'대구맑음' 앱을 홈 화면에 추가하시겠습니까?</p>
+                <button
+                  onClick={handleInstallAccept}
+                  className="modal-button primary"
+                >
+                  설치
+                </button>
+                <button onClick={handleInstallDismiss} className="modal-button">
+                  나중에
+                </button>
+              </div>
             </div>
-          </div>
-        )}
-        {/* 수동 설치 힌트 메시지 */}
-        {showManualInstallHint && (
-          <div className="manual-install-hint">
-            앱 설치는 브라우저 주소창의 설치 아이콘을 통해 언제든지 가능합니다.
-          </div>
-        )}
-      </main>
-    </>
+          )}
+          {/* 수동 설치 힌트 메시지 */}
+          {showManualInstallHint && (
+            <div className="manual-install-hint">
+              추후 수동 설치는 해당 홈페이지 우측 상단 메뉴에서 가능합니다.
+            </div>
+          )}
+        </main>
+      </>
+    </PWAInstallContext.Provider>
   );
 }
 
