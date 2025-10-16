@@ -1,5 +1,5 @@
 import "./Card03.css";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GoDotFill } from "react-icons/go";
 import { RiFileWarningLine } from "react-icons/ri";
@@ -12,10 +12,8 @@ import LogoBad from '../logo/LogoBad.jsx';
 import LogoVeryBad from '../logo/LogoVeryBad.jsx';
 import LogoError from "../logo/LogoError.jsx";
 
-import { getCurrentAirCondition } from "../../store/thunks/currentAirConditionThunk.js";
 import { getAirQualityInfo } from "../../utils/airQualityGradeUtil.js";
 import LoadingSkeleton from "../commons/LoadingSkeleton.jsx";
-import { CiTextAlignCenter } from "react-icons/ci";
 
 function Card03() {
   
@@ -109,23 +107,6 @@ function Card03() {
     }
   };
   
-  
-  
-  useEffect(() => {
-    // =====================================
-    // ||     측정소 값이 없을 경우 -> 종료
-    // =====================================
-    if(!measuringStation) {
-      // console.log('아직 측정소 저장 안됨!');
-      return;
-    }
-    
-    // =====================================
-    // ||     측정소 값이 있을 경우 -> api 받아오기
-    // =====================================
-    dispatch(getCurrentAirCondition(measuringStation));
-    
-  }, [measuringStation])
   
   // ===== 로딩 스켈레톤 =====
   if(loading) {

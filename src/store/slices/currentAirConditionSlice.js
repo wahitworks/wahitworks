@@ -5,12 +5,12 @@ const currentAirConditionSlice = createSlice({
   name: 'currentAirCondition',
   initialState: {
     dataTime: '',
-    currentPM10: 0,
-    currentPM25: 0,
-    currentO3: 0,
-    currentNO2: 0,
-    currentCO: 0,
-    currentSO2: 0,
+    currentPM10: null,
+    currentPM25: null,
+    currentO3: null,
+    currentNO2: null,
+    currentCO: null,
+    currentSO2: null,
     pm10Flag: "",
     pm25Flag: "",
     o3Flag: "",
@@ -48,8 +48,8 @@ const currentAirConditionSlice = createSlice({
         state.no2Flag = lastData.no2Flag;
         state.pm10Flag = lastData.pm10Flag;
       }
-      // console.log(lastData);
-      // console.log('미세먼지:', state.currentPM10, '초미세먼지:', state.currentPM25, '오존:', state.currentO3, '이산화질소:', state.currentNO2, '일산화탄소:', state.currentCO, '아황산가스:', state.currentSO2);
+      console.log(lastData);
+      console.log('미세먼지:', state.currentPM10, '초미세먼지:', state.currentPM25, '오존:', state.currentO3, '이산화질소:', state.currentNO2, '일산화탄소:', state.currentCO, '아황산가스:', state.currentSO2);
     })
 
     // ============================================

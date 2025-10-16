@@ -10,9 +10,6 @@ export const getCurrentAirCondition = createAsyncThunk(
   'currentAirCondition/getCurrentAirCondition',
   async(measuringStation, { rejectWithValue }) => {
     try {
-      // const state = getState();
-      // console.log('thunkAPI로 받아온 측정소:', state.locationSlice.measuringStation);
-
       // ============================================
       // ||     1. api 설정
       // ============================================

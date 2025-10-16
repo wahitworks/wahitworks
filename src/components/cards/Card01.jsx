@@ -2,8 +2,8 @@ import "./Card01.css";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { getCurrentLocation } from "../../store/thunks/locationThunk";
-import { getCurrentAirCondition } from "../../store/thunks/currentAirConditionThunk.js";
+// import { getCurrentLocation } from "../../store/thunks/locationThunk";
+// import { getCurrentAirCondition } from "../../store/thunks/currentAirConditionThunk.js";
 
 // 로고 컴포넌트 import
 import LogoGoodWhite from "../commons/LogoGoodWhite.jsx";
@@ -13,22 +13,22 @@ import LogoVeryBadWhite from "../commons/LogoVeryBadWhite.jsx";
 import LogoErrorWhite from "../commons/LogoErrorWhite.jsx";
 
 function Card01() {
-  const dispatch = useDispatch();
-  const { selectedLocationByUser, currentRegion, measuringStation } = useSelector(
-    (state) => state.locationSlice
-  );
+  // const dispatch = useDispatch();
+  // const { selectedLocationByUser, currentRegion, measuringStation } = useSelector(
+  //   (state) => state.locationSlice
+  // );
   const currentPM10 = useSelector(state => state.currentAirCondition.currentPM10);
 
-  useEffect(() => {
-    if (measuringStation) {
-      dispatch(getCurrentAirCondition(measuringStation));
-      return;
-    }
+  // useEffect(() => {
+  //   if (measuringStation) {
+  //     dispatch(getCurrentAirCondition(measuringStation));
+  //     return;
+  //   }
 
-    if (!selectedLocationByUser && !currentRegion) {
-      dispatch(getCurrentLocation());
-    }
-  }, [dispatch, measuringStation, selectedLocationByUser, currentRegion]);
+  //   if (!selectedLocationByUser && !currentRegion) {
+  //     dispatch(getCurrentLocation());
+  //   }
+  // }, [dispatch, measuringStation, selectedLocationByUser, currentRegion]);
 
 
   const getDustInfo = (pm10Value) => {
