@@ -1,4 +1,4 @@
-import Logo from "../logo/Logo.jsx";
+import LogoOrigin from "../logo/LogoOrigin.jsx";
 import "./Introduce.css";
 import logoTitle from "../../assets/logos/logo-title-200.svg";
 
@@ -12,7 +12,7 @@ function Introduce () {
         대구의 맑은 공기와 함께 이용자 맞춤 서비스를 제공하며 건강한 하루를 보내기를 바라는 마음을 담았습니다.
         </p>
         <div className="introduce-logo-container">
-          <Logo animated className="introduce-logo"></Logo>
+          <LogoOrigin animated className="introduce-logo" />
           <div className="introduce-logo-title" style={{ backgroundImage: `url(${logoTitle})` }}>
           </div>
         </div>

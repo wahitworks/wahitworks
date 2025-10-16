@@ -59,7 +59,7 @@ export const getCurrentLocation = createAsyncThunk(
         // console.log('측정소 찾기 완료 :', nearestStation);
         
       // ==============================================
-      // ||    반환!
+      // ||    반환 { 현재GPS: {위도, 경도, 현재지역}, 가까운 측정소: {가까운 측정소 정보, 거리} }
       // ==============================================
         return {
           currentGPS: {
@@ -124,7 +124,7 @@ export const getSearchLocation = createAsyncThunk(
       // console.log('좌표 변환 : ', searchCoordinates);
       
       // ============================================
-      // ||     2. 키워드로 위도&경도 가져오기 (카카오 SDK 사용 : index.html에 스크립트 로드 필요)
+      // ||     2. 가져온 위도&경도로 가까운 측정소 찾기
       // ============================================
       const nearestStation = findNearestStation(searchCoordinates.lat, searchCoordinates.lng)
       // console.log('좌표로 측정소 찾기 : ', nearestStation);

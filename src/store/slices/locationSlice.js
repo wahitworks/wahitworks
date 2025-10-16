@@ -42,10 +42,10 @@ const locationSlice = createSlice({
     .addCase(getCurrentLocation.fulfilled, (state, action) => {
       state.currentLocation = { lat: action.payload.currentGPS.lat, lng: action.payload.currentGPS.lng };
       state.currentRegion = action.payload.currentGPS.currentRegion;
-      console.log('GPS slice에서 담은 것: currentLocation-', state.currentLocation, 'currentRegion-', state.currentRegion);
+      // console.log('GPS slice에서 담은 것: currentLocation-', state.currentLocation, 'currentRegion-', state.currentRegion);
       state.measuringStation = action.payload.nearestStation.stationName;
       state.measuringStationDistance = action.payload.nearestStation.distance;
-      console.log('GPS slice에서 담은 것: measuringStation-', state.measuringStation, 'measuringDistance-', state.measuringStationDistance);
+      // console.log('GPS slice에서 담은 것: measuringStation-', state.measuringStation, 'measuringDistance-', state.measuringStationDistance);
     })
 
     // ============================================
@@ -58,13 +58,7 @@ const locationSlice = createSlice({
     .addCase(getSearchLocation.fulfilled, (state, action) => {
       state.measuringStation = action.payload.nearestStation.stationName;
       state.measuringStationDistance = action.payload.nearestStation.distance;
-      // console
-      // 검색한 지역(action.meta.arg-thunk에서 자동으로 입력된 값)을 key로, 찾은 측정소 이름을 value로 저장
-      // if (action.meta.arg && action.payload.nearestStation) {
-      //   state.regionStationMap[action.meta.arg] = action.payload.nearestStation.stationName;
-      //   console.log('regionStationMap :', state.regionStationMap[action.meta.arg], 'action.payload에서 가져온 측정소 이름 :', action.payload.nearestStation.stationName)
-      // }
-      console.log('검색 slice에서 담은 것: measuringStation-', state.measuringStation, 'measuringDistance-', state.measuringStationDistance);
+      // console.log('검색 slice에서 담은 것: measuringStation-', state.measuringStation, 'measuringDistance-', state.measuringStationDistance);
     })
 
     // ============================================

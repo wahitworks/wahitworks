@@ -12,7 +12,7 @@ import LogoVeryBad from '../logo/LogoVeryBad.jsx';
 import LogoError from "../logo/LogoError.jsx";
 
 import { getCurrentAirCondition } from "../../store/thunks/currentAirConditionThunk.js";
-import { getAirQualityGrade, getAirQualityGradeKo } from "../../utils/airQualityGradeUtil.js";
+import { getAirQualityInfo } from "../../utils/airQualityGradeUtil.js";
 
 function Card03() {
   const dispatch = useDispatch();
@@ -25,6 +25,13 @@ function Card03() {
   const currentCO = useSelector(state => state.currentAirCondition.currentCO)
   const currentSO2 = useSelector(state => state.currentAirCondition.currentSO2)
   const dataTime = useSelector(state => state.currentAirCondition.dataTime);
+  const pm10Flag = useSelector(state => state.currentAirCondition.pm10Flag);
+  const pm25Flag = useSelector(state => state.currentAirCondition.pm25Flag);
+  const o3Flag = useSelector(state => state.currentAirCondition.o3Flag);
+  const no2Flag = useSelector(state => state.currentAirCondition.no2Flag);
+  const coFlag = useSelector(state => state.currentAirCondition.coFlag);
+  const so2Flag = useSelector(state => state.currentAirCondition.so2Flag);
+  console.log(pm10Flag, pm25Flag, o3Flag, no2Flag, coFlag, so2Flag)
 
   const loading = useSelector(state => state.currentAirCondition.loading);
 
@@ -45,14 +52,15 @@ function Card03() {
       'moderate': <LogoModerate animated />,
       'bad': <LogoBad animated />,
       'very-bad': <LogoVeryBad animated />,
-      'no-data' : <LogoError animated />,
+      'no-data': <LogoError animated />,
+      'special': <LogoError animated />,
     };
     return icons[grade] || <LogoGood animated />;
   };
 
   // ===== 대기질 항목 렌더링 함수 =====
-  const renderAirQualityItem = (label, unit, value, type) => {
-    const grade = getAirQualityGrade(value, type);
+  const renderAirQualityItem = (label, unit, value, type, flg) => {
+    const info = getAirQualityInfo(value, type, flg);
     // console.log('value:', value);
     // console.log('typeof value:', typeof value);
     // console.log('value === 0:', value === 0);
@@ -62,9 +70,9 @@ function Card03() {
       <div className="card03-result-item">
         <p className="card03-font-b">{label}</p>
         <p className="card03-font-small-gray card03-margin-bottom">{unit}</p>
-        { value !== null && value !== undefined && Number(value) !== 0 ? <p className="card03-font-b card03-margin-bottom card03-font-small">{value}{type.startsWith('PM') ? '㎍/㎥' : 'ppm'}</p> : null}
-        <div className="card03-icon-wrapper">{getAirQualityIcon(grade)}</div>
-        <p className="card03-font-b card03-margin-top">{getAirQualityGradeKo(grade)}</p>
+        <p className="card03-font-b card03-margin-bottom card03-font-small">{ value !== null && value !== undefined && Number(value) !== 0 ? `${value}${type.startsWith('PM') ? '㎍/㎥' : 'ppm'}` : '-'}</p>
+        <div className="card03-icon-wrapper">{getAirQualityIcon(info.grade)}</div>
+        <p className="card03-font-b card03-margin-top">{info.text}</p>
       </div>
     );
   };
@@ -138,14 +146,14 @@ function Card03() {
               }}
             >
               <div className="card03-swipe-page">
-                {renderAirQualityItem('미세먼지', 'PM-10', currentPM10, 'PM10')}
-                {renderAirQualityItem('초미세먼지', 'PM-2.5', currentPM25, 'PM25')}
-                {renderAirQualityItem('오존', 'O₃', currentO3, 'O3')}
+                {renderAirQualityItem('미세먼지', 'PM-10', currentPM10, 'PM10', pm10Flag)}
+                {renderAirQualityItem('초미세먼지', 'PM-2.5', currentPM25, 'PM25', pm25Flag)}
+                {renderAirQualityItem('오존', 'O₃', currentO3, 'O3', o3Flag)}
               </div>
               <div className="card03-swipe-page">
-                {renderAirQualityItem('이산화질소', 'NO₂', currentNO2, 'NO2')}
-                {renderAirQualityItem('일산화탄소', 'CO', currentCO, 'CO')}
-                {renderAirQualityItem('아황산가스', 'SO₂', currentSO2, 'SO2')}
+                {renderAirQualityItem('이산화질소', 'NO₂', currentNO2, 'NO2', no2Flag)}
+                {renderAirQualityItem('일산화탄소', 'CO', currentCO, 'CO', coFlag)}
+                {renderAirQualityItem('아황산가스', 'SO₂', currentSO2, 'SO2', so2Flag)}
               </div>
             </motion.div>
           : <div className="card03-swipe-container-no-station">

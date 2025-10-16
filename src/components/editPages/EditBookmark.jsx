@@ -71,7 +71,7 @@ function EditBookmark () {
   const [showToast, setShowToast] = useState(false);
   const toastTimerRef = useRef(null);
 
-  console.log('input: ', bookmarkSearchInput);
+  // console.log('input: ', bookmarkSearchInput);
 
   // 원본 목록과 저장 여부를 추적하기 위한 ref 생성
   const originalBookmarks = useRef(null);
@@ -178,10 +178,10 @@ function EditBookmark () {
   const toggleBookmark = (item) => {
     if(isBookmarked(item)) {
       dispatch(removeBookmark(item))
-      console.log('제거:', item);
+      // console.log('제거:', item);
     } else {
       dispatch(addBookmark(item));
-      console.log('추가:', bookmarkedRegions);
+      // console.log('추가:', bookmarkedRegions);
     }
   };
 

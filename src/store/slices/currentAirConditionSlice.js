@@ -11,6 +11,12 @@ const currentAirConditionSlice = createSlice({
     currentNO2: 0,
     currentCO: 0,
     currentSO2: 0,
+    pm10Flag: "",
+    pm25Flag: "",
+    o3Flag: "",
+    no2Flag: "",
+    coFlag: "",
+    so2Flag: "",
     page: 0,
     loading: false,
     error: null,
@@ -34,6 +40,11 @@ const currentAirConditionSlice = createSlice({
         state.currentCO = lastData.coValue;
         state.currentSO2 = lastData.so2Value;
         state.dataTime = lastData.dataTime;
+        state.so2Flag = lastData.so2Flag;
+        state.coFlag = lastData.coFlag;
+        state.o3Flag = lastData.o3Flag;
+        state.no2Flag = lastData.no2Flag;
+        state.pm10Flag = lastData.pm10Flag;
       }
       // console.log(lastData);
       // console.log('미세먼지:', state.currentPM10, '초미세먼지:', state.currentPM25, '오존:', state.currentO3, '이산화질소:', state.currentNO2, '일산화탄소:', state.currentCO, '아황산가스:', state.currentSO2);

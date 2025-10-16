@@ -96,24 +96,22 @@ function LocationSearch() {
 
     dispatch(setFilteredLocationList(filteredResult));
   }, [searchInput, dispatch]);
-
-  // ====== useEffect - 검색창 여닫을 때마다(searchFlg) 변화 지정
-  useEffect(() => {
-    if (!searchFlg) {
-      // 검색창 닫힐 때마다
-      dispatch(setSearchInput("")); // 인풋 비우기
-      dispatch(setFilteredLocationList([])); // 리스트 비우기
-    }
-  }, [searchFlg, dispatch]); // searchFlg 변화 감지!
-
-  // ===== 마운트, 언마운트 설정 =====
+      
+  // ===== 마운트, 언마운트 - 스크롤 방지 설정 =====
+  // ===== 언마운트 - 검색창 닫을 때마다(searchFlg = false) input, list 비우기
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = 'unset';
-    }
-  })
 
+      // console.log(searchFlg)
+      // console.log(filteredLocationList)
+      
+      dispatch(setSearchInput("")); // 인풋 비우기
+      dispatch(setFilteredLocationList([])); // 리스트 비우기
+    }
+  }, [])
+  
 
   return (
     <>

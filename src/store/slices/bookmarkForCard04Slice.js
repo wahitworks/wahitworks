@@ -17,7 +17,7 @@ const bookmarkCard04 = createSlice({
       // 검색한 지역(action.meta.arg-thunk에서 자동으로 입력된 값)을 key로, 찾은 측정소 이름을 value로 저장
       if (action.meta.arg && action.payload.nearestStation) {
         state.regionStationMap[action.meta.arg] = action.payload.nearestStation.stationName;
-        console.log('regionStationMap :', state.regionStationMap[action.meta.arg], 'action.payload에서 가져온 측정소 이름 :', action.payload.nearestStation.stationName)
+        // console.log('regionStationMap :', state.regionStationMap[action.meta.arg], 'action.payload에서 가져온 측정소 이름 :', action.payload.nearestStation.stationName)
       }
     })
     .addMatcher(
