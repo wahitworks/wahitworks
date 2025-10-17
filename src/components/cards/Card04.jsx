@@ -180,9 +180,10 @@ function Card04() {
   const bookmarkedRegions = useSelector(state => state.bookmarkSlice.bookmarkedRegions);
   const loading = useSelector(state => state.bookmarkSlice.loading)
   const navigate = useNavigate();
+ 
 
   // 카드 높이 계산
-  const skeletonHeight = 60 + (bookmarkedRegions.length * 65);
+  const skeletonHeight = 70 + (bookmarkedRegions.length * 65);
 
   // 스켈레톤 라인 갯수
   const skeletonLines = [
@@ -197,7 +198,7 @@ function Card04() {
 
   // EditBookmark 페이지로 이동
   const Navigate = () => {
-    navigate(`/editcard`);
+    navigate(`/editbookmark`);
   };
   
   // ===== 로딩 스켈레톤 =====

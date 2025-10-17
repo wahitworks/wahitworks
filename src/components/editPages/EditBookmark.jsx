@@ -104,7 +104,25 @@ function EditBookmark() {
   const [showToast, setShowToast] = useState(false);
   const toastTimerRef = useRef(null);
 
-  // console.log('input: ', bookmarkSearchInput);
+  // 편집중인 북마크 목록 관리용
+  const [editingList, setEditingList] = useState(bookmarkedRegions);
+
+  // 변경될 때 순서 유지, 리스트 업뎃(집 가서 수정할 부분)
+  // useEffect(() => {
+  //   // 항목 순서 유지
+  //   const editingSet = new Set(editingList.map(item => item.region));
+  //   // 목록o 리스트 없는 것 찾기
+  //   const newItems = bookmarkedRegions.fillter(item => !editingSet.has(item.region));
+  //   // 목록기준 삭제항목 제거
+  //   const updatedList = editingList.fillter(item => 
+  //     bookmarkedRegions.some(reduxItem => reduxItem.region === item.region)
+  //   );
+  //     if (newItems.length > 0) {
+  //     setEditingList([...updatedList, ...newItems]);
+  //   } else {
+  //     setEditingList(updatedList);    
+  // }
+  // }, [bookmarkedRegions]);
 
   // 원본 목록과 저장 여부를 추적하기 위한 ref 생성
   // const originalBookmarks = useRef(null);
@@ -174,9 +192,11 @@ function EditBookmark() {
         (item) => item.region === over.id
       );
       // arrayMove 사용 새로운 순서 배열 생성
-      const newOrder = arrayMove(bookmarkedRegions, oldIndex, newIndex);
+      const newOrder = arrayMove(editingList, oldIndex, newIndex);
       // updateBookmarkedRegions 액션 호출
-      dispatch(updateBookmarkedRegions(newOrder));
+      // dispatch(updateBookmarkedRegions(newOrder));
+      // 로컬스토리지 업뎃
+      setEditingList(newOrder);
     }
   }
 
@@ -268,7 +288,6 @@ function EditBookmark() {
     // 저장했음을 표시 (페이지를 벗어날 때 순서를 되돌리지 않도록!)
     // bookmarkSaved.current = true;
     // 현재 상태를 localStorage에 저장
-    // localStorageUtil.setBookmarkedRegions(bookmarkedRegions);
 
     // 기존 타이머가 있으면 취소
     if (toastTimerRef.current) {

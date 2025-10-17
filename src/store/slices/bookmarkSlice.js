@@ -44,7 +44,8 @@ const bookmarkSlice = createSlice({
       localStorageUtil.setBookmarkedRegions(state.bookmarkedRegions);
     },
     // 저장하기 버튼 순서 저장
-    saveBookmarkOrder(state) {
+    saveBookmarkOrder(state, action) {
+      state.bookmarkedRegions = action.payload;
       localStorageUtil.setBookmarkedRegions(state.bookmarkedRegions);
     },
   },
