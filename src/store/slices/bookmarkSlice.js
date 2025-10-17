@@ -57,6 +57,8 @@ const bookmarkSlice = createSlice({
     .addCase(getSearchLocationForBookmark.fulfilled, (state, action) =>{
       state.bookmarkSearchMeasuringStation = action.payload.nearestStation.stationName; // 가까운 측정소
       // console.log('북마크 슬라이스 측정소:', state.bookmarkSearchMeasuringStation);
+      state.loading = false;
+      state.error = null;
     })
     .addMatcher(
       action => action.type.endsWith('/rejected'),

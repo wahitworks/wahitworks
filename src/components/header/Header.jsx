@@ -19,17 +19,15 @@ import {
   getCurrentLocation,
   getSearchLocation,
 } from "../../store/thunks/locationThunk.js";
-import {
-  setMatchedLocation,
-  setMeasuringStation,
-  setMeasuringStationDistance,
-} from "../../store/slices/locationSlice.js";
+import { setMatchedLocation } from "../../store/slices/locationSlice.js";
 import { stringUtils } from "../../utils/stringUtil.js";
 
 // 헤더에 들어가는 아이콘
 import { HiChevronLeft } from "react-icons/hi2";
 import { VscMenu } from "react-icons/vsc";
 import LogoOrigin from "../logo/LogoOrigin.jsx";
+import { LiaSearchLocationSolid } from "react-icons/lia";
+
 
 function Header() {
   const navigate = useNavigate();
@@ -50,6 +48,7 @@ function Header() {
   const currentRegion = useSelector(
     (state) => state.locationSlice.currentRegion
   );
+
 
   // ======================================================
   // ||     검색어 관련 함수
@@ -78,9 +77,7 @@ function Header() {
    * headerTitle 클릭 시, searchFlg true ↔ false
    */
   const headerTitleClick = () => {
-    if (location.pathname === "/") {
-      dispatch(setSearchFlg(!searchFlg));
-    }
+    dispatch(setSearchFlg(!searchFlg));
   };
   /**
    * headerMenu 클릭 시, menuFlg true
@@ -169,12 +166,22 @@ function Header() {
             <HiChevronLeft size={35} />
           </span>
         )}
-        <div className="header-center" onClick={() => headerTitleClick()}>
-          <p className="header-title">{headerTitle}</p>
-          {measuringOn && measuringStation && (
-            <span className="header-title-info">{measuringStation} 측정소</span>
-          )}
-        </div>
+        {
+          location.pathname === "/" 
+          ? (
+            <div className="header-center" onClick={() => headerTitleClick()}>
+              <div className="header-icon-wrapper">
+                <LiaSearchLocationSolid size={'24px'} color="#777"/>
+              </div>
+              <span className="header-title">{headerTitle}</span>
+              {measuringOn && measuringStation && (
+                <span className="header-title-info">{measuringStation} 측정소</span>
+              )}
+            </div>
+          ) : (
+            <p className="header-title header-right-padding">{headerTitle}</p>
+          )
+        }
         <div className="header-menu" onClick={() => headerMenuClick()}>
           <VscMenu size={35} />
         </div>

@@ -76,7 +76,7 @@ function Card03() {
         <p className="card03-font-small-gray card03-margin-bottom">{unit}</p>
         <p className="card03-font-b card03-margin-bottom card03-font-small">{ value !== null && value !== undefined && Number(value) !== 0 ? `${value}${type.startsWith('PM') ? '㎍/㎥' : 'ppm'}` : '-'}</p>
         <div className="card03-icon-wrapper">{getAirQualityIcon(info.grade)}</div>
-        <p className="card03-font-b card03-margin-top">{info.text}</p>
+        <p className="card03-result-info card03-font-nowrap card03-font-b card03-margin-top">{info.text}</p>
       </div>
     );
   };

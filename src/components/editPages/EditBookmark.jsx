@@ -137,7 +137,7 @@ function EditBookmark () {
   );
 
   // 드래그 종료시
-  function handleDragEnd(event) {s
+  function handleDragEnd(event) {
     const { active, over } = event;
 
     if (active.id !== over.id) {

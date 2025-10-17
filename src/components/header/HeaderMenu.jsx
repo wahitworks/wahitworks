@@ -61,6 +61,7 @@ function HeaderMenu() {
             />
 
             {/* 실제 영역 */}
+            <div className="heacer-Menu-wrapper" onClick={() => handleMenuClose()}>
             <motion.div
               className="header-Menu-container"
               onClick={(e) => e.stopPropagation()}
@@ -83,13 +84,13 @@ function HeaderMenu() {
                 duration: 0.15,
                 ease: "easeOut",
               }}
-            >
+              >
               <div className="header-Menu-container-top">
                 <h2 className="header-Menu-container-title">메뉴</h2>
                 <div
                   className="header-Menu-off"
                   onClick={() => handleMenuClose()}
-                >
+                  >
                   ✕
                 </div>
               </div>
@@ -101,16 +102,18 @@ function HeaderMenu() {
                     handleMenuClose();
                     navigate("/");
                   }}
-                >
+                  >
                   홈
                 </p>
+                <div className="haeder-Menu-empty-line"></div>
+                {/* <hr className="header-Menu-line" /> */}
                 <p
                   className="header-Menu-container-list"
                   onClick={() => {
                     handleMenuClose();
                     navigate("/editbookmark");
                   }}
-                >
+                  >
                   내 장소 관리
                 </p>
                 <p
@@ -119,17 +122,8 @@ function HeaderMenu() {
                     handleMenuClose();
                     navigate("/editcard");
                   }}
-                >
+                  >
                   카드 관리
-                </p>
-                <p
-                  className="header-Menu-container-list"
-                  onClick={() => {
-                    handleMenuClose();
-                    navigate("/apptutorial");
-                  }}
-                >
-                  사용 가이드
                 </p>
                 <p
                   className="header-Menu-container-list header-Menu-item-with-icon"
@@ -143,7 +137,7 @@ function HeaderMenu() {
                     }
                     handleMenuClose();
                   }}
-                >
+                  >
                   <span>앱 설치</span>
                   <img src={installIconUrl} alt="install icon" />
                 </p>
@@ -151,9 +145,18 @@ function HeaderMenu() {
                   className="header-Menu-container-list"
                   onClick={() => {
                     handleMenuClose();
+                    navigate("/apptutorial");
+                  }}
+                  >
+                  사용 가이드
+                </p>
+                <p
+                  className="header-Menu-container-list"
+                  onClick={() => {
+                    handleMenuClose();
                     navigate("/introduce");
                   }}
-                >
+                  >
                   사이트 소개
                 </p>
               </div>
@@ -161,6 +164,7 @@ function HeaderMenu() {
                 <p className="header-Menu-container-ver">대구맑음 ver. 1.0</p>
               </div>
             </motion.div>
+            </div>
           </>
         )}
       </AnimatePresence>

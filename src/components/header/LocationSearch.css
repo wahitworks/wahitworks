@@ -3,13 +3,18 @@
   max-width: 600px;  
 
   position: fixed;
-  top: 115px;
+  top: 0;
 }
 .header-OML-background {
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
 
   z-index: 1;
+}
+.header-search-empty {
+  width: 100px;
+  height: 115px;
+  background-color: white;
 }
 .header-OML-container {
   background-color: #fff;

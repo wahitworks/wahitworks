@@ -113,7 +113,7 @@ function App() {
           {/* 수동 설치 힌트 메시지 */}
           {showManualInstallHint && (
             <div className="manual-install-hint">
-              메뉴에서 수동설치가 가능합니다.
+              메뉴에서 언제든 설치가 가능합니다.
             </div>
           )}
         </main>

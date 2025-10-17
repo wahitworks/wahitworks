@@ -18,9 +18,15 @@ export const getAirQualityInfo = (value, type, flg) => {
 
   // flg 있는 경우
   if(flg) {
+    const flgText = {
+      점검및교정: `측정소 점검 중`,
+      장비점검: `장비 점검 중`,
+      통신장애: `통신 점검 중`,
+      자료이상: `데이터 점검 중`,
+    }
     return {
       grade: 'special',
-      text: flg,
+      text: flgText[flg],
       hasFlg: true,
     };
   }

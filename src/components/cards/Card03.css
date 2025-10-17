@@ -19,6 +19,9 @@
 .card03-font-small {
   font-size: 14px;
 }
+.card03-font-nowrap {
+  white-space: nowrap;
+}
 
 /* ===== 마진 ===== */
 .card03-margin-top {
@@ -77,12 +80,15 @@
 }
 .card03-icon-wrapper {
   width: 100%;
-  margin: 10px 0;
+  margin: 5px 0;
   padding: 1px;
 }
 .card03-swipe-container-no-station {
   text-align: center;
   padding: 30px 0;
+}
+.card03-result-info {
+  font-size: 15px;
 }
 
 /* ===== 페이지 네이션 영역 ===== */

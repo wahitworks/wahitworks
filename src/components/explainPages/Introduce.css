@@ -4,13 +4,27 @@
     flex-direction: column;
     align-items: center;
     gap: 30px;
-    margin: 50px auto;
+    margin: 50px auto 150px;
     text-align: center;
 }
 
 .introduce-logo-container {
-    width: 200px;
-    height: 100px;
+  width: 200px;
+  height: 100px;
+}
+.introduce-logo-flex {
+  display: flex;
+}
+.introduce-logo-forflex {
+  width: 300px;
+}
+.introduce-logo-title-forflex {
+  width: 300px;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
 }
 
 .introduce-info {
@@ -18,6 +32,19 @@
     color: var(--personal-blue);
 }
 .introduce-content {
+  width: 80%;
+
+  border: 1px solid #DDD;
+  border-radius: 15px;
+
+  margin: 10px 0 20px;
+  padding: 20px 0 30px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.introduce-content-title {
     font-size: 18px;
     font-weight: 600;
     word-break: keep-all;
@@ -26,12 +53,22 @@
 }
 
 .introduce-logo-title {
-    width: 100px;
+    width: 130px;
     height: 50px;
     background-repeat: no-repeat;
     margin: 10px auto;
 }
 
-.introduse-app-title {
-    color: var(--personal-blue);
+.introduce-font-line {
+  white-space: nowrap;
+  line-height: 30px;
+}
+.introduce-font-bold {
+  font-weight: bold;
+}
+.introduce-color-persnalblue {
+  color: var(--personal-blue);
+}
+.introduce-color-deepblue {
+  color: var(--deep-blue);
 }

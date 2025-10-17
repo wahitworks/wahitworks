@@ -184,6 +184,8 @@ function LocationSearch() {
                 ease: "easeOut",
               }}
             >
+              {/* 빈공간영역 */}
+              <div className="header-search-empty"></div>
               {/* 검색 영역 */}
               <div className="header-search-container">
                 <p className="header-search-title">장소 찾기</p>

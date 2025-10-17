@@ -10,10 +10,19 @@
   background-color: rgba(0, 0, 0, 0.5);
 
   position: fixed;
-  top: 115px;
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
   max-width: 600px;
+
+  z-index: 4;
+}
+.heacer-Menu-wrapper {
+  width: 100%;
+  max-width: 600px;
+  height: 100vh;
+
+  position: fixed;
 
   z-index: 4;
 }
@@ -62,7 +71,7 @@
   flex-direction: column;
   gap: 15px;
 }
-.header-Menu-container-list {
+/* .header-Menu-container-list {
   height: 40px;
   font-weight: 700;
   line-height: 40px;
@@ -81,6 +90,51 @@
   color: #fff;
   border-radius: 20px;
   transform: scale(0.9);
+} */
+.header-Menu-container-list {
+  height: 40px;
+  font-weight: 700;
+  line-height: 40px;
+  padding-left: 20px;
+  cursor: pointer;
+  position: relative; /* 가상 요소(::before)의 기준점 */
+  transition: all 0.2s ease-in-out; /* 부드러운 전환 효과 */
+}
+
+/* 세로 바(bar) 스타일 */
+.header-Menu-container-list::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 0; /* 초기 높이는 0 */
+  width: 4px;
+  background-color: var(--personal-blue);
+  border-radius: 2px;
+  transform: translateY(-50%);
+  transition: height 0.2s ease-in-out; /* 높이만 애니메이션 적용 */
+}
+/* 마우스 호버 시 효과 */
+.header-Menu-container-list:hover {
+background-color: #f0f8ff; /* 연한 하늘색 배경으로 변경 */
+}
+.header-Menu-container-list:hover::before {
+  height: 60%; /* 호버 시 높이를 60%로 늘림 */
+}
+/* 클릭 시 효과 (기존 스타일 유지 또는 원하는 대로 수정) */
+.header-Menu-container-list:active {
+  transform: scale(0.95);
+  color: var(--deep-blue);
+}
+
+.header-Menu-line {
+  border: none;                    /* 기본 보더 제거 */
+  border-top: 1px solid var(--personal-blue);      /* 선 스타일 */
+  height: 1px;                      /* 두께 */
+  width: 60%;                       /* 너비 */
+}
+.haeder-Menu-empty-line {
+  height: 3px;
 }
 
 .header-Menu-container-ver {
