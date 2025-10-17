@@ -20,7 +20,7 @@
 
 /* 북마크가 있을시 나타나는 것 */
 .card04-bookmark-item-container {
-  background-color: var(--personal-blue);
+  background-color: #fff;
   width: 95%;
   border-radius: 15px;
   display: flex;
@@ -94,15 +94,19 @@
 
 .card04-bookmark-list-toggle-info-title {
   font-weight: 700;
-  font-size: 18px;
-}
-
-.card04-bookmark-list-toggle-info-value {
   font-size: 16px;
 }
 
+.card04-bookmark-list-toggle-info-value {
+  font-size: 13px;
+}
+
 .card04-air-log {
-  padding: 15px;
+  padding: 10px 15px;
+}
+
+.card04-list-toggle-ingo-text {
+  font-size: 15px;
 }
 
 /* 에러 */
@@ -146,4 +150,32 @@
 
 .card04-air-status.very-bad {
   color: var(--red);
+}
+
+/* 즐겨찾기 페이지 이동 카드 */
+.card04-plus-btn {
+  background-color: rgba(255, 255, 255, 0.226);
+  border: 1px solid #fff;
+  width: 95%;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 7px 0;
+}
+
+.card04-plus-btn:hover {
+  cursor: pointer;
+}
+
+.card04-plus-icon {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.card04-plus-comment {
+  color: #fff;
+  font-size: 15px;
 }

@@ -13,6 +13,7 @@ import { fetchFineDustData } from "../../store/thunks/fineDustThunk.js"; // 미�
 
 import LoadingSkeleton from "../commons/LoadingSkeleton.jsx";  // 컴포넌트 임포트
 import { GRADE_CLASS } from "../../constants/ultraFineDustLevel.js";
+import { useNavigate } from "react-router-dom";
 
 // 각 북마크 항목 렌더링 컴포넌트
 function BookmarkItem({ region, stationName }) {
@@ -148,7 +149,7 @@ function BookmarkItem({ region, stationName }) {
                   <div className="card04-air-log">
                     <AirQualityLogo grade={dustGrade} />
                   </div>
-                  <p>{getGradeText(dustGrade)}</p>
+                  <p className="card04-list-toggle-ingo-text">{getGradeText(dustGrade)}</p>
                 </div>
                 <div className="card04-bookmark-list-toggle-info">
                   <p className="card04-bookmark-list-toggle-info-title">초미세먼지</p>
@@ -156,7 +157,7 @@ function BookmarkItem({ region, stationName }) {
                   <div className="card04-air-log">
                     <AirQualityLogo grade={ultraDustGrade} />
                   </div>
-                  <p>{getGradeText(ultraDustGrade)}</p>
+                  <p className="card04-list-toggle-ingo-text">{getGradeText(ultraDustGrade)}</p>
                 </div>
                 <div className="card04-bookmark-list-toggle-info">
                   <p className="card04-bookmark-list-toggle-info-title">오존O₃</p>
@@ -164,7 +165,7 @@ function BookmarkItem({ region, stationName }) {
                   <div className="card04-air-log">
                     <AirQualityLogo grade={o3Grade} />
                   </div>
-                  <p>{getGradeText(o3Grade)}</p>
+                  <p className="card04-list-toggle-ingo-text">{getGradeText(o3Grade)}</p>
                 </div>
               </>
             ) : null }
@@ -178,6 +179,7 @@ function BookmarkItem({ region, stationName }) {
 function Card04() {
   const bookmarkedRegions = useSelector(state => state.bookmarkSlice.bookmarkedRegions);
   const loading = useSelector(state => state.bookmarkSlice.loading)
+  const navigate = useNavigate();
 
   // 카드 높이 계산
   const skeletonHeight = 60 + (bookmarkedRegions.length * 65);
@@ -193,8 +195,11 @@ function Card04() {
     skeletonLines.push({ width: '95%', height: '50px', align: 'center' });
   }
 
+  // EditBookmark 페이지로 이동
+  const Navigate = () => {
+    navigate(`/editcard`);
+  };
   
-
   // ===== 로딩 스켈레톤 =====
   if(loading) {
     return (
@@ -208,6 +213,7 @@ function Card04() {
         />
     );
   }
+
   return (
     <div className="card04-container">
       <h2 className="card04-title">내 장소</h2>
@@ -228,6 +234,10 @@ function Card04() {
           </div>
         )
       }
+      <div className="card04-plus-btn" onClick={Navigate}>
+        <p className="card04-plus-icon">+</p>
+        <p className="card04-plus-comment">내 장소를 추가해 보세요!</p>
+      </div>
     </div>
   );
 }
