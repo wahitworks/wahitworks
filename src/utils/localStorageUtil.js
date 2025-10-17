@@ -40,8 +40,23 @@ export const localStorageUtil = {
  */
 export function loadCardOrder(defaultOrder) {
   const saved = localStorage.getItem(CARD_ORDER_KEY);
-  return saved ? JSON.parse(saved) : defaultOrder;
+  // CASE.1 저장된 값이 없는 경우 -> 디폴트 반환
+  if (!saved) {
+    return defaultOrder;
+  }
+  // CASE.2 저장된 있는 경우
+  const savedOrder = JSON.parse(saved);
+  
+  // 새로운 카드 찾기 (defaultOrder에는 있지만 savedOrder에는 없는 것들)
+  const newCards = defaultOrder.filter(cardId => !savedOrder.includes(cardId));
+  
+  // 디폴트에서 삭제된 카드 제거 (savedOrder에는 있지만 defaultOrder에는 없는 것들)
+  const validOrder = savedOrder.filter(cardId => defaultOrder.includes(cardId));
+  
+  // 삭제된 카드를 제거한 배열 + 새 카드
+  return [...validOrder, ...newCards];
 }
+
 
 /**
  * 카드 순서를 로컬스토리지에 저장하는 setter 함수

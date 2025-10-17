@@ -40,12 +40,14 @@
 }
 
 .header-center {
-  margin: 0 auto;
+  width: 50%;
+  margin: 30px auto;
 
   cursor: pointer;
 
   display: grid;
   align-items: center;
+  justify-content: center;
   grid-template: 1fr 1fr / auto auto; 
 }
 .header-icon-wrapper {

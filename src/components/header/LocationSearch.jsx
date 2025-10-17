@@ -230,7 +230,6 @@ function LocationSearch() {
                       <div
                         className="header-search-result"
                         key={item}
-                        
                       >
                         <span
                           className="bookmark-icon"
@@ -248,7 +247,7 @@ function LocationSearch() {
                         <span
                           className="header-search-result-item"
                           onClick={(e) => {e.stopPropagation(); handleSelectLocation(item)}}
-                        > {item}</span>
+                        >{item}</span>
                       </div>
                     ))}
                 </motion.div>

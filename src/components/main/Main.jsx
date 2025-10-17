@@ -12,8 +12,7 @@ import Card01 from "../cards/Card01.jsx";
 import Card02 from "../cards/Card02.jsx";
 import Card03 from "../cards/Card03.jsx";
 import Card04 from "../cards/Card04.jsx";
-import LogoOrigin from "../logo/LogoOrigin.jsx";
-import LoadingSkeleton from "../commons/LoadingSkeleton.jsx"
+import Card05 from "../cards/Card05.jsx";
 
 // 카드 id와 실제 컴포넌트를 짝지어주는 목록
 const cardList = {
@@ -21,6 +20,7 @@ const cardList = {
   card02: Card02,
   card03: Card03,
   card04: Card04,
+  card05: Card05,
 };
 
 function Main() {

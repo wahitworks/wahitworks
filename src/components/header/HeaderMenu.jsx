@@ -125,6 +125,8 @@ function HeaderMenu() {
                   >
                   카드 관리
                 </p>
+                <div className="haeder-Menu-empty-line"></div>
+
                 <p
                   className="header-Menu-container-list header-Menu-item-with-icon"
                   onClick={() => {
@@ -139,6 +141,7 @@ function HeaderMenu() {
                   <span>앱 설치</span>
                   <img src={installIconUrl} alt="install icon" />
                 </p>
+                <div className="haeder-Menu-empty-line"></div>
                 <p
                   className="header-Menu-container-list"
                   onClick={() => {

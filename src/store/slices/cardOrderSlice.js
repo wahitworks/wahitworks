@@ -9,6 +9,7 @@ const DEFAULT_ORDER = [
   { id: `card02`, name: "대구 대기질 3일 예보", checked: true },
   { id: `card03`, name: "지금 대기 상태", checked: true },
   { id: `card04`, name: "내 장소", checked: true },
+  { id: `card05`, name: "맑음 단계", checked: true },
 ];
 
 const initialState = {

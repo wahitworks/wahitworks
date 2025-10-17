@@ -1,0 +1,79 @@
+.card05-container {
+  width: 90%;
+  border: 1px solid var(--deep-blue);
+  border-radius: 15px;
+  box-shadow: 0px 0px 5px var(--light-blue);
+  
+  padding: 20px 10px 10px;
+  margin: 0 auto;
+}
+
+.card05-tab-menu {
+  padding: 5px;
+  margin-bottom: 10px;
+  
+  border-radius: 12px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+/* 탭 버튼 */
+.card05-tab-button {
+  flex-shrink: 0; /* 텍스트 안 찌그러지게 */
+  padding: 8px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background: white;
+  font-size: 15px;
+  color: #666;
+  white-space: nowrap; /* 줄바꿈 방지 */
+  transition: all 0.2s;
+}
+/* 선택된 탭 */
+.card05-tab-button.card05-active {
+  background: var(--personal-blue);
+  color: white;
+  border: none;
+}
+
+/* 등급 카드들 */
+.card05-grade-container {
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+/* 작은 화면에서는 1열로 */
+@media (max-width: 480px) {
+  .card05-grade-items {
+    grid-template-columns: 1fr;
+  }
+}
+.card05-grade-items {
+  width: 100%;
+  padding: 10px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.card05-grade-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.card05-grade-item-title {
+  width: 25%;
+  font-weight: bold;
+}
+.card05-grade-item-range {
+  width: 60%;
+  font-weight: bold;
+}
