@@ -131,9 +131,7 @@ function HeaderMenu() {
                     if (deferredPrompt) {
                       handleInstallAccept();
                     } else {
-                      alert(
-                        "앱이 이미 설치되어 있거나, 설치를 지원하지 않는 환경입니다."
-                      );
+                      alert("새로고침 후 다시 시도해주세요");
                     }
                     handleMenuClose();
                   }}

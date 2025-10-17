@@ -1,77 +1,104 @@
 // 드래그앤드롭 dnd-kit 관련
-import { 
-    DndContext,
-    closestCenter,
-    KeyboardSensor,
-    PointerSensor,
-    TouchSensor,
-    useSensor,
-    useSensors, } from '@dnd-kit/core';
-import { 
-    arrayMove,
-    SortableContext,
-    sortableKeyboardCoordinates, 
-    verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
-import './EditBookmark.css';
+import "./EditBookmark.css";
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import { IoMdSearch } from "react-icons/io";
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from "framer-motion";
 import { CiStar } from "react-icons/ci";
 import { FaStar } from "react-icons/fa";
 
-import { addBookmark, removeBookmark, setBookmarkFilteredList, setBookmarkSearchInput, updateBookmarkedRegions, saveBookmarkOrder, } from '../../store/slices/bookmarkSlice.js';
-import { useEffect, useState, useRef } from 'react';
-import { LOCATION_LIST } from '../../constants/locationList.js';
-import { stringUtils } from '../../utils/stringUtil';
+import {
+  addBookmark,
+  removeBookmark,
+  setBookmarkFilteredList,
+  setBookmarkSearchInput,
+  updateBookmarkedRegions,
+  saveBookmarkOrder,
+} from "../../store/slices/bookmarkSlice.js";
+import { useEffect, useState, useRef } from "react";
+import { LOCATION_LIST } from "../../constants/locationList.js";
+import { stringUtils } from "../../utils/stringUtil";
 // import { localStorageUtil } from '../../utils/localStorageUtil.js';
 // toast관련
-import Toast from '../commons/Toast';
-import { getSearchLocationForBookmark } from '../../store/thunks/bookmarkThunk.js';
+import Toast from "../commons/Toast";
+import { getSearchLocationForBookmark } from "../../store/thunks/bookmarkThunk.js";
 // import { div } from 'framer-motion/client';
 
 // 각 북마크 아이템을 위한 컴포넌트
 // useSortable을 추상화해서 재사용 가능하게 만들기 위해 따로 빼놓았습니다!
-function SortableItem (props) {
+function SortableItem(props) {
   const {
-      attributes,
-      listeners, // 드래그 동작 담당
-      setNodeRef,
-      transform,
-      transition,
+    attributes,
+    listeners, // 드래그 동작 담당
+    setNodeRef,
+    transform,
+    transition,
   } = useSortable({ id: props.id });
 
   const style = {
-      transform: CSS.Transform.toString(transform),
-      transition,
+    transform: CSS.Transform.toString(transform),
+    transition,
   };
 
   return (
     <>
-      <div className="bookmark-item" ref={setNodeRef} style={style} {...attributes} {...listeners}>
+      <div
+        className="bookmark-item"
+        ref={setNodeRef}
+        style={style}
+        {...attributes}
+        {...listeners}
+      >
         <div className="bookmark-hamburger">&#x2630; {/* 햄버거 아이콘 */}</div>
-        <span className='bookmark-name'>{props.id}</span>
-            
-        <span className="bookmark-icon" 
-        onClick={() => props.onToggle(props.id)}
-        onPointerDown={(e) => e.stopPropagation()}>
-        {props.isBookmarked ? <FaStar color='var(--deep-blue)' /> : <CiStar color='var(--deep-blue)' />}
+        <span className="bookmark-name">{props.id}</span>
+
+        <span
+          className="bookmark-icon"
+          onClick={() => props.onToggle(props.id)}
+          onPointerDown={(e) => e.stopPropagation()}
+        >
+          {props.isBookmarked ? (
+            <FaStar color="var(--deep-blue)" />
+          ) : (
+            <CiStar color="var(--deep-blue)" />
+          )}
         </span>
       </div>
     </>
   );
 }
 
-function EditBookmark () {
+function EditBookmark() {
   const dispatch = useDispatch();
 
   // ===== 전역 state =====
-  const bookmarkedRegions = useSelector(state => state.bookmarkSlice.bookmarkedRegions);
-  const bookmarkSearchInput = useSelector(state => state.bookmarkSlice.bookmarkSearchInput);
-  const bookmarkFilteredList = useSelector(state => state.bookmarkSlice.bookmarkFilteredList);
+  const bookmarkedRegions = useSelector(
+    (state) => state.bookmarkSlice.bookmarkedRegions
+  );
+  const bookmarkSearchInput = useSelector(
+    (state) => state.bookmarkSlice.bookmarkSearchInput
+  );
+  const bookmarkFilteredList = useSelector(
+    (state) => state.bookmarkSlice.bookmarkFilteredList
+  );
 
   // 알림창용 state, ref
   const [showToast, setShowToast] = useState(false);
@@ -99,8 +126,7 @@ function EditBookmark () {
   //   }
   // }, [dispatch]);
 
-
-  // // 컴포넌트 처음 렌더링될 때, 페이지를 벗어날 때 동작 
+  // // 컴포넌트 처음 렌더링될 때, 페이지를 벗어날 때 동작
   // useEffect(() => {
   //   // 컴포넌트 렌더링 시, 현재 상태를 원본으로 ref에 저장
   //   originalBookmarks.current = bookmarkedRegions;
@@ -112,7 +138,7 @@ function EditBookmark () {
   //       // 원본으로 되돌림
   //       dispatch(updateBookmarkedRegions(originalBookmarks.current));
   //     }
-  //   } 
+  //   }
   // }, []); // 빈배열: 마운트, 언마운트 시 한 번만 실행
 
   // dnd 센서 설정
@@ -132,7 +158,7 @@ function EditBookmark () {
       activationConstraint: {
         delay: 50,
         tolerance: 5,
-      }
+      },
     })
   );
 
@@ -141,8 +167,12 @@ function EditBookmark () {
     const { active, over } = event;
 
     if (active.id !== over.id) {
-      const oldIndex = bookmarkedRegions.findIndex((item) => item.region === active.id);
-      const newIndex = bookmarkedRegions.findIndex((item) => item.region === over.id);
+      const oldIndex = bookmarkedRegions.findIndex(
+        (item) => item.region === active.id
+      );
+      const newIndex = bookmarkedRegions.findIndex(
+        (item) => item.region === over.id
+      );
       // arrayMove 사용 새로운 순서 배열 생성
       const newOrder = arrayMove(bookmarkedRegions, oldIndex, newIndex);
       // updateBookmarkedRegions 액션 호출
@@ -150,50 +180,48 @@ function EditBookmark () {
     }
   }
 
-
   // ======================================================
-  // ||     useEffect : 북마크 검색어에 따라 
+  // ||     useEffect : 북마크 검색어에 따라
   // ======================================================
   useEffect(() => {
     // ===== CASE.1 검색어 없을 경우 =====
     //        -> 빈 배열 반환
-    if(bookmarkSearchInput.trim() === '') {
+    if (bookmarkSearchInput.trim() === "") {
       dispatch(setBookmarkFilteredList([]));
       return;
     }
     // ===== CASE.2 검색어 있을 경우 =====
     //        -> 1. 띄어쓰기를 제거해서 매칭된 배열 반환
-    const filteredResult = LOCATION_LIST.filter(location => {
+    const filteredResult = LOCATION_LIST.filter((location) => {
       const locationNoSpace = stringUtils.removeSpaces(location);
       const inputNoSpace = stringUtils.removeSpaces(bookmarkSearchInput);
-      return locationNoSpace.includes(inputNoSpace); 
+      return locationNoSpace.includes(inputNoSpace);
     });
     dispatch(setBookmarkFilteredList(filteredResult));
-
-  }, [bookmarkSearchInput, dispatch])
-  
+  }, [bookmarkSearchInput, dispatch]);
 
   // ======================================================
-  // ||     useEffect : 언마운트 마다, 검색어 초기화  
+  // ||     useEffect : 언마운트 마다, 검색어 초기화
   // ======================================================
   useEffect(() => {
     return () => {
-      dispatch(setBookmarkSearchInput(''));
-    }
-  }, [])
-
+      dispatch(setBookmarkSearchInput(""));
+    };
+  }, []);
 
   // ======================================================
-  // ||     handling 관련 함수  
+  // ||     handling 관련 함수
   // ======================================================
 
   /**
    * bookmarkedRegions에 추가되어있는지 아닌지 true/false 반환
    * @param {string} item : 검색한 지역
-   * @returns {boolean} 
+   * @returns {boolean}
    */
   const isBookmarked = (item) => {
-    return bookmarkedRegions.some(bookmarkeditem => bookmarkeditem.region === item)
+    return bookmarkedRegions.some(
+      (bookmarkeditem) => bookmarkeditem.region === item
+    );
   };
 
   /**
@@ -208,23 +236,28 @@ function EditBookmark () {
       dispatch(removeBookmark(item));
       // console.log("제거:", item);
 
-    // ===== CASE.2 북마크 리스트에 존재하지 않는다면 ===
+      // ===== CASE.2 북마크 리스트에 존재하지 않는다면 ===
     } else {
       try {
         // unwrap(): 성공 -> payload반환, 실패 -> error throw
-        const result = await dispatch(getSearchLocationForBookmark(item)).unwrap();
-        dispatch(addBookmark({
-          region: item, 
-          stationName: result.nearestStation.stationName
-        }));
+        const result = await dispatch(
+          getSearchLocationForBookmark(item)
+        ).unwrap();
+        dispatch(
+          addBookmark({
+            region: item,
+            stationName: result.nearestStation.stationName,
+          })
+        );
         console.log("북마크 추가에 성공했습니다. ", bookmarkedRegions);
-
       } catch (error) {
-        console.error("북마크에 추가한 지역의 측정소를 찾지 못했습니다. ", error);
+        console.error(
+          "북마크에 추가한 지역의 측정소를 찾지 못했습니다. ",
+          error
+        );
       }
     }
   };
-
 
   /**
    * 저장하기 버튼 클릭 시, 현재 상태를 localStorage에 저장
@@ -239,7 +272,7 @@ function EditBookmark () {
 
     // 기존 타이머가 있으면 취소
     if (toastTimerRef.current) {
-      clearTimeout(toastTimerRef.current)
+      clearTimeout(toastTimerRef.current);
     }
     // 알림표시
     setShowToast(true);
@@ -247,96 +280,111 @@ function EditBookmark () {
     toastTimerRef.current = setTimeout(() => {
       setShowToast(false);
     }, 1000);
-  }
+  };
 
-  return(
+  return (
     <>
-    <AnimatePresence>
-    <div className="bookmark-container">
-      {/* 검색 영역 */}
-      <div className="bookmark-search-container">
-        <p className='bookmark-title'>내 장소 추가하기</p>
-        <div className="bookmark-search-input-btn">
-          <input className="bookmark-search-input" 
-            onChange={e => dispatch(setBookmarkSearchInput(e.target.value))} type="text" />
-          <button className='bookmark-search-btn' type='button'><IoMdSearch color="#333"/></button>
-        </div>
-        {/* 검색 결과 영역 */}
-        <motion.div
-          className="bookmark-filtered-conatiner"
-          initial={{ height: 0, minHeight: 0, opacity: 0 }}
-          animate={{
-            height: bookmarkFilteredList.length > 0 ? 'auto' : 0,
-            minHeight: bookmarkFilteredList.length > 0 ? 50 : 0,
-            opacity: bookmarkFilteredList.length > 0 ? 1 : 0
-          }}
-          transition={{
-            duration: 0.3,
-            ease: "easeOut"
-          }}
-        >
-          {
-            bookmarkFilteredList.length > 0 && bookmarkFilteredList.map(filteredItem => (
-              <div className="bookmark-filtered-item" key={filteredItem}>
-                <span
-                  className="bookmark-icon"
-                  onClick={() => {
-                    toggleBookmark(filteredItem); // 2. item 값 그대로 전달!
-                  }}
-                >
-                  {isBookmarked(filteredItem) ? <FaStar color='var(--deep-blue)' /> : <CiStar color='var(--deep-blue)' />}
-                </span>
-                <span> {filteredItem}</span>
-              </div>
-            ))
-          }
-        </motion.div>
-      </div>
-      <div className='bookmark-list-container'>
-        <p className='bookmark-title'>내 장소</p>
-
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}>
-          <SortableContext 
-          // 각 아이템의 id배열 전달
-          items={bookmarkedRegions.map(item => item.region)}
-          strategy={verticalListSortingStrategy}>
-            <div className='bookmark-items-container'>
-            { bookmarkedRegions.length > 0 && bookmarkedRegions.map((item) => (
-              <SortableItem 
-                key={item.region} 
-                id={item.region}
-                stationName={item.stationName} 
-                isBookmarked={isBookmarked(item.region)} 
-                onToggle={toggleBookmark} 
+      <AnimatePresence>
+        <div className="bookmark-container">
+          {/* 검색 영역 */}
+          <div className="bookmark-search-container">
+            <p className="bookmark-title">내 장소 추가하기</p>
+            <div className="bookmark-search-input-btn">
+              <input
+                className="bookmark-search-input"
+                onChange={(e) =>
+                  dispatch(setBookmarkSearchInput(e.target.value))
+                }
+                type="text"
               />
-              ))  
-            }    
-            {
-              bookmarkedRegions.length === 0 &&
-              <div className="bookmark-nothing">
-                <p>
-                  저장된 내 장소가 없습니다.
-                </p>
-              </div>
-            }
-        </div>
-          </SortableContext>
-        </DndContext>
+              <button className="bookmark-search-btn" type="button">
+                <IoMdSearch color="#333" />
+              </button>
+            </div>
+            {/* 검색 결과 영역 */}
+            <motion.div
+              className="bookmark-filtered-conatiner"
+              initial={{ height: 0, minHeight: 0, opacity: 0 }}
+              animate={{
+                height: bookmarkFilteredList.length > 0 ? "auto" : 0,
+                minHeight: bookmarkFilteredList.length > 0 ? 50 : 0,
+                opacity: bookmarkFilteredList.length > 0 ? 1 : 0,
+              }}
+              transition={{
+                duration: 0.3,
+                ease: "easeOut",
+              }}
+            >
+              {bookmarkFilteredList.length > 0 &&
+                bookmarkFilteredList.map((filteredItem) => (
+                  <div className="bookmark-filtered-item" key={filteredItem}>
+                    <span
+                      className="bookmark-icon"
+                      onClick={() => {
+                        toggleBookmark(filteredItem); // 2. item 값 그대로 전달!
+                      }}
+                    >
+                      {isBookmarked(filteredItem) ? (
+                        <FaStar color="var(--deep-blue)" />
+                      ) : (
+                        <CiStar color="var(--deep-blue)" />
+                      )}
+                    </span>
+                    <span> {filteredItem}</span>
+                  </div>
+                ))}
+            </motion.div>
+          </div>
+          <div className="bookmark-list-container">
+            <p className="bookmark-title">내 장소</p>
 
-        {/* 내 장소 저장하기 버튼 */}
-          <div className="bookmark-save-btn-container">
-            <button className='bookmark-save-btn' type="button" onClick={handleSave}>저장하기</button> 
-            {/* 토스트 */}
-            <Toast message="저장되었습니다!" show={showToast} />
-          </div>          
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
+            >
+              <SortableContext
+                // 각 아이템의 id배열 전달
+                items={bookmarkedRegions.map((item) => item.region)}
+                strategy={verticalListSortingStrategy}
+              >
+                <div className="bookmark-items-container">
+                  {bookmarkedRegions.length > 0 &&
+                    bookmarkedRegions.map((item) => (
+                      <SortableItem
+                        key={item.region}
+                        id={item.region}
+                        stationName={item.stationName}
+                        isBookmarked={isBookmarked(item.region)}
+                        onToggle={toggleBookmark}
+                      />
+                    ))}
+                  {bookmarkedRegions.length === 0 && (
+                    <div className="bookmark-nothing">
+                      <p>저장된 내 장소가 없습니다.</p>
+                    </div>
+                  )}
+                </div>
+              </SortableContext>
+            </DndContext>
+
+            {/* 내 장소 저장하기 버튼 */}
+            <div className="bookmark-save-btn-container">
+              <button
+                className="bookmark-save-btn"
+                type="button"
+                onClick={handleSave}
+              >
+                저장하기
+              </button>
+              {/* 토스트 */}
+              <Toast message="저장되었습니다!" show={showToast} />
+            </div>
+          </div>
         </div>
-    </div>
-    </AnimatePresence>
+      </AnimatePresence>
     </>
-  )
-};
+  );
+}
 
 export default EditBookmark;

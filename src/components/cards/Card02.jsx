@@ -7,24 +7,16 @@ import LogoError from "../logo/LogoError.jsx";
 import { fetchAirQuality } from "../../store/thunks/airQualityThunk.js";
 import { nextDay, prevDay } from "../../store/slices/airQualitySlice.js";
 
-// 이미지 에셋들을 가져옵니다.
-import veryBad from "../../assets/weather-indicators/verybad.jpg";
-import bad from "../../assets/weather-indicators/bad.jpg";
-import normal from "../../assets/weather-indicators/normal.jpg";
-import good from "../../assets/weather-indicators/good.jpg";
-
 import LogoGood from "../logo/LogoGood.jsx";
 import LogoModerate from "../logo/LogoModerate.jsx";
 import LogoBad from "../logo/LogoBad.jsx";
-import LogoVeryBad from "../logo/LogoVeryBad.jsx";
 
 // 스켈레톤 컴포넌트 임포트
-import Skeleton from "react-loading-skeleton";
+
 import Card02LoadingSkeleton from "../commons/Card02LoadingSkeleton.jsx";
 
 // 등급별 텍스트와 이미지를 매핑하는 헬퍼 객체
 const labelByGrade = { 1: "좋음", 2: "보통", 3: "나쁨", 4: "매우나쁨" };
-const imgByGrade = { 1: good, 2: normal, 3: bad, 4: veryBad };
 
 function Card02() {
   const dispatch = useDispatch();
@@ -72,10 +64,9 @@ function Card02() {
   // ++ grade 별 아이콘 컴포넌트 출력을 위한 함수
   const getAirQualityIcon = (grade) => {
     const icons = {
-      good: <LogoGood animated style={{ margin: "20px" }} />,
-      moderate: <LogoModerate animated style={{ margin: "10px" }} />,
-      bad: <LogoBad animated style={{ margin: "10px" }} />,
-      "very-bad": <LogoVeryBad animated style={{ margin: "10px" }} />,
+      1: <LogoGood animated style={{ margin: "10px" }} />,
+      2: <LogoModerate animated style={{ margin: "10px" }} />,
+      3: <LogoBad animated style={{ margin: "10px" }} />,
     };
     return icons[grade] || <LogoGood animated />;
   };
