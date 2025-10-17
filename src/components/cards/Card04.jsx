@@ -9,15 +9,15 @@ import LogoBad from '../logo/LogoBad.jsx';
 import LogoVeryBad from '../logo/LogoVeryBad.jsx';
 import LogoError from "../logo/LogoError.jsx";
 // Thunk 
-import { getSearchLocation } from "../../store/thunks/locationThunk.js"; // 측정소 검색 Thunk
 import { fetchFineDustData } from "../../store/thunks/fineDustThunk.js"; // 미세먼지 데이터
 
 import LoadingSkeleton from "../commons/LoadingSkeleton.jsx";  // 컴포넌트 임포트
 import { GRADE_CLASS } from "../../constants/ultraFineDustLevel.js";
 
 // 각 북마크 항목 렌더링 컴포넌트
-function BookmarkItem({ region }) {
-  
+function BookmarkItem({ region, stationName }) {
+  const dispatch = useDispatch();
+
   // 등급을 계산하는 함수 
   const getGradeNumberFromValue = (value, type) => {
     const standards = {
@@ -27,7 +27,8 @@ function BookmarkItem({ region }) {
     }
   
   if (value === null || value === undefined || value === '' || value === '-' || value === 0) {
-    return null;}
+    return null;
+  }
   
   const standard = standards[type];
   if (!standard) {return null;}
@@ -38,8 +39,13 @@ function BookmarkItem({ region }) {
   return '4';
   }
 
-  const stationName = useSelector((state) => state.bookmarkCard04.regionStationMap[region]);
-  const station = useSelector(state => state.bookmarkCard04.regionStationMap);
+  // 미세먼지 정보 호출
+  useEffect(() => {
+    if (stationName && stationName !== 'error') {
+      // 다른 코드와의 통일성을 위해 객체로 넘김
+      dispatch(fetchFineDustData({ stationName: stationName }));
+    }
+  }, [dispatch, stationName]);
 
   // 해당 측정소의 미세먼지 데이터 호출
   const data = useSelector((state) => stationName ? state.fineDust.data[stationName] : null);
@@ -105,7 +111,7 @@ function BookmarkItem({ region }) {
              <FaStar color='var(--deep-blue)' />
           </span>
           <p className="card04-bookmark-list-title">{region}</p>
-          <p className="card04-bookmark-list-station">{station[region]} 측정소</p>
+          <p className="card04-bookmark-list-station">{stationName} 측정소</p>
           <div className="card04-bookmark-list-air-status">
           {/* 데이터 불러오기 성공시 출력 */}
           {card04Loading && <small>로딩 중...</small>}
@@ -170,35 +176,8 @@ function BookmarkItem({ region }) {
 
 // 메인 컨포넌트
 function Card04() {
-  const dispatch = useDispatch();
   const bookmarkedRegions = useSelector(state => state.bookmarkSlice.bookmarkedRegions);
-  const regionStationMap = useSelector(state => state.bookmarkCard04.regionStationMap);
-  const fineDustLoading = useSelector(state => state.fineDust.loading);
-  const fineDustData = useSelector(state => state.fineDust.data);
-  const fineDustError = useSelector(state => state.fineDust.error);
-  
-  useEffect(() => {
-    bookmarkedRegions.forEach(region => {
-      const stationName = regionStationMap[region];
-
-      // 측정소 정보가 없을 때
-      if (!stationName) {
-        dispatch(getSearchLocation(region));
-      }
-      // 측정소 정보o 에러x
-      else if (stationName !== 'error') {
-        const isLoading = fineDustLoading[stationName];
-        const hasData = fineDustData[stationName];
-        // 에러 상태를 확인하는 변수
-        const hasError = fineDustError[stationName];
-
-        // 로딩중x 데이터x 에러x
-        if (!isLoading && !hasData && !hasError) {
-          dispatch(fetchFineDustData({ stationName: stationName }));
-        }
-      }
-    });
-  }, [dispatch, bookmarkedRegions, regionStationMap, fineDustData, fineDustLoading, fineDustError]);
+  const loading = useSelector(state => state.bookmarkSlice.loading)
 
   // 카드 높이 계산
   const skeletonHeight = 60 + (bookmarkedRegions.length * 65);
@@ -214,13 +193,10 @@ function Card04() {
     skeletonLines.push({ width: '95%', height: '50px', align: 'center' });
   }
 
-  const card04Loading = bookmarkedRegions.length > 0 && bookmarkedRegions.some(region => {
-    const stationName = regionStationMap[region];
-    return !stationName || (stationName && fineDustLoading[stationName] === true);
-  })
+  
 
   // ===== 로딩 스켈레톤 =====
-  if(card04Loading) {
+  if(loading) {
     return (
         <LoadingSkeleton
           width="90%" // 스켈레톤의 전체 너비 -> 고칠 필요 없음
@@ -238,8 +214,12 @@ function Card04() {
       {
         bookmarkedRegions && bookmarkedRegions.length > 0 ? (
           // 즐겨찾기 목록에서 찾아 랜더링
-          bookmarkedRegions.map(region => (
-            <BookmarkItem key={region} region={region} />
+          bookmarkedRegions.map(item => (
+            <BookmarkItem 
+              key={item.region} 
+              region={item.region}
+              stationName={item.stationName} 
+            />
           ))
         ) : (
           // 즐겨찾기 목록 없을 때

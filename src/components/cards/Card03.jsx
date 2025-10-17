@@ -69,6 +69,7 @@ function Card03() {
     // console.log('value === 0:', value === 0);
     // console.log('value === "0":', value === "0");
     // console.log('Number(value):', Number(value));
+    // console.log('Flg: pm10Flag-', pm10Flag, 'pm25Flag-', pm25Flag, 'o3Flag-', o3Flag, 'no2Flag-', no2Flag, 'coFlag-', coFlag, 'so2Flag-', so2Flag);
     return (
       <div className="card03-result-item">
         <p className="card03-font-b">{label}</p>

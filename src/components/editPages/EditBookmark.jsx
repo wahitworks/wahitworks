@@ -30,6 +30,7 @@ import { stringUtils } from '../../utils/stringUtil';
 // import { localStorageUtil } from '../../utils/localStorageUtil.js';
 // toast관련
 import Toast from '../commons/Toast';
+import { getSearchLocationForBookmark } from '../../store/thunks/bookmarkThunk.js';
 // import { div } from 'framer-motion/client';
 
 // 각 북마크 아이템을 위한 컴포넌트
@@ -136,18 +137,19 @@ function EditBookmark () {
   );
 
   // 드래그 종료시
-  function handleDragEnd(event) {
+  function handleDragEnd(event) {s
     const { active, over } = event;
 
     if (active.id !== over.id) {
-      const oldIndex = bookmarkedRegions.findIndex((item) => item === active.id);
-      const newIndex = bookmarkedRegions.findIndex((item) => item === over.id);
+      const oldIndex = bookmarkedRegions.findIndex((item) => item.region === active.id);
+      const newIndex = bookmarkedRegions.findIndex((item) => item.region === over.id);
       // arrayMove 사용 새로운 순서 배열 생성
       const newOrder = arrayMove(bookmarkedRegions, oldIndex, newIndex);
       // updateBookmarkedRegions 액션 호출
       dispatch(updateBookmarkedRegions(newOrder));
     }
   }
+
 
   // ======================================================
   // ||     useEffect : 북마크 검색어에 따라 
@@ -170,6 +172,7 @@ function EditBookmark () {
 
   }, [bookmarkSearchInput, dispatch])
   
+
   // ======================================================
   // ||     useEffect : 언마운트 마다, 검색어 초기화  
   // ======================================================
@@ -178,6 +181,7 @@ function EditBookmark () {
       dispatch(setBookmarkSearchInput(''));
     }
   }, [])
+
 
   // ======================================================
   // ||     handling 관련 함수  
@@ -189,7 +193,7 @@ function EditBookmark () {
    * @returns {boolean} 
    */
   const isBookmarked = (item) => {
-    return bookmarkedRegions.some(bookmarkeditem => bookmarkeditem === item)
+    return bookmarkedRegions.some(bookmarkeditem => bookmarkeditem.region === item)
   };
 
   /**
@@ -197,15 +201,30 @@ function EditBookmark () {
    * 해당 지역이 북마크되어있지 않다면 (bookmarkedRegions에 없다면) → 북마크에 추가
    * @param {string} item : 검색한 지역
    */
-  const toggleBookmark = (item) => {
-    if(isBookmarked(item)) {
-      dispatch(removeBookmark(item))
-      // console.log('제거:', item);
+  const toggleBookmark = async (item) => {
+    // ===== CASE.1 이미 북마크 리스트에 존재한다면 ===
+    if (isBookmarked(item)) {
+      // 북마크에서 제거
+      dispatch(removeBookmark(item));
+      // console.log("제거:", item);
+
+    // ===== CASE.2 북마크 리스트에 존재하지 않는다면 ===
     } else {
-      dispatch(addBookmark(item));
-      // console.log('추가:', bookmarkedRegions);
+      try {
+        // unwrap(): 성공 -> payload반환, 실패 -> error throw
+        const result = await dispatch(getSearchLocationForBookmark(item)).unwrap();
+        dispatch(addBookmark({
+          region: item, 
+          stationName: result.nearestStation.stationName
+        }));
+        console.log("북마크 추가에 성공했습니다. ", bookmarkedRegions);
+
+      } catch (error) {
+        console.error("북마크에 추가한 지역의 측정소를 찾지 못했습니다. ", error);
+      }
     }
   };
+
 
   /**
    * 저장하기 버튼 클릭 시, 현재 상태를 localStorage에 저장
@@ -282,12 +301,17 @@ function EditBookmark () {
           onDragEnd={handleDragEnd}>
           <SortableContext 
           // 각 아이템의 id배열 전달
-          items={bookmarkedRegions}
+          items={bookmarkedRegions.map(item => item.region)}
           strategy={verticalListSortingStrategy}>
             <div className='bookmark-items-container'>
-            { bookmarkedRegions.length > 0 && bookmarkedRegions.map((region) => (
-              <SortableItem key={region} id={region} 
-                isBookmarked={isBookmarked(region)} onToggle={toggleBookmark} />
+            { bookmarkedRegions.length > 0 && bookmarkedRegions.map((item) => (
+              <SortableItem 
+                key={item.region} 
+                id={item.region}
+                stationName={item.stationName} 
+                isBookmarked={isBookmarked(item.region)} 
+                onToggle={toggleBookmark} 
+              />
               ))  
             }    
             {

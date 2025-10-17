@@ -18,6 +18,7 @@ import {
   addBookmark,
   removeBookmark,
 } from "../../store/slices/bookmarkSlice.js";
+import { getSearchLocationForBookmark } from "../../store/thunks/bookmarkThunk.js";
 
 function LocationSearch() {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ function LocationSearch() {
   const bookmarkedRegions = useSelector(
     (state) => state.bookmarkSlice.bookmarkedRegions
   );
+
 
 
   // ======================================================
@@ -57,21 +59,36 @@ function LocationSearch() {
    * @returns {boolean}
    */
   const isBookmarked = (item) => {
-    return bookmarkedRegions.some((bookmarkeditem) => bookmarkeditem === item);
+    return bookmarkedRegions.some((bookmarkeditems) => bookmarkeditems.region === item);
   };
+
 
   /**
    * 해당 지역이 북마크되어있다면 (bookmarkedRegions에 있다면) → 북마크에서 삭제 /
    * 해당 지역이 북마크되어있지 않다면 (bookmarkedRegions에 없다면) → 북마크에 추가
    * @param {string} item : 검색한 지역
    */
-  const toggleBookmark = (item) => {
+  const toggleBookmark = async (item) => {
+    // ===== CASE.1 이미 북마크 리스트에 존재한다면 ===
     if (isBookmarked(item)) {
+      // 북마크에서 제거
       dispatch(removeBookmark(item));
       // console.log("제거:", item);
+
+    // ===== CASE.2 북마크 리스트에 존재하지 않는다면 ===
     } else {
-      dispatch(addBookmark(item));
-      // console.log("추가:", bookmarkedRegions);
+      try {
+        // unwrap(): 성공 -> payload반환, 실패 -> error throw
+        const result = await dispatch(getSearchLocationForBookmark(item)).unwrap();
+        dispatch(addBookmark({
+          region: item, 
+          stationName: result.nearestStation.stationName
+        }));
+        console.log("북마크 추가에 성공했습니다. ", bookmarkedRegions);
+
+      } catch (error) {
+        console.error("북마크에 추가한 지역의 측정소를 찾지 못했습니다. ", error);
+      }
     }
   };
 
@@ -211,7 +228,7 @@ function LocationSearch() {
                       <div
                         className="header-search-result"
                         key={item}
-                        onClick={() => handleSelectLocation(item)}
+                        
                       >
                         <span
                           className="bookmark-icon"
@@ -226,7 +243,10 @@ function LocationSearch() {
                             <CiStar color="var(--deep-blue)" />
                           )}
                         </span>
-                        <span> {item}</span>
+                        <span
+                          className="header-search-result-item"
+                          onClick={(e) => {e.stopPropagation(); handleSelectLocation(item)}}
+                        > {item}</span>
                       </div>
                     ))}
                 </motion.div>

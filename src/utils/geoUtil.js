@@ -4,6 +4,9 @@ import { MEASURING_STATIONS } from "../constants/measuringStation.js";
 // ||    1. 좌표(위도, 경도)로 거리 계산 함수
 // ||    2. 각도를 라디안으로 변환하는 함수
 // ||    3. 좌표(위도, 경도)로 가장 가까운 거리의 측정소를 찾는 함수
+// ||    4. GPS로 위도, 경도 받는 함수
+// ||    5. 주소로 위도, 경도 받는 함수
+// ||    6. 위도, 경도로 주소 구하는 함수
 // =================================================================
 
 /**
@@ -75,4 +78,67 @@ export function findNearestStation(currentLat, currentLng) {
     ...nearestStation,
     distance: Number(minDistance.toFixed(2)),
   };
+}
+
+ /**
+  * 브라우저의 GPS 기능으로 현재 위치를 가져오는 함수
+  */
+export async function getCurrentGPS() {
+  // navigator.geolocation.getCurrentPosition은 콜백 방식
+  // -> 값 받기 위해 promise 사용
+  // -> async + await 사용
+  const position = await new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  })
+  return {  // ✅ 값을 반환해야 함!
+    lat: position.coords.latitude,
+    lng: position.coords.longitude
+  }
+}
+
+/**
+ * 주소 값으로 위도와 경도 구하는 함수
+ * @param {string} addr : 위도, 경도 구할 주소
+ */
+export async function getLatLngFromAddr(addr) {
+  // 카카오 객체 생성
+  const geocoder = new window.kakao.maps.services.Geocoder();
+  // 비동기이므로 promise로 감싸서 await
+  const searchCoordinates = await new Promise((resolve, reject) => {
+        // console.log(`대구 ${searchKeyword}`)
+    geocoder.addressSearch(`대구 ${addr}`, (result, status) => {
+      if (status === window.kakao.maps.services.Status.OK) {
+        resolve ({
+          lat : parseFloat(result[0].y),
+          lng : parseFloat(result[0].x),
+        });
+      } else {
+        reject(new Error('주소로 좌표를 찾을 수 없습니다.'));
+      }
+    });
+  });
+  return searchCoordinates;
+}
+
+/**
+ * 경도, 위도 받아서 현재 주소 출력
+ * @param {number} longitude 
+ * @param {number} latitude 
+ */
+export async function getAddrFromGPS(longitude, latitude) {
+  // 카카오 SDK의 Geocoder 객체 생성
+  const geocoder = new window.kakao.maps.services.Geocoder();
+  const addressData = await new Promise((resolve, reject) => {
+            // coord2Address(경도, 위도, 콜백함수)
+    geocoder.coord2Address(longitude, latitude, (result, status) => {
+      if(status === window.kakao.maps.services.Status.OK) {
+        // 성공 시 result[0].address에 주소 정보가 담김
+        resolve(result[0].address);
+        // console.log('카카오맵으로 가져온 주소:', result[0].address);
+      } else {
+        reject(new Error('주소를 가져올 수 없습니다'));
+      }
+    });
+  })
+  return `${addressData.region_2depth_name} ${addressData.region_3depth_name}`;
 }
