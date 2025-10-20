@@ -107,6 +107,11 @@ function EditBookmark() {
   // 편집중인 북마크 목록 관리용
   const [editingList, setEditingList] = useState(bookmarkedRegions);
 
+  // 토글로 북마크 추가할 때마다 editingList로 저장
+  useEffect(() => {
+    setEditingList(bookmarkedRegions);
+  }, [bookmarkedRegions]);
+
   // 변경될 때 순서 유지, 리스트 업뎃(집 가서 수정할 부분)
   // useEffect(() => {
   //   // 항목 순서 유지
@@ -284,7 +289,7 @@ function EditBookmark() {
    */
   const handleSave = () => {
     // redux에 순서 저장 액션을 보냄
-    dispatch(saveBookmarkOrder());
+    dispatch(saveBookmarkOrder(editingList || []));
     // 저장했음을 표시 (페이지를 벗어날 때 순서를 되돌리지 않도록!)
     // bookmarkSaved.current = true;
     // 현재 상태를 localStorage에 저장

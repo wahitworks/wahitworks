@@ -32,10 +32,6 @@
 .card04-bookmark-list-title {
   font-weight: 900;
 }
-.card04-bookmark-list-station {
-  color: gray;
-  font-size: 12px;
-}
 
 .card04-bookmark-list {
   width: 100%;
@@ -68,7 +64,7 @@
   padding: 15px;
   border-radius: 0 0 20px 20px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
 }
@@ -77,6 +73,19 @@
   max-height: 500px;
   opacity: 1;
   padding: 15px;
+}
+
+.card04-bookmark-list-toggle-station {
+  color: gray;
+  font-size: 12px;
+
+  margin-bottom: 10px;
+}
+
+.card04-bookmark-list-toggle-container {
+  width: 100%;
+
+  display: flex;
 }
 
 .card04-bookmark-list-toggle-info{

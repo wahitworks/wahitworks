@@ -88,7 +88,7 @@ function BookmarkItem({ region, stationName }) {
       case "2": return <LogoModerate animated />;
       case "3": return <LogoBad animated />;
       case "4": return <LogoVeryBad animated />;
-      default: return <LogoError />;
+      default: return <LogoError animated />;
     }
   }; 
   
@@ -112,7 +112,7 @@ function BookmarkItem({ region, stationName }) {
              <FaStar color='var(--deep-blue)' />
           </span>
           <p className="card04-bookmark-list-title">{region}</p>
-          <p className="card04-bookmark-list-station">{stationName} 측정소</p>
+          {/* <p className="card04-bookmark-list-station">{stationName} 측정소</p> */}
           <div className="card04-bookmark-list-air-status">
           {/* 데이터 불러오기 성공시 출력 */}
           {card04Loading && <small>로딩 중...</small>}
@@ -143,29 +143,34 @@ function BookmarkItem({ region, stationName }) {
             ) : data ? (
               // 데이터가 불러 왔을 경우 : 상세 정보
               <>
-                <div className="card04-bookmark-list-toggle-info">
-                  <p className="card04-bookmark-list-toggle-info-title">미세먼지</p>
-                  <p className="card04-bookmark-list-toggle-info-value">{dustValue}㎍/㎥</p>
-                  <div className="card04-air-log">
-                    <AirQualityLogo grade={dustGrade} />
-                  </div>
-                  <p className="card04-list-toggle-ingo-text">{getGradeText(dustGrade)}</p>
+                <div className="card04-bookmark-list-toggle-top">
+                  <p className="card04-bookmark-list-toggle-station">{stationName} 측정소</p>
                 </div>
-                <div className="card04-bookmark-list-toggle-info">
-                  <p className="card04-bookmark-list-toggle-info-title">초미세먼지</p>
-                  <p className="card04-bookmark-list-toggle-info-value">{ultraDustValue}㎍/㎥</p>
-                  <div className="card04-air-log">
-                    <AirQualityLogo grade={ultraDustGrade} />
+                <div className="card04-bookmark-list-toggle-container">
+                  <div className="card04-bookmark-list-toggle-info">
+                    <p className="card04-bookmark-list-toggle-info-title">미세먼지</p>
+                    <p className="card04-bookmark-list-toggle-info-value">{dustValue}㎍/㎥</p>
+                    <div className="card04-air-log">
+                      <AirQualityLogo grade={dustGrade} />
+                    </div>
+                    <p className="card04-list-toggle-ingo-text">{getGradeText(dustGrade)}</p>
                   </div>
-                  <p className="card04-list-toggle-ingo-text">{getGradeText(ultraDustGrade)}</p>
-                </div>
-                <div className="card04-bookmark-list-toggle-info">
-                  <p className="card04-bookmark-list-toggle-info-title">오존O₃</p>
-                  <p className="card04-bookmark-list-toggle-info-value">{o3Value}ppm</p>
-                  <div className="card04-air-log">
-                    <AirQualityLogo grade={o3Grade} />
+                  <div className="card04-bookmark-list-toggle-info">
+                    <p className="card04-bookmark-list-toggle-info-title">초미세먼지</p>
+                    <p className="card04-bookmark-list-toggle-info-value">{ultraDustValue}㎍/㎥</p>
+                    <div className="card04-air-log">
+                      <AirQualityLogo grade={ultraDustGrade} />
+                    </div>
+                    <p className="card04-list-toggle-ingo-text">{getGradeText(ultraDustGrade)}</p>
                   </div>
-                  <p className="card04-list-toggle-ingo-text">{getGradeText(o3Grade)}</p>
+                  <div className="card04-bookmark-list-toggle-info">
+                    <p className="card04-bookmark-list-toggle-info-title">오존O₃</p>
+                    <p className="card04-bookmark-list-toggle-info-value">{o3Value}ppm</p>
+                    <div className="card04-air-log">
+                      <AirQualityLogo grade={o3Grade} />
+                    </div>
+                    <p className="card04-list-toggle-ingo-text">{getGradeText(o3Grade)}</p>
+                  </div>
                 </div>
               </>
             ) : null }
