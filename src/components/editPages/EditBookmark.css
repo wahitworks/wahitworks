@@ -59,7 +59,7 @@
   max-height: 200px;
   overflow-y: auto; /* 스크롤 자동 생성 */
 
-  padding: 10px 30px 10px 60px;
+  padding: 10px 30px 10px 14%;
 
   display: flex;
   flex-direction: column;
@@ -78,13 +78,17 @@
 .bookmark-filtered-item {
   font-weight: bold;
 
-  padding: 10px 20px;
+  padding: 10px 15px;
   border: 1px solid var(--light-blue);
   border-radius: 15px;
 
   display: flex;
+  justify-content: flex-start;
   align-items: center;
   gap: 8px;
+}
+.bookmark-filtered-item-region {
+  white-space: nowrap;
 }
 
 /* 북마크 드래그앤드롭 영역 */
