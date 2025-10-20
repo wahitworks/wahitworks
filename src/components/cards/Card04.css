@@ -31,8 +31,14 @@
 
 .card04-bookmark-list-title {
   font-weight: 900;
+  text-align: center;
+  line-height: 18px;
 }
-
+.card04-bookmark-gray-little{
+  color: #999;
+  font-weight: 400;
+  font-size: 12px;
+}
 .card04-bookmark-list {
   width: 100%;
   padding: 15px;
@@ -72,13 +78,18 @@
 .card04-bookmark-list-toggle.show {
   max-height: 500px;
   opacity: 1;
-  padding: 15px;
+  padding: 0 15px 15px;
+}
+
+.card04-bookmark-list-toggle-top {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;  /* 오른쪽 정렬 */
 }
 
 .card04-bookmark-list-toggle-station {
   color: gray;
   font-size: 12px;
-
   margin-bottom: 10px;
 }
 

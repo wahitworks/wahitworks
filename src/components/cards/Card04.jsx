@@ -16,7 +16,7 @@ import { GRADE_CLASS } from "../../constants/ultraFineDustLevel.js";
 import { useNavigate } from "react-router-dom";
 
 // 각 북마크 항목 렌더링 컴포넌트
-function BookmarkItem({ region, stationName }) {
+function BookmarkItem({ region, stationName, nickname }) {
   const dispatch = useDispatch();
 
   // 등급을 계산하는 함수 
@@ -111,7 +111,17 @@ function BookmarkItem({ region, stationName }) {
           <span className="bookmark-icon">
              <FaStar color='var(--deep-blue)' />
           </span>
-          <p className="card04-bookmark-list-title">{region}</p>
+            {/* 닉네임이 있다면, 닉네임. 없다면 지역 */}
+            { nickname ? (
+              <p className="card04-bookmark-list-title">
+                <p>{nickname}</p>
+                <p className="card04-bookmark-gray-little"> {region}</p>
+              </p>
+            ) : (
+              <p className="card04-bookmark-list-title">
+                {region}
+              </p>
+            )}
           {/* <p className="card04-bookmark-list-station">{stationName} 측정소</p> */}
           <div className="card04-bookmark-list-air-status">
           {/* 데이터 불러오기 성공시 출력 */}
@@ -231,6 +241,7 @@ function Card04() {
               key={item.region} 
               region={item.region}
               stationName={item.stationName} 
+              nickname={item.nickname}
             />
           ))
         ) : (

@@ -7,10 +7,9 @@ const bookmarkSlice = createSlice({
   initialState: {
     bookmarkedRegions: localStorageUtil.getBookmarkedRegions() || [],
     bookmarkSearchInput: '',
-    // bookmarkSearchKeyword: null, // 사용 안 함
-    // bookmarkSearchRegion:'', // 사용 안 함
-    // bookmarkSearchMeasuringStation: '', // 컴포넌트 로컬로 이동 필요
     bookmarkFilteredList: [],
+    // nicknameEditFlg: false,
+    // nicknameEditRegion: null,
     loading: false,
     error: null,
   },
@@ -20,10 +19,6 @@ const bookmarkSlice = createSlice({
     setBookmarkSearchInput(state, action) {
       state.bookmarkSearchInput = action.payload;
     },
-    // 검색어 설정
-    // setBookmarkSearchKeyword(state, action) { // 사용 안 함
-    //   state.bookmarkSearchKeyword = action.payload;
-    // },
     // 입력어에 따른 자동완성 리스트
     setBookmarkFilteredList(state, action) {
       state.bookmarkFilteredList = action.payload;
@@ -47,6 +42,24 @@ const bookmarkSlice = createSlice({
     // 저장하기 버튼 - 현재 state를 localStorage에 저장
     saveBookmarkOrder(state) {
       // payload 없이 현재 state만 localStorage에 저장
+      localStorageUtil.setBookmarkedRegions(state.bookmarkedRegions);
+    },
+    // 북마크 닉네임 변경 모달 플래그
+    setNicknameEditFlg(state, action) {
+      state.nicknameEditFlg = action.payload;
+    },
+    // 변경 중인 북마크의 지역 전달용
+    setNicknameEditRegion(state, action) {
+      state.nicknameEditRegion = action.payload;
+    },
+    // 북마크 닉네임 변경
+    updateBookmarkNickname(state, action) {
+      const { region, nickname } = action.payload;
+      const item = state.bookmarkedRegions.find(item => item.region === region);
+      if (item) {
+        item.nickname = nickname;
+      }
+      // localStorage도 업데이트
       localStorageUtil.setBookmarkedRegions(state.bookmarkedRegions);
     },
   },
@@ -76,8 +89,10 @@ export const {
   addBookmark,
   removeBookmark,
   setBookmarkSearchInput,
-  // setBookmarkSearchKeyword, // 사용 안 함
   setBookmarkFilteredList,
+  updateBookmarkNickname,
+  setNicknameEditFlg,
+  setNicknameEditRegion,
   updateBookmarkedRegions,
   saveBookmarkOrder,
 } = bookmarkSlice.actions;

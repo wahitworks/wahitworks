@@ -19,30 +19,39 @@ import { CSS } from "@dnd-kit/utilities";
 
 import "./EditBookmark.css";
 
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
+
 import { IoMdSearch } from "react-icons/io";
 import { CiStar } from "react-icons/ci";
 import { FaStar } from "react-icons/fa";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { FiEdit3 } from "react-icons/fi";
+import { GiSaveArrow } from "react-icons/gi";
 
 import {
   addBookmark,
   removeBookmark,
-  setBookmarkFilteredList,
-  setBookmarkSearchInput,
   updateBookmarkedRegions,
   saveBookmarkOrder,
+  updateBookmarkNickname,
+  setNicknameEditFlg,
+  setNicknameEditRegion,
 } from "../../store/slices/bookmarkSlice.js";
-import { useEffect, useState, useRef } from "react";
 import { LOCATION_LIST } from "../../constants/locationList.js";
-import { stringUtils } from "../../utils/stringUtil";
-// import { localStorageUtil } from '../../utils/localStorageUtil.js';
+import { stringUtils } from "../../utils/stringUtil.js";
 // toast관련
 import Toast from "../commons/Toast";
 import { getSearchLocationForBookmark } from "../../store/thunks/bookmarkThunk.js";
-// import { div } from 'framer-motion/client';
+// 북마크 닉네임 수정
+import EditBookmarkNickname from "./EditBookmarkNickname.jsx";
 
-// 각 북마크 아이템을 위한 컴포넌트
+
+// ====================================================
+// ||     각 북마크 아이템을 위한 컴포넌트
+// ====================================================
+
 // useSortable을 추상화해서 재사용 가능하게 만들기 위해 따로 빼놓았습니다!
 function SortableItem(props) {
   const {
@@ -58,6 +67,27 @@ function SortableItem(props) {
     transition,
   };
 
+  const dispatch = useDispatch()
+
+  // 북마크 편집을 위한 로컬 state
+  const [editNicknameFlg, setEditNicknameFlg] = useState(false)
+  const [editNickname, setEditNickname] = useState(props.nickname)
+
+
+  /**
+   * region을 받아서 해당하는 요소의 nickname을 수정하는 함수
+   * @param {string} region : bookmarkedRegions 에 저장된 region
+   */
+  const handleSaveNickname = (region) => {
+    // 1. Redux에 닉네임 업데이트
+    dispatch(updateBookmarkNickname({
+      region: props.id,
+      nickname: editNickname
+    }));
+    // 2. 편집 모드 종료
+    setEditNicknameFlg(false);
+  }
+
   return (
     <>
       <div
@@ -65,26 +95,66 @@ function SortableItem(props) {
         ref={setNodeRef}
         style={style}
         {...attributes}
-        {...listeners}
       >
-        <div className="bookmark-hamburger">&#x2630; {/* 햄버거 아이콘 */}</div>
-        <span className="bookmark-name">{props.id}</span>
-
-        <span
-          className="bookmark-icon"
-          onClick={() => props.onToggle(props.id)}
-          onPointerDown={(e) => e.stopPropagation()}
-        >
-          {props.isBookmarked ? (
-            <FaStar color="var(--deep-blue)" />
+        {/* 햄버거만 드래그 가능 */}
+        <div className="bookmark-drag-handle" {...listeners}>
+          &#x2630;
+          {/* <div className="bookmark-hamburger">&#x2630;</div> */}
+        </div>
+        {editNicknameFlg ? (
+          // 편집 모드: input
+          <input
+            type="text"
+            value={editNickname}
+            onChange={(e) => setEditNickname(e.target.value)}
+            maxLength={6}
+            placeholder={props.nickname ? props.nickname : props.id}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleSaveNickname();
+              }
+            }}
+          />
+        ) : (
+          // 일반 모드: 닉네임 유무에 따라 출력
+          props.nickname ? (
+            <span className="bookmark-name">
+              <p>{props.nickname}</p>
+              <p className="bookmark-name-gray">{props.id}</p>
+            </span>
           ) : (
-            <CiStar color="var(--deep-blue)" />
-          )}
-        </span>
+            <p className="bookmark-name">
+              {props.id}
+            </p>
+          )
+        )}
+        {/* 펜&삭제 아이콘 - 드래그 완전히 분리, 클릭만 가능 */}
+        <div className="bookmark-icon-container">
+          <span
+            onClick={() => {
+              editNicknameFlg ? handleSaveNickname(props.id) : setEditNicknameFlg(true)}}
+          >
+            {
+              editNicknameFlg ? <GiSaveArrow color="var(--deep-blue)" /> : <FiEdit3 color="var(--deep-blue)" />
+            }
+            
+          </span>
+          <span
+            onClick={() => props.onToggle(props.id)}
+          >
+            {props.isBookmarked && <FaRegTrashAlt color="var(--deep-blue)" />}
+          </span>
+        </div>
       </div>
+
     </>
   );
 }
+
+
+// ====================================================
+// ||     내 장소 관리 메인 컴포넌트
+// ====================================================
 
 function EditBookmark() {
   const dispatch = useDispatch();
@@ -93,12 +163,12 @@ function EditBookmark() {
   const bookmarkedRegions = useSelector(
     (state) => state.bookmarkSlice.bookmarkedRegions
   );
-  const bookmarkSearchInput = useSelector(
-    (state) => state.bookmarkSlice.bookmarkSearchInput
-  );
-  const bookmarkFilteredList = useSelector(
-    (state) => state.bookmarkSlice.bookmarkFilteredList
-  );
+  const nicknameEditFlg = useSelector(state => state.bookmarkSlice.nicknameEditFlg);
+
+  // ===== 로컬 state =====
+  // 검색 관련 (로컬로 변경!)
+  const [searchInput, setSearchInput] = useState('');
+  const [filteredList, setFilteredList] = useState([]);
 
   // 알림창용 state, ref
   const [showToast, setShowToast] = useState(false);
@@ -204,33 +274,24 @@ function EditBookmark() {
   }
 
   // ======================================================
-  // ||     useEffect : 북마크 검색어에 따라
+  // ||     useEffect : 북마크 검색어에 따라 (로컬 state 사용)
   // ======================================================
   useEffect(() => {
     // ===== CASE.1 검색어 없을 경우 =====
     //        -> 빈 배열 반환
-    if (bookmarkSearchInput.trim() === "") {
-      dispatch(setBookmarkFilteredList([]));
+    if (searchInput.trim() === "") {
+      setFilteredList([]);
       return;
     }
     // ===== CASE.2 검색어 있을 경우 =====
     //        -> 1. 띄어쓰기를 제거해서 매칭된 배열 반환
     const filteredResult = LOCATION_LIST.filter((location) => {
       const locationNoSpace = stringUtils.removeSpaces(location);
-      const inputNoSpace = stringUtils.removeSpaces(bookmarkSearchInput);
+      const inputNoSpace = stringUtils.removeSpaces(searchInput);
       return locationNoSpace.includes(inputNoSpace);
     });
-    dispatch(setBookmarkFilteredList(filteredResult));
-  }, [bookmarkSearchInput, dispatch]);
-
-  // ======================================================
-  // ||     useEffect : 언마운트 마다, 검색어 초기화
-  // ======================================================
-  useEffect(() => {
-    return () => {
-      dispatch(setBookmarkSearchInput(""));
-    };
-  }, []);
+    setFilteredList(filteredResult);
+  }, [searchInput]);
 
   // ======================================================
   // ||     handling 관련 함수
@@ -270,6 +331,7 @@ function EditBookmark() {
           addBookmark({
             region: item,
             stationName: result.nearestStation.stationName,
+            nickname: '',
           })
         );
         console.log("북마크 추가에 성공했습니다. ", bookmarkedRegions);
@@ -303,20 +365,22 @@ function EditBookmark() {
     }, 1000);
   };
 
+  console.log(nicknameEditFlg);
+
   return (
     <>
       <AnimatePresence>
+        {nicknameEditFlg && <EditBookmarkNickname />}
+        {/* 검색 영역 */}
         <div className="bookmark-container">
-          {/* 검색 영역 */}
           <div className="bookmark-search-container">
             <p className="bookmark-title">내 장소 추가하기</p>
             <div className="bookmark-search-input-btn">
               <input
                 className="bookmark-search-input"
-                onChange={(e) =>
-                  dispatch(setBookmarkSearchInput(e.target.value))
-                }
+                onChange={(e) => setSearchInput(e.target.value)}
                 type="text"
+                value={searchInput}
               />
               <button className="bookmark-search-btn" type="button">
                 <IoMdSearch color="#333" />
@@ -327,23 +391,25 @@ function EditBookmark() {
               className="bookmark-filtered-conatiner"
               initial={{ height: 0, minHeight: 0, opacity: 0 }}
               animate={{
-                height: bookmarkFilteredList.length > 0 ? "auto" : 0,
-                minHeight: bookmarkFilteredList.length > 0 ? 50 : 0,
-                opacity: bookmarkFilteredList.length > 0 ? 1 : 0,
+                height: filteredList.length > 0 ? "auto" : 0,
+                minHeight: filteredList.length > 0 ? 50 : 0,
+                opacity: filteredList.length > 0 ? 1 : 0,
               }}
               transition={{
                 duration: 0.3,
                 ease: "easeOut",
               }}
             >
-              {bookmarkFilteredList.length > 0 &&
-                bookmarkFilteredList.map((filteredItem) => (
-                  <div className="bookmark-filtered-item" key={filteredItem}>
+              {filteredList.length > 0 &&
+                filteredList.map((filteredItem) => (
+                  <div className="bookmark-filtered-item" 
+                    key={filteredItem}
+                    onClick={() => {
+                      toggleBookmark(filteredItem); // 2. item 값 그대로 전달!
+                    }}
+                  >
                     <span
                       className="bookmark-icon"
-                      onClick={() => {
-                        toggleBookmark(filteredItem); // 2. item 값 그대로 전달!
-                      }}
                     >
                       {isBookmarked(filteredItem) ? (
                         <FaStar color="var(--deep-blue)" />
@@ -359,6 +425,7 @@ function EditBookmark() {
           <div className="bookmark-list-container">
             <p className="bookmark-title">내 장소</p>
 
+            {/* 내 장소 편집 영역 */}
             <DndContext
               sensors={sensors}
               collisionDetection={closestCenter}
@@ -375,6 +442,7 @@ function EditBookmark() {
                       <SortableItem
                         key={item.region}
                         id={item.region}
+                        nickname={item.nickname}
                         stationName={item.stationName}
                         isBookmarked={isBookmarked(item.region)}
                         onToggle={toggleBookmark}

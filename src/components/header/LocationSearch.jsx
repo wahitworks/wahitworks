@@ -82,7 +82,8 @@ function LocationSearch() {
         const result = await dispatch(getSearchLocationForBookmark(item)).unwrap();
         dispatch(addBookmark({
           region: item, 
-          stationName: result.nearestStation.stationName
+          stationName: result.nearestStation.stationName,
+          nickname: '',
         }));
         console.log("북마크 추가에 성공했습니다. ", bookmarkedRegions);
 

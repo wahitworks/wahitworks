@@ -3,6 +3,12 @@
 
   display: flex;
   flex-direction: column;
+
+  /* 텍스트 선택(드래그) 방지 */
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 .bookmark-title {
   font-weight: 700;
@@ -106,20 +112,52 @@
   gap: 8px;
 
   touch-action: none;
+}
+
+/* 햄버거 (드래그 핸들) */
+.bookmark-drag-handle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1; /* 남은 공간 차지 */
   cursor: grab;
+  touch-action: none;
+}
+
+.bookmark-drag-handle:active {
+  cursor: grabbing;
 }
 
 .bookmark-name {
+  width: 70%;
+  
+  line-height: 20px;
   touch-action: none;
+}
+.bookmark-name-gray {
+  color: #999;
+  font-weight: 400;
+  font-size: 13px;
 }
 
 /* 햄버거 */
 .bookmark-hamburger {
   color: #888;
   padding: 0 15px 0 0;
-  /* 모바일의 기본 동작이 드래그앤드롭 터치 기능과 충돌 */
-  /* 브라우저의 기본 터치 동작 비활성화 */
-  touch-action: none; /* 드래그앤드롭 해결 */
+  touch-action: none;
+}
+
+/* 아이콘 영역 (토글만 가능, 드래그 불가) */
+.bookmark-icon-container {
+  width: 45px;
+
+  font-size: 16px;
+  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  cursor: pointer;
 }
 
 .bookmark-items-container {
