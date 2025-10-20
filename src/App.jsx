@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import Header from "./components/header/Header.jsx";
 import { Outlet } from "react-router-dom";
 import Topbtn from "./components/topBtn/topBtn.jsx";
+import AppTutorial from "./components/explainPages/AppTutorial.jsx";
 import "./App.css";
 import { PWAInstallContext } from "./contexts/PWAInstallContext.jsx";
 
@@ -10,6 +12,8 @@ function App() {
   const [showInstallModal, setShowInstallModal] = useState(false);
   const [showManualInstallHint, setShowManualInstallHint] = useState(false); // New state
   const [isInstalling, setIsInstalling] = useState(false); // 설치 시도 중 상태 플래그
+
+  const isTutorialVisible = useSelector(state => state.headerSlice.isTutorialVisible);
 
   useEffect(() => {
     const handler = (e) => {
@@ -117,6 +121,7 @@ function App() {
             </div>
           )}
         </main>
+        {isTutorialVisible && <AppTutorial />}
       </>
     </PWAInstallContext.Provider>
   );

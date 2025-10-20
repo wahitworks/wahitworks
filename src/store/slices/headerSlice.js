@@ -6,6 +6,7 @@ const headerSlice = createSlice({
     headerTitle: '중구 성내동',
     searchFlg: false,
     menuFlg: false,
+    isTutorialVisible: false, // 튜토리얼 표시 여부
   },
   reducers: {
     setHeaderTitle(state, action) {
@@ -16,6 +17,9 @@ const headerSlice = createSlice({
     },
     setMenuFlg(state, action) {
       state.menuFlg = action.payload;
+    },
+    setTutorialVisible(state, action) { // 튜토리얼 표시 여부 설정
+      state.isTutorialVisible = action.payload;
     }
   }
 });
@@ -24,6 +28,7 @@ export const {
   setHeaderTitle,
   setSearchFlg,
   setMenuFlg,
+  setTutorialVisible, // action export 추가
 } = headerSlice.actions;
 
 export default headerSlice.reducer;

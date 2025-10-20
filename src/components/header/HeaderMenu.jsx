@@ -6,7 +6,7 @@ import { useContext, useEffect } from "react";
 
 import installIconUrl from "../../assets/icons/install_icon.svg";
 import { PWAInstallContext } from "../../contexts/PWAInstallContext.jsx";
-import { setMenuFlg, setSearchFlg } from "../../store/slices/headerSlice.js";
+import { setMenuFlg, setSearchFlg, setTutorialVisible } from "../../store/slices/headerSlice.js";
 
 function HeaderMenu() {
   const dispatch = useDispatch();
@@ -145,8 +145,13 @@ function HeaderMenu() {
                 <p
                   className="header-Menu-container-list"
                   onClick={() => {
-                    handleMenuClose();
-                    navigate("/apptutorial");
+                    // 튜토리얼 시작 명령을 먼저 예약
+                    setTimeout(() => {
+                      dispatch(setTutorialVisible(true));
+                    }, 300); // 충분한 지연 시간
+
+                    navigate('/'); // 메인 페이지로 이동
+                    handleMenuClose(); // 메뉴 닫기
                   }}
                   >
                   사용 가이드

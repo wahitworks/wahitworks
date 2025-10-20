@@ -25,11 +25,7 @@ const router = createBrowserRouter([
         path: "/editcard",
         element: <EditCard />,
       },
-      {
-        // 앱 사용 방법 안내 페이지
-        path: "/apptutorial",
-        element: <AppTutorial />,
-      },
+
       {
         // 사이트 소개 페이지
         path: "/introduce",

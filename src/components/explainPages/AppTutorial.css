@@ -1,0 +1,87 @@
+.tutorial-container {
+  /* 이 컨테이너는 이제 튜토리얼 UI 요소들만 포함합니다. */
+}
+
+.tutorial-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6); /* 오버레이가 어두운 배경을 제공 */
+  z-index: 1000;
+}
+
+.tutorial-close-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 300;
+  cursor: pointer;
+  z-index: 1002; 
+  line-height: 1;
+}
+
+.tutorial-highlight {
+  position: fixed;
+  border: 2px solid white;
+  border-radius: 8px;
+  /* 하이라이트는 구멍을 뚫는 역할만 합니다. */
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.6); /* 어두운 그림자로 구멍을 뚫음 */
+  z-index: 1001;
+  pointer-events: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.tutorial-message-box {
+  position: fixed;
+  background-color: white;
+  color: #333;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1002;
+  max-width: min(300px, calc(100vw - 40px)); /* 더 반응형으로 변경 */
+  text-align: left;
+  transition: all 0.3s ease-in-out;
+}
+
+.tutorial-message-box p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.4;
+  word-break: normal; /* 글자가 개별적으로 줄바꿈되는 현상 방지 */
+  white-space: normal; /* 공백 처리 방식 표준화 */
+}
+
+/* 튜토리얼 진행 안내 표시 */
+.tutorial-advance-indicator {
+  position: fixed;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 1.1rem;
+  text-align: center;
+  z-index: 1002;
+  pointer-events: none; /* 클릭 이벤트가 오버레이로 전달되도록 */
+}
+
+.tutorial-advance-indicator .arrow-animation {
+  display: inline-block;
+  margin-left: 10px;
+  animation: bounceArrow 1s infinite;
+}
+
+@keyframes bounceArrow {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+}
