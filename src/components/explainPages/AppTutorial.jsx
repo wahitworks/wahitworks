@@ -13,7 +13,7 @@ const tutorialSteps = [
   {
     targetSelector: "#main-container > div:first-child",
     message:
-      "선택된 지역을 기반으로 다양한 대기 상태에 관련된 정보들을 보여주는 카드입니다. ",
+      "선택된 지역을 기반으로 다양한 대기 상태에 관련된 정보들을 보여주는 카드입니다. 각 카드들은 메뉴의 '카드 관리'에서 on/off 및 순서 재배치가 가능합니다 ",
     position: "bottom",
   },
   {
@@ -45,32 +45,38 @@ const AppTutorial = () => {
     // 다음 단계로 넘어가기 전에 현재 UI를 숨겨 부드러운 전환을 만듭니다.
     setTargetPosition(null);
 
+    // 배열 끝 인덱스 계산
     if (step < tutorialSteps.length - 1) {
       setStep(step + 1);
     } else {
+      // 배열 인덱스 끝 도달 시 오버레이 종료 - 스크롤 탑
       closeTutorial();
     }
   };
 
   // step이 변경될 때마다 실행되는 효과
   useEffect(() => {
+    // [] idx로 순회하여 가이드 순차적으로 출력
     const currentStep = tutorialSteps[step];
     if (!currentStep) return;
 
+    // 클래스 네임으로 전역에서 요소를 특정
+    // 독립적인 컴포넌트들의 요소를 찾기 용이하게 바닐라 JS를 사용
+    // targetSelector = 요소의 클래스 이름
     const element = document.querySelector(currentStep.targetSelector);
     if (element) {
       // 요소를 화면 중앙으로 부드럽게 스크롤합니다.
       element.scrollIntoView({ behavior: "smooth", block: "center" });
 
-      // 스크롤 애니메이션이 끝날 시간을 기다린 후 위치를 측정합니다.
+      // 스크롤 애니메이션이 끝날 시간을 기다린 후 위치를 측정 (하이라이팅 위치 오류 방지)
       const scrollTimeout = setTimeout(() => {
+        // 선택된 클래스 네임의 요소의 위치를 저장
         setTargetPosition(element.getBoundingClientRect());
       }, 500); // 0.5초 대기
 
       // 컴포넌트가 언마운트되거나 step이 바뀌면 timeout을 정리합니다.
       return () => clearTimeout(scrollTimeout);
     } else {
-      // 요소를 찾지 못하면 다음 단계로 자동 이동
       goToNextStep();
     }
   }, [step]);
@@ -79,23 +85,29 @@ const AppTutorial = () => {
 
   // 스타일 동적 계산
   const highlightStyle = targetPosition
-    ? {
+    ? // 강조 요소 있을 시
+      {
         left: `${targetPosition.left - 5}px`,
         top: `${targetPosition.top - 5}px`,
         width: `${targetPosition.width + 10}px`,
         height: `${targetPosition.height + 10}px`,
       }
-    : { display: "none" };
+    : // 없을 시 스킵
+      { display: "none" };
 
   const messageBoxStyle = targetPosition
-    ? (() => {
+    ? // 강조 요소 있을 시
+      (() => {
         const messageBoxMaxWidth = 300; // CSS의 max-width와 일치
         const viewportPadding = 10; // 화면 가장자리로부터 최소 여백
 
+        // 메시지 박스를 강조 요소 기준 중앙에 배치
+        // 왼쪽 시작지점 + 총 너비 / 2 = 강조 요소 중앙
         const targetCenter = targetPosition.left + targetPosition.width / 2;
+        // 메시지 박스 왼쪽 시작점 구하기
         let calculatedLeft = targetCenter - messageBoxMaxWidth / 2;
 
-        // 화면 왼쪽 가장자리 오버플로우 방지
+        // 메시지 박스 왼쪽 시작 지점이 음수 (화면밖) 일때 양수로 변환 후 화면 안에서 출력
         if (calculatedLeft < viewportPadding) {
           calculatedLeft = viewportPadding;
         }
@@ -103,9 +115,12 @@ const AppTutorial = () => {
         // 화면 오른쪽 가장자리 오버플로우 방지
         const viewportWidth = window.innerWidth;
         if (
+          // 메시지 박스의 오른쪽 끝자리 위치값
           calculatedLeft + messageBoxMaxWidth >
+          // 여백을 계산한 보이는 스크린의 총 너비
           viewportWidth - viewportPadding
         ) {
+          // 햄버거 메뉴 메시지 박스 오류를 픽스하기위한 메시지 박스 좌측 시작점 재 계산
           calculatedLeft = viewportWidth - messageBoxMaxWidth - viewportPadding;
           // 뷰포트가 너무 작아 음수가 되는 경우 방지
           if (calculatedLeft < viewportPadding) {
@@ -124,10 +139,11 @@ const AppTutorial = () => {
         return {
           left: `${calculatedLeft}px`,
           top: topPosition,
-          transform: "none", // translateX는 더 이상 필요 없음
+          transform: "none",
         };
       })()
-    : { display: "none" };
+    : // 강조 요소 없을시
+      { display: "none" };
 
   return (
     <div className="tutorial-overlay" onClick={goToNextStep}>

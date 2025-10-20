@@ -15,14 +15,14 @@
 .tutorial-close-btn {
   position: fixed;
   top: 20px;
-  right: 20px;
+  left: 20px; /* X버튼이 가이드를 가려서 좌측 상단으로 이동*/
   background: transparent;
   border: none;
   color: white;
   font-size: 2.5rem;
   font-weight: 300;
   cursor: pointer;
-  z-index: 1002; 
+  z-index: 1002;
   line-height: 1;
 }
 
@@ -78,7 +78,8 @@
 }
 
 @keyframes bounceArrow {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0);
   }
   50% {
