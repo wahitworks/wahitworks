@@ -104,13 +104,8 @@ function EditBookmark() {
   const [showToast, setShowToast] = useState(false);
   const toastTimerRef = useRef(null);
 
-  // 편집중인 북마크 목록 관리용 (로컬 state - 드래그앤드롭 임시 저장)
+  // 편집중인 북마크 목록 관리용
   const [editingList, setEditingList] = useState(bookmarkedRegions);
-
-  // Redux의 bookmarkedRegions가 변경되면 editingList도 동기화
-  useEffect(() => {
-    setEditingList(bookmarkedRegions);
-  }, [bookmarkedRegions]);
 
   // 변경될 때 순서 유지, 리스트 업뎃(집 가서 수정할 부분)
   // useEffect(() => {
@@ -190,15 +185,17 @@ function EditBookmark() {
     const { active, over } = event;
 
     if (active.id !== over.id) {
-      const oldIndex = editingList.findIndex(
+      const oldIndex = bookmarkedRegions.findIndex(
         (item) => item.region === active.id
       );
-      const newIndex = editingList.findIndex(
+      const newIndex = bookmarkedRegions.findIndex(
         (item) => item.region === over.id
       );
       // arrayMove 사용 새로운 순서 배열 생성
       const newOrder = arrayMove(editingList, oldIndex, newIndex);
-      // 로컬 state만 업데이트 (Redux X, Card04 안 바뀜!)
+      // updateBookmarkedRegions 액션 호출
+      // dispatch(updateBookmarkedRegions(newOrder));
+      // 로컬스토리지 업뎃
       setEditingList(newOrder);
     }
   }
@@ -286,10 +283,11 @@ function EditBookmark() {
    * 저장하기 버튼 클릭 시, 현재 상태를 localStorage에 저장
    */
   const handleSave = () => {
-    // 1. editingList를 Redux에 업데이트 (이때 Card04에 반영됨!)
-    dispatch(updateBookmarkedRegions(editingList));
-    // 2. Redux state를 localStorage에 저장
+    // redux에 순서 저장 액션을 보냄
     dispatch(saveBookmarkOrder());
+    // 저장했음을 표시 (페이지를 벗어날 때 순서를 되돌리지 않도록!)
+    // bookmarkSaved.current = true;
+    // 현재 상태를 localStorage에 저장
 
     // 기존 타이머가 있으면 취소
     if (toastTimerRef.current) {
@@ -297,7 +295,7 @@ function EditBookmark() {
     }
     // 알림표시
     setShowToast(true);
-    // 1초 뒤에 토스트 숨김 타이머
+    // 2초 뒤에 토스트 숨김 타이머
     toastTimerRef.current = setTimeout(() => {
       setShowToast(false);
     }, 1000);
@@ -365,13 +363,13 @@ function EditBookmark() {
               onDragEnd={handleDragEnd}
             >
               <SortableContext
-                // 각 아이템의 id배열 전달 (editingList 사용)
-                items={editingList.map((item) => item.region)}
+                // 각 아이템의 id배열 전달
+                items={bookmarkedRegions.map((item) => item.region)}
                 strategy={verticalListSortingStrategy}
               >
                 <div className="bookmark-items-container">
-                  {editingList.length > 0 &&
-                    editingList.map((item) => (
+                  {bookmarkedRegions.length > 0 &&
+                    bookmarkedRegions.map((item) => (
                       <SortableItem
                         key={item.region}
                         id={item.region}
@@ -380,7 +378,7 @@ function EditBookmark() {
                         onToggle={toggleBookmark}
                       />
                     ))}
-                  {editingList.length === 0 && (
+                  {bookmarkedRegions.length === 0 && (
                     <div className="bookmark-nothing">
                       <p>저장된 내 장소가 없습니다.</p>
                     </div>

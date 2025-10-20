@@ -59,15 +59,17 @@ function Card05() {
   return (
     <>
       <div className="card05-container">
-
+        <div className="card05-title-box">
+          <h2 className="card05-title">대기질 등급 기준</h2>
+        </div>
         {/* 4. 탭 메뉴 */}
         <div className="card05-tab-menu">
           {tabs.map(tab => (
             <button
-              key={tab.id}
-              // 5. 선택된 탭은 'active' 클래스 추가
-              className={`card05-tab-button ${selectedPollutant === tab.id ? 'card05-active' : ''}`}
-              onClick={() => setSelectedPollutant(tab.id)}
+            key={tab.id}
+            // 5. 선택된 탭은 'active' 클래스 추가
+            className={`card05-tab-button ${selectedPollutant === tab.id ? 'card05-active' : ''}`}
+            onClick={() => setSelectedPollutant(tab.id)}
             >
               {tab.label}
             </button>
@@ -78,14 +80,15 @@ function Card05() {
         <div className="card05-grade-container">
           {gradeStandard[selectedPollutant].map((gradeInfo, index) => (
             <Card05Grade
-              key={index}
-              grade={gradeInfo.grade}
-              range={gradeInfo.range}
-              color={gradeInfo.color}
-              unit={gradeInfo.unit}
+            key={index}
+            grade={gradeInfo.grade}
+            range={gradeInfo.range}
+            color={gradeInfo.color}
+            unit={gradeInfo.unit}
             />
           ))}
         </div>
+        <p className="card05-source-info">환경정책기본법시행령[2015.1.1 시행] 환경기준(제2조 관련)</p>
       </div>
     </>
   );

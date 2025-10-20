@@ -7,9 +7,9 @@ const bookmarkSlice = createSlice({
   initialState: {
     bookmarkedRegions: localStorageUtil.getBookmarkedRegions() || [],
     bookmarkSearchInput: '',
-    bookmarkSearchKeyword: null,
-    bookmarkSearchRegion:'',
-    bookmarkSearchMeasuringStation: '',
+    // bookmarkSearchKeyword: null, // 사용 안 함
+    // bookmarkSearchRegion:'', // 사용 안 함
+    // bookmarkSearchMeasuringStation: '', // 컴포넌트 로컬로 이동 필요
     bookmarkFilteredList: [],
     loading: false,
     error: null,
@@ -21,9 +21,9 @@ const bookmarkSlice = createSlice({
       state.bookmarkSearchInput = action.payload;
     },
     // 검색어 설정
-    setBookmarkSearchKeyword(state, action) {
-      state.bookmarkSearchKeyword = action.payload;
-    },
+    // setBookmarkSearchKeyword(state, action) { // 사용 안 함
+    //   state.bookmarkSearchKeyword = action.payload;
+    // },
     // 입력어에 따른 자동완성 리스트
     setBookmarkFilteredList(state, action) {
       state.bookmarkFilteredList = action.payload;
@@ -39,13 +39,14 @@ const bookmarkSlice = createSlice({
       state.bookmarkedRegions = state.bookmarkedRegions.filter(item => item.region !== action.payload);
       localStorageUtil.setBookmarkedRegions(state.bookmarkedRegions);
     },
+    // 북마크 전체 업데이트 (저장 버튼 클릭 시 호출됨)
     updateBookmarkedRegions(state, action) {
       state.bookmarkedRegions = action.payload;
-      localStorageUtil.setBookmarkedRegions(state.bookmarkedRegions);
+      // localStorage 저장은 saveBookmarkOrder에서 수행하므로 여기서는 Redux만 업데이트
     },
-    // 저장하기 버튼 순서 저장
-    saveBookmarkOrder(state, action) {
-      state.bookmarkedRegions = action.payload;
+    // 저장하기 버튼 - 현재 state를 localStorage에 저장
+    saveBookmarkOrder(state) {
+      // payload 없이 현재 state만 localStorage에 저장
       localStorageUtil.setBookmarkedRegions(state.bookmarkedRegions);
     },
   },
@@ -75,7 +76,7 @@ export const {
   addBookmark,
   removeBookmark,
   setBookmarkSearchInput,
-  setBookmarkSearchKeyword,
+  // setBookmarkSearchKeyword, // 사용 안 함
   setBookmarkFilteredList,
   updateBookmarkedRegions,
   saveBookmarkOrder,
