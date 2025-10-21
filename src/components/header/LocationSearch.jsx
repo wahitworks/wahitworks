@@ -7,6 +7,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { IoMdSearch } from "react-icons/io";
 import { CiStar } from "react-icons/ci";
 import { FaStar } from "react-icons/fa";
+import { HiMiniXMark } from "react-icons/hi2";
+
 
 import { setSearchFlg } from "../../store/slices/headerSlice.js";
 import {
@@ -36,6 +38,7 @@ function LocationSearch() {
   const bookmarkedRegions = useSelector(
     (state) => state.bookmarkSlice.bookmarkedRegions
   );
+  const headerTitle = useSelector(state => state.headerSlice.headerTitle);
 
 
   // ======================================================
@@ -116,15 +119,14 @@ function LocationSearch() {
   }, [searchInput, dispatch]);
       
   // ===== 마운트, 언마운트 - 스크롤 방지 설정 =====
-  // ===== 언마운트 - 검색창 닫을 때마다(searchFlg = false) input, list 비우기
+  // ===== 언마운트 - 검색창 닫을 때마다(searchFlg = false) input, list
+  // ===== 마운트 - 검색창 열릴 때 현재 위치를 searchInput에 설정 =====
   useEffect(() => {
+    dispatch(setSearchInput(headerTitle)); // 현재 위치를 input에 표시
     document.body.style.overflow = 'hidden';
+
     return () => {
       document.body.style.overflow = 'unset';
-
-      // console.log(searchFlg)
-      // console.log(filteredLocationList)
-      
       dispatch(setSearchInput("")); // 인풋 비우기
       dispatch(setFilteredLocationList([])); // 리스트 비우기
     }
@@ -194,6 +196,7 @@ function LocationSearch() {
                 <div className="header-search-input-btn header-flex-style">
                   <input
                     className="header-search-input"
+                    value={searchInput}
                     onChange={(e) => dispatch(setSearchInput(e.target.value))}
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
@@ -202,12 +205,18 @@ function LocationSearch() {
                     }}
                     type="text"
                   />
-                  <button
+                  <div 
+                    className="header-search-cancel-btn"
+                    onClick={() => dispatch(setSearchInput(''))}
+                  >
+                    <HiMiniXMark color="#333" />
+                  </div>
+                  <div
                     className="header-search-btn"
                     onClick={() => handleSelectLocation(searchInput)}
                   >
                     <IoMdSearch color="#333" />
-                  </button>
+                  </div>
                 </div>
               </div>
 

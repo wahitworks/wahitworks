@@ -19,7 +19,7 @@ import { CSS } from "@dnd-kit/utilities";
 
 import "./EditBookmark.css";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -41,6 +41,8 @@ import {
 } from "../../store/slices/bookmarkSlice.js";
 import { LOCATION_LIST } from "../../constants/locationList.js";
 import { stringUtils } from "../../utils/stringUtil.js";
+// toast관련
+import Toast from "../commons/Toast";
 import { getSearchLocationForBookmark } from "../../store/thunks/bookmarkThunk.js";
 // 북마크 닉네임 수정
 import EditBookmarkNickname from "./EditBookmarkNickname.jsx";
@@ -199,6 +201,9 @@ function EditBookmark() {
   // 편집중인 북마크 목록 관리용 (로컬 state - 드래그앤드롭 임시 저장)
   const [editingList, setEditingList] = useState(bookmarkedRegions);
 
+  // 알림창용 state, ref
+  const [showToast, setShowToast] = useState(false);
+  const toastTimerRef = useRef(null);
 
 
   // Redux의 bookmarkedRegions가 변경되면 editingList도 동기화
@@ -227,7 +232,7 @@ function EditBookmark() {
     })
   );
 
-  // 드래그 종료시 - 자동 저장
+  // 드래그 종료시
   function handleDragEnd(event) {
     const { active, over } = event;
 
@@ -240,12 +245,8 @@ function EditBookmark() {
       );
       // arrayMove 사용 새로운 순서 배열 생성
       const newOrder = arrayMove(editingList, oldIndex, newIndex);
-      // 로컬 state 업데이트
+      // 로컬 state만 업데이트 (Redux X, Card04 안 바뀜!)
       setEditingList(newOrder);
-
-      // 자동 저장: Redux + localStorage에 즉시 반영
-      dispatch(updateBookmarkedRegions(newOrder));
-      dispatch(saveBookmarkOrder());
     }
   }
 
@@ -321,6 +322,26 @@ function EditBookmark() {
     }
   };
 
+  /**
+   * 저장하기 버튼 클릭 시, 현재 상태를 localStorage에 저장
+   */
+  const handleSave = () => {
+    // 1. editingList를 Redux에 업데이트 (이때 Card04에 반영됨!)
+    dispatch(updateBookmarkedRegions(editingList));
+    // 2. Redux state를 localStorage에 저장
+    dispatch(saveBookmarkOrder());
+
+    // 기존 타이머가 있으면 취소
+    if (toastTimerRef.current) {
+      clearTimeout(toastTimerRef.current);
+    }
+    // 알림표시
+    setShowToast(true);
+    // 1초 뒤에 토스트 숨김 타이머
+    toastTimerRef.current = setTimeout(() => {
+      setShowToast(false);
+    }, 1000);
+  };
 
   // console.log(nicknameEditFlg);
 
@@ -421,6 +442,19 @@ function EditBookmark() {
                 </div>
               </SortableContext>
             </DndContext>
+
+            {/* 내 장소 저장하기 버튼 */}
+            <div className="bookmark-save-btn-container">
+              <button
+                className="bookmark-save-btn"
+                type="button"
+                onClick={handleSave}
+              >
+                저장하기
+              </button>
+              {/* 토스트 */}
+              <Toast message="저장되었습니다!" show={showToast} />
+            </div>
           </div>
         </div>
       </AnimatePresence>
