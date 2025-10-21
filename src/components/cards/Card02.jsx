@@ -45,8 +45,8 @@ function Card02() {
   if (error) {
     return (
       <div className="card02-container">
-        <h2>초미세먼지 예보</h2>
-        <LogoError />
+        <h2>대구 대기질 3일 예보</h2>
+        <LogoError animated style={{ margin: "10px" }} />,
       </div>
     );
   }
@@ -55,8 +55,9 @@ function Card02() {
   if (!dailyForecasts || dailyForecasts.length === 0) {
     return (
       <div className="card02-container">
-        <h2>대기질 예보</h2>
+        <h2>대구 대기질 3일 예보</h2>
         <p>표시할 데이터가 없습니다.</p>
+        <LogoError animated style={{ margin: "10px" }} />,
       </div>
     );
   }
