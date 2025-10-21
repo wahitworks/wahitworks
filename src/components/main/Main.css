@@ -6,21 +6,13 @@
   padding-top: 15px;
 }
 
-/* 탑버튼 */
-.topbtn-test-div {
-  width: 100%;
-  height: 500px;
-  background-color: aqua;
-  /* TODO: 테스트 후 삭제 */
-}
-
 /* card12 */
 .main-add-card-container {
   width: 90%;
   margin: 15px auto 180px;
 }
 
-.main-add-card{
+.main-add-card {
   color: #999999;
   height: 140px;
   border: 1px solid #999999;

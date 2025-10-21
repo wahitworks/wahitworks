@@ -33,9 +33,6 @@ function Card02() {
     dispatch(fetchAirQuality());
   }, [dispatch]);
 
-  // api값 확인 (가공됐는지 잘 확인)
-  console.log("태호야 thunk로 가공된 api값 함보자:", dailyForecasts);
-
   // 1. 로딩 중일 때 표시할 화면
   if (loading) {
     return <Card02LoadingSkeleton />;
