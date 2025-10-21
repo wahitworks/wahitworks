@@ -29,6 +29,8 @@ import { FaStar } from "react-icons/fa";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FiEdit3 } from "react-icons/fi";
 import { GiSaveArrow } from "react-icons/gi";
+import { MdOutlineCancel } from "react-icons/md";
+import { HiMiniXMark } from "react-icons/hi2";
 
 import {
   addBookmark,
@@ -36,8 +38,6 @@ import {
   updateBookmarkedRegions,
   saveBookmarkOrder,
   updateBookmarkNickname,
-  setNicknameEditFlg,
-  setNicknameEditRegion,
 } from "../../store/slices/bookmarkSlice.js";
 import { LOCATION_LIST } from "../../constants/locationList.js";
 import { stringUtils } from "../../utils/stringUtil.js";
@@ -54,31 +54,34 @@ import EditBookmarkNickname from "./EditBookmarkNickname.jsx";
 
 // useSortable을 추상화해서 재사용 가능하게 만들기 위해 따로 빼놓았습니다!
 function SortableItem(props) {
+  const dispatch = useDispatch()
+
+  // 북마크 편집을 위한 로컬 state (useSortable보다 먼저 선언!)
+  const [editNicknameFlg, setEditNicknameFlg] = useState(false)
+  const [editNickname, setEditNickname] = useState(props.nickname)
+
   const {
     attributes,
     listeners, // 드래그 동작 담당
     setNodeRef,
     transform,
     transition,
-  } = useSortable({ id: props.id });
+  } = useSortable({
+    id: props.id,
+    disabled: editNicknameFlg, //  편집 모드일때 드래그 비활성화
+  });
 
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
   };
 
-  const dispatch = useDispatch()
-
-  // 북마크 편집을 위한 로컬 state
-  const [editNicknameFlg, setEditNicknameFlg] = useState(false)
-  const [editNickname, setEditNickname] = useState(props.nickname)
-
 
   /**
    * region을 받아서 해당하는 요소의 nickname을 수정하는 함수
    * @param {string} region : bookmarkedRegions 에 저장된 region
    */
-  const handleSaveNickname = (region) => {
+  const handleSaveNickname = () => {
     // 1. Redux에 닉네임 업데이트
     dispatch(updateBookmarkNickname({
       region: props.id,
@@ -96,50 +99,79 @@ function SortableItem(props) {
         style={style}
         {...attributes}
       >
-        {/* 햄버거만 드래그 가능 */}
+
+        {/* ===== 드래그 가능 영역 ↓ ===== */}
         <div className="bookmark-drag-handle" {...listeners}>
-          &#x2630;
-          {/* <div className="bookmark-hamburger">&#x2630;</div> */}
-        </div>
-        {editNicknameFlg ? (
-          // 편집 모드: input
-          <input
-            type="text"
-            value={editNickname}
-            onChange={(e) => setEditNickname(e.target.value)}
-            maxLength={6}
-            placeholder={props.nickname ? props.nickname : props.id}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                handleSaveNickname();
-              }
-            }}
-          />
-        ) : (
-          // 일반 모드: 닉네임 유무에 따라 출력
-          props.nickname ? (
-            <span className="bookmark-name">
-              <p>{props.nickname}</p>
-              <p className="bookmark-name-gray">{props.id}</p>
-            </span>
+          
+          {/* 햄버거  */}
+          {/* &#x2630; */}
+          <div className="bookmark-hamburger">&#x2630;</div>
+
+          {/* 이름 출력 영역 */}
+          {editNicknameFlg ? (
+            // ===== 편집 모드: input =====
+            <div className="bookmark-name">
+              <input
+                type="text"
+                className="bookmark-nickname-input bookmark-name"
+                value={editNickname}
+                onChange={(e) => setEditNickname(e.target.value)}
+                maxLength={6}
+                placeholder={props.nickname ? props.nickname : props.id}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleSaveNickname();
+                  }
+                }}
+              />
+              <p className="bookmark-name-gray">
+                  {props.id}
+              </p>
+            </div>
           ) : (
-            <p className="bookmark-name">
-              {props.id}
-            </p>
-          )
-        )}
-        {/* 펜&삭제 아이콘 - 드래그 완전히 분리, 클릭만 가능 */}
-        <div className="bookmark-icon-container">
+            // ===== 일반 모드: 닉네임 유무에 따라 출력 =====
+            props.nickname ? (
+              // CASE.1 닉네임이 있는 경우 -> 닉네임 + 지역 출력
+              <span className="bookmark-name">
+                <p>{props.nickname}</p>
+                <p className="bookmark-name-gray">{props.id}</p>
+              </span>
+            ) : (
+              // CASW.2 닉네임이 없는 경우 -> 지역 출력
+              <p className="bookmark-name">
+                {props.id}
+              </p>
+            )
+          )}
+          </div>
+        {/* ===== 드래그 가능 영역 ↑ ===== */}
+
+        {/* 닉네임 편집 & 북마크 삭제 아이콘 - 드래그 완전히 분리, 클릭만 가능 */}
+        <div className="bookmark-item-icon-container">
+          {/* 북마크 편집 아이콘 */}
+          {
+            editNicknameFlg ? (
+              // ===== 편집 모드 =====
+              <>
+                {/* 취소 아이콘 */}
+                <span className="bookmark-item-icon" onClick={() => setEditNicknameFlg(false)}>
+                  <MdOutlineCancel color="var(--deep-blue)" />
+                </span>
+                {/* 저장 아이콘 */}
+                <span className="bookmark-item-icon" onClick={() => handleSaveNickname(props.id) }>
+                  <GiSaveArrow color="var(--deep-blue)" />
+                </span>
+              </>
+            ) : (
+              // ===== 일반 모드 =====
+                // 편집 모드로 바꿔주는 펜 아이콘
+              <span className="bookmark-item-icon" onClick={() => setEditNicknameFlg(true)}>
+                <FiEdit3 color="var(--deep-blue)" />
+              </span>
+            )
+          }
           <span
-            onClick={() => {
-              editNicknameFlg ? handleSaveNickname(props.id) : setEditNicknameFlg(true)}}
-          >
-            {
-              editNicknameFlg ? <GiSaveArrow color="var(--deep-blue)" /> : <FiEdit3 color="var(--deep-blue)" />
-            }
-            
-          </span>
-          <span
+            className="bookmark-item-icon"
             onClick={() => props.onToggle(props.id)}
           >
             {props.isBookmarked && <FaRegTrashAlt color="var(--deep-blue)" />}
@@ -169,13 +201,13 @@ function EditBookmark() {
   // 검색 관련 (로컬로 변경!)
   const [searchInput, setSearchInput] = useState('');
   const [filteredList, setFilteredList] = useState([]);
+  // 편집중인 북마크 목록 관리용 (로컬 state - 드래그앤드롭 임시 저장)
+  const [editingList, setEditingList] = useState(bookmarkedRegions);
 
   // 알림창용 state, ref
   const [showToast, setShowToast] = useState(false);
   const toastTimerRef = useRef(null);
 
-  // 편집중인 북마크 목록 관리용 (로컬 state - 드래그앤드롭 임시 저장)
-  const [editingList, setEditingList] = useState(bookmarkedRegions);
 
   // Redux의 bookmarkedRegions가 변경되면 editingList도 동기화
   useEffect(() => {
@@ -382,9 +414,14 @@ function EditBookmark() {
                 type="text"
                 value={searchInput}
               />
-              <button className="bookmark-search-btn" type="button">
+              <div className="bookmark-search-cancel-btn"
+                onClick={() => setSearchInput('')}
+              >
+                <HiMiniXMark color="#333" />
+              </div>
+              <div className="bookmark-search-btn" type="button">
                 <IoMdSearch color="#333" />
-              </button>
+              </div>
             </div>
             {/* 검색 결과 영역 */}
             <motion.div

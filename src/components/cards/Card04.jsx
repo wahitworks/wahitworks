@@ -113,16 +113,18 @@ function BookmarkItem({ region, stationName, nickname }) {
           </span>
             {/* 닉네임이 있다면, 닉네임. 없다면 지역 */}
             { nickname ? (
+              // CASA.1 닉네임 있음 ->  닉네임 + 지역
               <p className="card04-bookmark-list-title">
                 <p>{nickname}</p>
                 <p className="card04-bookmark-gray-little"> {region}</p>
               </p>
             ) : (
+              // CASE.2 닉네임 없음 -> 지역 
               <p className="card04-bookmark-list-title">
                 {region}
               </p>
             )}
-          {/* <p className="card04-bookmark-list-station">{stationName} 측정소</p> */}
+
           <div className="card04-bookmark-list-air-status">
           {/* 데이터 불러오기 성공시 출력 */}
           {card04Loading && <small>로딩 중...</small>}

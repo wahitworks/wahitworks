@@ -44,6 +44,20 @@
 .bookmark-search-input:focus {
   box-shadow: 0 0 5px var(--deep-blue);
 }
+.bookmark-search-cancel-btn {
+  font-size: 20px;
+
+  width: 30px;
+  height: 30px;
+
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  position: absolute;
+  top: 22%;
+  right: 16%;  
+}
 .bookmark-search-btn{
   font-size: 20px;
 
@@ -97,29 +111,37 @@
   white-space: nowrap;
 }
 
+.bookmark-items-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 /* 북마크 드래그앤드롭 영역 */
 .bookmark-item {
   font-weight: bold;
 
   background-color: white;
-  padding: 10px 20px;
+  padding: 5px 10px 5px 0;
   border: 1px solid var(--deep-blue);
   border-radius: 15px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
 
   touch-action: none;
 }
 
+
 /* 햄버거 (드래그 핸들) */
 .bookmark-drag-handle {
+  padding: 5px 10px;
+
   display: flex;
   align-items: center;
-  gap: 8px;
-  flex: 1; /* 남은 공간 차지 */
+  flex: 1; 
+  
   cursor: grab;
   touch-action: none;
 }
@@ -128,6 +150,16 @@
   cursor: grabbing;
 }
 
+
+/* 햄버거 */
+.bookmark-hamburger {
+  color: #888;
+  padding: 0 15px 0 0;
+  touch-action: none;
+}
+
+
+/* 이름 영역 */
 .bookmark-name {
   width: 70%;
   
@@ -140,31 +172,44 @@
   font-size: 13px;
 }
 
-/* 햄버거 */
-.bookmark-hamburger {
-  color: #888;
-  padding: 0 15px 0 0;
-  touch-action: none;
+.bookmark-nickname-input {
+  width: 100%;
+  font-size: 16px;
+  font-weight: 600;
+  color: #666;
+
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid var(--deep-blue);
+  border-radius: 0;
+  padding: 3px 5px;
+  outline: none;
 }
 
-/* 아이콘 영역 (토글만 가능, 드래그 불가) */
-.bookmark-icon-container {
-  width: 45px;
 
-  font-size: 16px;
+/* 아이콘 영역 (토글만 가능, 드래그 불가) */
+.bookmark-item-icon-container {
+  width: 20%;
+  min-width: 85px;
+
+  font-size: 18px;
+  line-height: 30px;
+  text-align: center;
+
+  margin: 0 0 0 5px;
   
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
+  gap: 4px;
   
   cursor: pointer;
 }
-
-.bookmark-items-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.bookmark-item-icon {
+  width: 25px;
+  height: 25px;
 }
+
 
 /* 북마크 저장 버튼 */
 .bookmark-save-btn-container {
