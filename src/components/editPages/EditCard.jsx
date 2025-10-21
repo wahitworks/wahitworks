@@ -84,6 +84,9 @@ function EditCard() {
   // 저장버튼 클릭시 추적 ref
   const saveRef = useRef(false);
 
+  // 변경여부 추적
+  const [cardChanged, setCardChanged] = useState(false);
+
   useEffect(() => {
     // 컨포넌트 마운트 시 현재 redux 상태 order 원본 저장
     originalOrderRef.current = order;
@@ -97,6 +100,15 @@ function EditCard() {
       }
     }
   }, [])
+
+  // order 상태가 변경될 때마다 변경여부 확인
+  useEffect(() => {
+    if (originalOrderRef.current) {
+      const Changed = JSON.stringify(originalOrderRef.current) !== JSON.stringify(order);
+      setCardChanged(Changed);
+    }
+  }, [order]);
+
 
   // 2초후 사라지게하기
   useEffect(() => {
@@ -148,22 +160,26 @@ function EditCard() {
   // 저장하기 버튼 클릭시
   const handleSave = () => {
     // 현재 상태를 localStorage에 저장
-    saveCardOrder(order);
-    saveRef.current = true; // 초기화도 저장으로 간주하여 플래그 설정
+    if (cardChanged) {
+      saveCardOrder(order);
+      saveRef.current = true; // 초기화도 저장으로 간주하여 플래그 설정
 
-    // 이전에 타이머가 있다면 취소
-    if (toastTimerRef.current) {
-      clearTimeout(toastTimerRef.current);
-    }
+      originalOrderRef.current = order; // 저장 시 원본 순서를 현재 순서로 업데이트
+      setCardChanged(false); // 저장 후 변경 상태 초기화
+      // 이전에 타이머가 있다면 취소
+      if (toastTimerRef.current) {
+        clearTimeout(toastTimerRef.current);
+      }
 
-    // 토스트 출력
-    setShowToast(true);
+      // 토스트 출력
+      setShowToast(true);
 
-    // 2초 뒤 토스트 숨기는 타이머
-    // ref에 저장
-    toastTimerRef.current = setTimeout(() => {
-      setShowToast(false);
-    }, 1000);
+      // 2초 뒤 토스트 숨기는 타이머
+      // ref에 저장
+      toastTimerRef.current = setTimeout(() => {
+        setShowToast(false);
+      }, 1000);
+    }    
   };
 
   // 초기화 버튼 클릭시
