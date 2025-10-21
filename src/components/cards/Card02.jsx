@@ -46,7 +46,8 @@ function Card02() {
     return (
       <div className="card02-container">
         <h2>대구 대기질 3일 예보</h2>
-        <LogoError animated style={{ margin: "10px" }} />,
+        <LogoError animated style={{ margin: "10px" }} />
+        <p>오류가 발생했습니다.</p>
       </div>
     );
   }
@@ -57,7 +58,7 @@ function Card02() {
       <div className="card02-container">
         <h2>대구 대기질 3일 예보</h2>
         <p>표시할 데이터가 없습니다.</p>
-        <LogoError animated style={{ margin: "10px" }} />,
+        <LogoError animated style={{ margin: "10px" }} />
       </div>
     );
   }

@@ -66,13 +66,13 @@ const AppTutorial = () => {
     const element = document.querySelector(currentStep.targetSelector);
     if (element) {
       // 요소를 화면 중앙으로 부드럽게 스크롤합니다.
-      element.scrollIntoView({ behavior: "smooth", block: "center" });
+      element.scrollIntoView({ behavior: "smooth", block: "end" });
 
       // 스크롤 애니메이션이 끝날 시간을 기다린 후 위치를 측정 (하이라이팅 위치 오류 방지)
       const scrollTimeout = setTimeout(() => {
         // 선택된 클래스 네임의 요소의 위치를 저장
         setTargetPosition(element.getBoundingClientRect());
-      }, 500); // 0.5초 대기
+      }, 800); // 0.8초 대기
 
       // 컴포넌트가 언마운트되거나 step이 바뀌면 timeout을 정리합니다.
       return () => clearTimeout(scrollTimeout);
