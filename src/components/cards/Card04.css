@@ -10,6 +10,11 @@
   justify-content: center;
   align-items: center;
   gap: 15px;
+
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;  
 }
 
 /* 카드04 타이틀 */
