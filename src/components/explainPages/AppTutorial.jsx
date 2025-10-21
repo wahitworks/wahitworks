@@ -81,6 +81,14 @@ const AppTutorial = () => {
     }
   }, [step]);
 
+  // 튜토리얼 활성화 시 스크롤 방지
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset'; // 또는 'auto'로 복원
+    };
+  }, []); // 컴포넌트 마운트/언마운트 시 한 번만 실행
+
   const currentStep = tutorialSteps[step];
 
   // 스타일 동적 계산
