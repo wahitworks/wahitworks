@@ -2,6 +2,8 @@ import "./LocationSearch.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
+
+// 아이콘
 import { IoMdSearch } from "react-icons/io";
 import { CiStar } from "react-icons/ci";
 import { FaStar } from "react-icons/fa";
@@ -36,7 +38,6 @@ function LocationSearch() {
   );
 
 
-
   // ======================================================
   // ||     검색어 관련 함수
   // ======================================================
@@ -61,7 +62,6 @@ function LocationSearch() {
   const isBookmarked = (item) => {
     return bookmarkedRegions.some((bookmarkeditems) => bookmarkeditems.region === item);
   };
-
 
   /**
    * 해당 지역이 북마크되어있다면 (bookmarkedRegions에 있다면) → 북마크에서 삭제 /
@@ -187,6 +187,7 @@ function LocationSearch() {
             >
               {/* 빈공간영역 */}
               <div className="header-search-empty"></div>
+              
               {/* 검색 영역 */}
               <div className="header-search-container">
                 <p className="header-search-title">장소 찾기</p>

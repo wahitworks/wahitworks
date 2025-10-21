@@ -6,10 +6,6 @@ const bookmarkSlice = createSlice({
   name: 'bookmarkSlice',
   initialState: {
     bookmarkedRegions: localStorageUtil.getBookmarkedRegions() || [],
-    bookmarkSearchInput: '',
-    bookmarkFilteredList: [],
-    // nicknameEditFlg: false,
-    // nicknameEditRegion: null,
     loading: false,
     error: null,
   },
@@ -23,6 +19,7 @@ const bookmarkSlice = createSlice({
     setBookmarkFilteredList(state, action) {
       state.bookmarkFilteredList = action.payload;
     },
+
     // ===== 북마크 기능 =====
     // 북마크에 추가
     addBookmark(state, action) {
@@ -34,24 +31,18 @@ const bookmarkSlice = createSlice({
       state.bookmarkedRegions = state.bookmarkedRegions.filter(item => item.region !== action.payload);
       localStorageUtil.setBookmarkedRegions(state.bookmarkedRegions);
     },
+    
     // 북마크 전체 업데이트 (저장 버튼 클릭 시 호출됨)
     updateBookmarkedRegions(state, action) {
-      state.bookmarkedRegions = action.payload;
       // localStorage 저장은 saveBookmarkOrder에서 수행하므로 여기서는 Redux만 업데이트
+      state.bookmarkedRegions = action.payload;
     },
     // 저장하기 버튼 - 현재 state를 localStorage에 저장
     saveBookmarkOrder(state) {
       // payload 없이 현재 state만 localStorage에 저장
       localStorageUtil.setBookmarkedRegions(state.bookmarkedRegions);
     },
-    // 북마크 닉네임 변경 모달 플래그
-    setNicknameEditFlg(state, action) {
-      state.nicknameEditFlg = action.payload;
-    },
-    // 변경 중인 북마크의 지역 전달용
-    setNicknameEditRegion(state, action) {
-      state.nicknameEditRegion = action.payload;
-    },
+
     // 북마크 닉네임 변경
     updateBookmarkNickname(state, action) {
       const { region, nickname } = action.payload;
@@ -79,7 +70,7 @@ const bookmarkSlice = createSlice({
       action => action.type.endsWith('/rejected'),
       (state, action) => {
         state.loading = false;
-        console.log('현재 대기 정보 가져오기 실패 : ', action.error);
+        console.log('현재 북마크 저장하기 위한 측정소 정보 가져오기 실패 : ', action.error);
       }
     )
   }
@@ -88,13 +79,11 @@ const bookmarkSlice = createSlice({
 export const {
   addBookmark,
   removeBookmark,
-  setBookmarkSearchInput,
-  setBookmarkFilteredList,
-  updateBookmarkNickname,
-  setNicknameEditFlg,
-  setNicknameEditRegion,
+
   updateBookmarkedRegions,
   saveBookmarkOrder,
+
+  updateBookmarkNickname,
 } = bookmarkSlice.actions;
 
 export default bookmarkSlice.reducer;

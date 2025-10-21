@@ -76,7 +76,6 @@ function SortableItem(props) {
     transition,
   };
 
-
   /**
    * region을 받아서 해당하는 요소의 nickname을 수정하는 함수
    * @param {string} region : bookmarkedRegions 에 저장된 region
@@ -170,10 +169,8 @@ function SortableItem(props) {
               </span>
             )
           }
-          <span
-            className="bookmark-item-icon"
-            onClick={() => props.onToggle(props.id)}
-          >
+          {/* 북마크 삭제 아이콘 */}
+          <span className="bookmark-item-icon" onClick={() => props.onToggle(props.id)}>
             {props.isBookmarked && <FaRegTrashAlt color="var(--deep-blue)" />}
           </span>
         </div>
@@ -198,7 +195,7 @@ function EditBookmark() {
   const nicknameEditFlg = useSelector(state => state.bookmarkSlice.nicknameEditFlg);
 
   // ===== 로컬 state =====
-  // 검색 관련 (로컬로 변경!)
+  // 검색용
   const [searchInput, setSearchInput] = useState('');
   const [filteredList, setFilteredList] = useState([]);
   // 편집중인 북마크 목록 관리용 (로컬 state - 드래그앤드롭 임시 저장)
@@ -213,58 +210,6 @@ function EditBookmark() {
   useEffect(() => {
     setEditingList(bookmarkedRegions);
   }, [bookmarkedRegions]);
-
-  // 변경될 때 순서 유지, 리스트 업뎃(집 가서 수정할 부분)
-  // useEffect(() => {
-  //   // 항목 순서 유지
-  //   const editingSet = new Set(editingList.map(item => item.region));
-  //   // 목록o 리스트 없는 것 찾기
-  //   const newItems = bookmarkedRegions.fillter(item => !editingSet.has(item.region));
-  //   // 목록기준 삭제항목 제거
-  //   const updatedList = editingList.fillter(item => 
-  //     bookmarkedRegions.some(reduxItem => reduxItem.region === item.region)
-  //   );
-  //     if (newItems.length > 0) {
-  //     setEditingList([...updatedList, ...newItems]);
-  //   } else {
-  //     setEditingList(updatedList);    
-  // }
-  // }, [bookmarkedRegions]);
-
-  // 원본 목록과 저장 여부를 추적하기 위한 ref 생성
-  // const originalBookmarks = useRef(null);
-  // const bookmarkSaved = useRef(false);
-
-  // 컴포넌트 처음 렌더링될 때, 페이지를 벗어날 때 동작
-  // useEffect(() => {
-  //   // 컴포넌트 렌더링 시, 현재 "순서"를 원본으로 ref에 저장
-  //   originalBookmarks.current = bookmarkedRegions;
-  //   // 저장 상태를 false로 초기화
-  //   bookmarkSaved.current = false;
-
-  //   // cleanup함수 : 컴포넌트가 화면에서 사라질 때 실행
-  //   return () => {
-  //     // 저장버튼을 누르지 않고 페이지를 나갔다면, "순서"만 원본으로 되돌림
-  //     if (!bookmarkSaved.current) {
-  //       dispatch(updateBookmarkedRegions(originalBookmarks.current));
-  //     }
-  //   }
-  // }, [dispatch]);
-
-  // // 컴포넌트 처음 렌더링될 때, 페이지를 벗어날 때 동작
-  // useEffect(() => {
-  //   // 컴포넌트 렌더링 시, 현재 상태를 원본으로 ref에 저장
-  //   originalBookmarks.current = bookmarkedRegions;
-
-  //   // cleanup함수 : 컴포넌트가 화면에서 사라지리 때 실행
-  //   return () => {
-  //     // 저장버튼을 누르지 않을 시
-  //     if (!bookmarkSaved.current) {
-  //       // 원본으로 되돌림
-  //       dispatch(updateBookmarkedRegions(originalBookmarks.current));
-  //     }
-  //   }
-  // }, []); // 빈배열: 마운트, 언마운트 시 한 번만 실행
 
   // dnd 센서 설정
   const sensors = useSensors(
@@ -325,6 +270,7 @@ function EditBookmark() {
     setFilteredList(filteredResult);
   }, [searchInput]);
 
+  
   // ======================================================
   // ||     handling 관련 함수
   // ======================================================
@@ -366,7 +312,7 @@ function EditBookmark() {
             nickname: '',
           })
         );
-        console.log("북마크 추가에 성공했습니다. ", bookmarkedRegions);
+        // console.log("북마크 추가에 성공했습니다. ", bookmarkedRegions);
       } catch (error) {
         console.error(
           "북마크에 추가한 지역의 측정소를 찾지 못했습니다. ",
@@ -397,7 +343,7 @@ function EditBookmark() {
     }, 1000);
   };
 
-  console.log(nicknameEditFlg);
+  // console.log(nicknameEditFlg);
 
   return (
     <>
@@ -457,9 +403,11 @@ function EditBookmark() {
                     </span>
                     <span className="bookmark-filtered-item-region"> {filteredItem}</span>
                   </div>
-                ))}
+              ))}
             </motion.div>
           </div>
+
+          {/* 편집 영역 */}
           <div className="bookmark-list-container">
             <p className="bookmark-title">내 장소</p>
 

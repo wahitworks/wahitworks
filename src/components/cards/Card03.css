@@ -23,7 +23,7 @@
   white-space: nowrap;
 }
 
-/* ===== 마진 ===== */
+/* ===== 마진 스타일 ===== */
 .card03-margin-top {
   margin-top: 5px;
 }
@@ -42,7 +42,6 @@
   margin-bottom: 30px;
   
 }
-
 
 /* ===== 정보 출력 영역 ===== */
 .card03-swipe-wrapper {

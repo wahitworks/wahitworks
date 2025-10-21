@@ -59,6 +59,7 @@ function SortableItem(props) {
         type="checkbox"
         className="editcard-switch"
         onChange={props.onToggle} // 스위치
+        onTouchStart={(e) => e.stopPropagation()}
         onPointerDown={(e) => e.stopPropagation()}
       ></input>
     </div>

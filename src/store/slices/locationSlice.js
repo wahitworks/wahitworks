@@ -10,7 +10,6 @@ const locationSlice = createSlice({
     matchedLocation: '',
     measuringStation: '',
     measuringStationDistance: 0,
-    // regionStationMap: {}, // region, station 매핑 객체
     error: null,
     selectedLocationByUser: null,
   },
@@ -67,7 +66,7 @@ const locationSlice = createSlice({
     .addMatcher(
       action => action.type.endsWith('/rejected'),
       (state, action) => {
-        console.log('thunk함수 실패', action.error);
+        console.log('location Thunk 측정소 불러오기 실패', action.error);
       }
     )
   }

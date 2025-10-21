@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import LocationSearch from "./LocationSearch.jsx";
 import HeaderMenu from "./HeaderMenu.jsx";
-import Logo from "../Logo/Logo.jsx";
 
 import {
   setHeaderTitle,
@@ -38,7 +37,6 @@ function Header() {
   const headerTitle = useSelector((state) => state.headerSlice.headerTitle);
   const searchFlg = useSelector((state) => state.headerSlice.searchFlg);
   const menuFlg = useSelector(state => state.headerSlice.menuFlg);
-  const matchedLocation = useSelector(state => state.headerSlice.matchedLocation);
   const searchKeyword = useSelector(
     (state) => state.locationSearchSlice.searchKeyword
   );
@@ -113,22 +111,22 @@ function Header() {
     // 매칭된 검색어 담을 변수
     let foundLocation = null;
     if (searchKeyword?.trim) {
-      // 검색어로 데이터에서 찾기 (띄어쓰기 제외한 값을 서로 비교)
+      // 1. 검색어로 데이터에서 찾기 (띄어쓰기 제외한 값을 서로 비교)
       const keywordNoSpace = stringUtils.removeSpaces(searchKeyword);
       foundLocation = LOCATION_LIST.find((location) => {
         const locationNoSpace = stringUtils.removeSpaces(location);
         return locationNoSpace.includes(keywordNoSpace);
       });
-      //        -> 데이터에서 검색어 값이 있다면 타이틀로 출력
+      //        -> 2. 데이터에서 검색어 값이 있다면 타이틀로 출력
       if (foundLocation) {
         dispatch(setHeaderTitle(foundLocation));
         dispatch(setMatchedLocation(foundLocation));
         dispatch(getSearchLocation(foundLocation));
         return;
       } else {
-      //        -> 매칭된 지역이 없을 경우, 현재 위치 가져오기 + 현재 위치를 기반으로 타이틀 출력하기
+      //        -> 2-1. 매칭된 지역이 없을 경우, 현재 위치 가져오기 + 현재 위치를 기반으로 타이틀 출력하기
         console.log(
-          "검색어가 없거나 매칭 지역이 없습니다. 현재위치를 가져옵니다."
+          "검색어와 매칭된 지역이 없습니다. 현재위치를 가져옵니다."
         );
         dispatch(getCurrentLocation());
       }
@@ -137,7 +135,7 @@ function Header() {
       // =============================================
       // ||         2. 검색어 없을 시!!!
       // =============================================
-      //        -> 현재 위치 가져오기 + 현재 위치를 기반으로 타이틀 출력하기
+      //        -> 1. 현재 위치 가져오기 + 현재 위치를 기반으로 타이틀 출력하기
       console.log("검색어가 없습니다. 현재위치를 가져옵니다.");
       dispatch(getCurrentLocation());
     }
@@ -153,22 +151,28 @@ function Header() {
   return (
     <>
       <div className="header-container">
-        {location.pathname === "/" ? (
-          <div className="header-logo-container" onClick={() => goHome()}>
-            <LogoOrigin animated className="header-logo" />
-            <div
-              className="header-logo-title"
-              style={{ backgroundImage: `url(${logoTitle})` }}
-            ></div>
-          </div>
-        ) : (
-          <span className="header-return" onClick={() => goHome()}>
-            <HiChevronLeft size={35} />
-          </span>
-        )}
+        {/* 왼쪽 로고 영역 */}
+        { 
+          location.pathname === "/" ? (
+            // ===== 현재 주소가 메인 '/' 인 경우 -> 로고 =====
+            <div className="header-logo-container" onClick={() => goHome()}>
+              <LogoOrigin animated className="header-logo" />
+              <div
+                className="header-logo-title"
+                style={{ backgroundImage: `url(${logoTitle})` }}
+              ></div>
+            </div>
+          ) : (
+            // ===== 현재 주소가 메인 '/' 가 아닌 경우 -> `<` 아이콘 ===== 
+            <span className="header-return" onClick={() => goHome()}>
+              <HiChevronLeft size={35} />
+            </span>)
+        }
+
+        {/* 가운데 타이틀 영역 */}
         {
-          location.pathname === "/" 
-          ? (
+          location.pathname === "/" ? (
+            // ===== 현재 주소가 메인 '/' 인 경우 -> 현재(검색)위치 =====
             <div className="header-center" onClick={() => headerTitleClick()}>
               <div className="header-icon-wrapper">
                 <LiaSearchLocationSolid size={'24px'} color="#777"/>
@@ -179,13 +183,17 @@ function Header() {
               )}
             </div>
           ) : (
+            // ===== 현재 주소가 메인'/' 가 아닌 경우 -> 페이지 제목 =====
             <p className="header-title header-right-padding">{headerTitle}</p>
           )
         }
+
+        {/* 오른쪽 메뉴 아이콘 영역 */}
         <div className="header-menu" onClick={() => headerMenuClick()}>
           <VscMenu size={35} />
         </div>
       </div>
+      {/* Flg 컴포넌트 출력 */}
       { searchFlg && <LocationSearch />}
       { menuFlg && <HeaderMenu />}
     </>

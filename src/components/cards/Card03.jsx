@@ -2,22 +2,18 @@ import "./Card03.css";
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GoDotFill } from "react-icons/go";
-import { RiFileWarningLine } from "react-icons/ri";
 import { motion, AnimatePresence } from 'framer-motion';
-import Skeleton from 'react-loading-skeleton';
 
 import LogoGood from '../logo/LogoGood.jsx';
 import LogoModerate from '../logo/LogoModerate.jsx';
 import LogoBad from '../logo/LogoBad.jsx';
 import LogoVeryBad from '../logo/LogoVeryBad.jsx';
 import LogoError from "../logo/LogoError.jsx";
-
-import { getAirQualityInfo } from "../../utils/airQualityGradeUtil.js";
 import LoadingSkeleton from "../commons/LoadingSkeleton.jsx";
 
+import { getAirQualityInfo } from "../../utils/airQualityGradeUtil.js";
+
 function Card03() {
-  
-  const dispatch = useDispatch();
 
   // ===== 전역 state =====
   const currentPM10 = useSelector(state => state.currentAirCondition.currentPM10)
@@ -36,11 +32,9 @@ function Card03() {
   const so2Flag = useSelector(state => state.currentAirCondition.so2Flag);
   
   const measuringStation = useSelector(state => state.locationSlice.measuringStation);
-  
   const loading = useSelector(state => state.currentAirCondition.loading);
   
-  
-  // ===== 컴포넌트 State ================
+  // ===== 로컬 State ================
   const [page, setPage] = useState(0);
   const totalPages = 2;
   
@@ -107,8 +101,7 @@ function Card03() {
       }
     }
   };
-  
-  
+    
   // ===== 로딩 스켈레톤 =====
   if(loading) {
     return (
@@ -169,7 +162,7 @@ function Card03() {
           }
           </div>
 
-          {/* 페이지 네이션 */}
+          {/* 페이지네이션 */}
           <div className="card03-pagination-dots-container">
             {
               Array(2).fill(0).map((_, index) => (

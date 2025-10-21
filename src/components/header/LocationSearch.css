@@ -11,11 +11,15 @@
 
   z-index: 1;
 }
+
+/* 빈 공간 */
 .header-search-empty {
   width: 100px;
   height: 115px;
   background-color: white;
 }
+
+/* 메인 영역 */
 .header-OML-container {
   background-color: #fff;
   border-radius: 0 0 40px 40px;
@@ -25,6 +29,7 @@
   padding: 0 5% 0 5%;
 }
 
+/* 타이틀 */
 .header-search-title {
   font-weight: 700;
 
@@ -41,6 +46,7 @@
   margin: 20px 0 60px 0;
 }
 
+/* 검색 영역 */
 .header-search-input-btn {
   padding: 0 7%;
 
@@ -80,6 +86,7 @@
   box-shadow: 0 0 5px var(--deep-blue);
 }
 
+/* 결과 영역 */
 .header-search-result {
   font-weight: 600;
   width: 85%;

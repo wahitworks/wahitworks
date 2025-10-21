@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { setMatchedLocation } from "./locationSlice";
 
 const locationSearchSlice = createSlice({
   name: 'locationSearchSlice',

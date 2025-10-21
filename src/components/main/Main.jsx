@@ -35,6 +35,7 @@ function Main() {
   // ===== 전역 state =====
   const measuringStation = useSelector(state => state.locationSlice.measuringStation);
 
+
   // =====================================
   // ||     측정소별 실시간 측정정보 조회 : CARD01, CARD03
   // =====================================
@@ -55,7 +56,6 @@ function Main() {
   const Navigate = () => {
     navigate(`/editcard`);
   };
-
 
 
   return (

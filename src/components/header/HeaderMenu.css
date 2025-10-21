@@ -46,6 +46,7 @@
   z-index: 5;
 }
 
+/* ===== 상단 영역 ===== */
 .header-Menu-container-top {
   height: 90px;
   display: flex;
@@ -55,6 +56,20 @@
 .header-Menu-container-title {
   font-size: 32px;
 }
+.header-Menu-off {
+  color: #666;
+
+  width: 50px;
+  height: 50px;
+
+  text-align: center;
+  line-height: 50px;
+
+  font-size: 20px;
+  font-weight: 900;
+
+  cursor: pointer;
+}
 .header-Menu-container-bar {
   border: none;                    /* 기본 보더 제거 */
   border-top: 2px solid var(--deep-blue);      /* 선 스타일 */
@@ -63,6 +78,14 @@
   width: 100%;                       /* 너비 */
 }
 
+.header-Menu-line {
+  border: none;                    /* 기본 보더 제거 */
+  border-top: 1px solid var(--personal-blue);      /* 선 스타일 */
+  height: 1px;                      /* 두께 */
+  width: 60%;                       /* 너비 */
+}
+
+/* ===== 메인 영역 ===== */
 .header-Menu-container-main {
   height: 83%;
   padding: 40px 10px;
@@ -71,26 +94,7 @@
   flex-direction: column;
   gap: 15px;
 }
-/* .header-Menu-container-list {
-  height: 40px;
-  font-weight: 700;
-  line-height: 40px;
-  
-  padding-left: 20px;
-  cursor: pointer;
-}
-.header-Menu-container-list:hover {
-  width: 70%;
-  background-color: var(--personal-blue);
-  border-radius: 20px;
-}
-.header-Menu-container-list:active {
-  width: 70%;
-  background-color: var(--personal-blue);
-  color: #fff;
-  border-radius: 20px;
-  transform: scale(0.9);
-} */
+
 .header-Menu-container-list {
   height: 40px;
   font-weight: 700;
@@ -126,46 +130,21 @@ background-color: #f0f8ff; /* 연한 하늘색 배경으로 변경 */
   transform: scale(0.95);
   color: var(--deep-blue);
 }
-
-.header-Menu-line {
-  border: none;                    /* 기본 보더 제거 */
-  border-top: 1px solid var(--personal-blue);      /* 선 스타일 */
-  height: 1px;                      /* 두께 */
-  width: 60%;                       /* 너비 */
+/* 아이콘 있는 목록 */
+.header-Menu-item-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
+/* 빈 공간 */
 .haeder-Menu-empty-line {
   height: 3px;
 }
 
+/* ===== 최하단 영역 ===== */
 .header-Menu-container-ver {
   color: #666;
   font-size: 14px;
   text-align: right;
 }
 
-.header-Menu-item-with-icon {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.header-Menu-item-with-icon img {
-  width: 20px;
-  height: 20px;
-  transform: translateY(2px);
-}
-
-.header-Menu-off {
-  color: #666;
-
-  width: 50px;
-  height: 50px;
-
-  text-align: center;
-  line-height: 50px;
-
-  font-size: 20px;
-  font-weight: 900;
-
-  cursor: pointer;
-}
