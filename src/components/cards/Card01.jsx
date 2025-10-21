@@ -1,5 +1,4 @@
 import "./Card01.css";
-// import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import LoadingSkeleton from "../commons/LoadingSkeleton.jsx";  // 컴포넌트 임포트
 
