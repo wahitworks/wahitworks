@@ -25,7 +25,7 @@ const tutorialSteps = [
   {
     targetSelector: ".main-add-card-container",
     message:
-      "홈 화면에서 카드 관리를 하고싶을 때 해당 기능으로 바로 갈 수있습니다.",
+      "홈 화면에서 카드 관리를 하고싶을 때 해당 기능으로 바로 갈 수 있습니다.",
     position: "top",
   },
 ];

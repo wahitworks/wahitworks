@@ -7,13 +7,40 @@ import AppTutorial from "./components/explainPages/AppTutorial.jsx";
 import "./App.css";
 import { PWAInstallContext } from "./contexts/PWAInstallContext.jsx";
 
+// 새로 생성한 커스텀 훅 임포트
+import useRefresh from "./hooks/refresh.js";
+// 새로고침 thunk 목록
+import { fetchAirQuality } from "./store/thunks/airQualityThunk.js";
+import { getCurrentAirCondition } from "./store/thunks/currentAirConditionThunk.js";
+import { fetchFineDustData } from "./store/thunks/fineDustThunk.js";
+
 function App() {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showInstallModal, setShowInstallModal] = useState(false);
   const [showManualInstallHint, setShowManualInstallHint] = useState(false); // New state
   const [isInstalling, setIsInstalling] = useState(false); // 설치 시도 중 상태 플래그
 
-  const isTutorialVisible = useSelector(state => state.headerSlice.isTutorialVisible);
+  const isTutorialVisible = useSelector(
+    (state) => state.headerSlice.isTutorialVisible
+  );
+
+  // 새로고침 ------------------------
+  // 측정소 기반 Thunk 함수에 쓰일 측정소 값 가져오기
+  const measuringStation = useSelector(
+    (state) => state.locationSlice.measuringStation
+  );
+
+  // 새로고침할 thunk 함수 배열
+  const thunksToRefresh = [
+    fetchAirQuality,
+    getCurrentAirCondition,
+    fetchFineDustData,
+  ];
+
+  // 새로고침용 커스텀 훅
+  // 측정소 필요 API만을 위한 측정소 값 건네기
+  useRefresh(thunksToRefresh, measuringStation);
+  // 새로고침 --------------------------
 
   useEffect(() => {
     const handler = (e) => {
@@ -31,7 +58,7 @@ function App() {
       const installDeclined = localStorage.getItem("installDeclined");
       if (installDeclined === "true") {
         console.log(
-          "User has previously declined installation, hiding modal but enabling manual install."
+          "유저 앱 설치 거부이력이 있으므로 커스텀 설치 모달을 띄우지 않습니다."
         );
         return; // 모달만 띄우지 않고 종료
       }

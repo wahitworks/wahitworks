@@ -5,7 +5,6 @@ import { Provider } from "react-redux";
 import store from "./store/store.js";
 
 createRoot(document.getElementById("root")).render(
-  // TODO: store 분배
   <Provider store={store}>
     <Router />
   </Provider>
