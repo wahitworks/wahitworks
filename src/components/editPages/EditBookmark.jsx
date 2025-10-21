@@ -439,10 +439,11 @@ function EditBookmark() {
             >
               {filteredList.length > 0 &&
                 filteredList.map((filteredItem) => (
-                  <div className="bookmark-filtered-item" 
+                  <div className="bookmark-filtered-item"
                     key={filteredItem}
-                    onClick={() => {
-                      toggleBookmark(filteredItem); // 2. item 값 그대로 전달!
+                    onPointerDown={(e) => {
+                      e.preventDefault();
+                      toggleBookmark(filteredItem);
                     }}
                   >
                     <span
