@@ -309,8 +309,8 @@ function LocationSearch() {
               <div className="header-mylocation-container">
                 <div className="header-search-title-container">
                   <span className='header-search-title'>내 장소</span>
-                  <span className="header-mylocation-title-icon" onClick={() => goBookmark()}>
-                    <FiEdit3 color="var(--deep-blue)" />
+                  <span className="header-search-title-icon" onClick={() => goBookmark()}>
+                    <span>편집하기 </span><FiEdit3 color="var(--deep-blue)" />
                   </span>
                 </div>
                 <motion.div

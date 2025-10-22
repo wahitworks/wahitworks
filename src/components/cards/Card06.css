@@ -1,0 +1,9 @@
+.card06-container {
+  width: 90%;
+  border: 1px solid var(--deep-blue);
+  border-radius: 15px;
+  box-shadow: 0px 0px 5px var(--light-blue);
+  
+  padding: 20px 10px 10px;
+  margin: 0 auto;  
+}

@@ -11,8 +11,11 @@ const axiosAirConfig = {
   // 선택
   RETURN_TYPE: "json",
   NUM_OF_ROWS: "48",
+  NUM_OF_ROWS_2: "96",
+  PAGE_NO: "8",
   VER: "1.5",
   DATA_TERM: "DAILY",
+  DATA_TERM_2: "MONTH",
 };
 
 export default axiosAirConfig;

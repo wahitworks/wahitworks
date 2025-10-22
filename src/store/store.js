@@ -12,7 +12,7 @@ import fineDustReducer from "./slices/fineDustSlice.js";
 import bookmarkCard04Reducer from "./slices/bookmarkForCard04Slice.js";
 import warningReducer from "./slices/warningSlice.js";
 import weatherReducer from "./slices/weatherSlice.js";
-
+import latestAirConditionReducer from "./slices/latestAirConditionSlice.js";
 
 export default configureStore({
   reducer: {
@@ -27,5 +27,7 @@ export default configureStore({
     bookmarkCard04: bookmarkCard04Reducer,
     warning: warningReducer,
     weather: weatherReducer,
+    latestAirCondition: latestAirConditionReducer,
+
   },
 });

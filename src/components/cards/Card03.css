@@ -12,11 +12,12 @@
 .card03-font-b {
   font-weight: bold;
 }
-.card03-font-small-gray {
+.card03-font-small-12-gray {
   color: gray;
   font-size: 12px;
 }
-.card03-font-small {
+.card03-font-small-14-gray {
+  color: gray;
   font-size: 14px;
 }
 .card03-font-nowrap {

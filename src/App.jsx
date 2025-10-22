@@ -19,17 +19,6 @@ function App() {
     (state) => state.headerSlice.isTutorialVisible
   );
 
-  // 새로고침 ------------------------
-  // 측정소 기반 Thunk 함수에 쓰일 측정소 값 가져오기
-  const measuringStation = useSelector(
-    (state) => state.locationSlice.measuringStation
-  );
-
-  // 새로고침용 커스텀 훅
-  // 측정소 필요 API만을 위한 측정소 값 건네기
-  // useRefresh(thunksToRefresh, measuringStation);
-  // 새로고침 --------------------------
-
   useEffect(() => {
     const handler = (e) => {
       // 현재 설치 과정이 진행 중이면, 새로운 이벤트를 무시

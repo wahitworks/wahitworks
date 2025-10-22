@@ -49,12 +49,12 @@ function Card03() {
   // ===== 등급에 맞는 아이콘 컴포넌트 반환 =====
   const getAirQualityIcon = (grade) => {
     const icons = {
-      'good': <LogoGood animated />,
-      'moderate': <LogoModerate animated />,
-      'bad': <LogoBad animated />,
-      'very-bad': <LogoVeryBad animated />,
-      'no-data': <LogoError animated />,
-      'special': <LogoError animated />,
+      'good': <LogoGood animated style={{ margin: "10px" }} />,
+      'moderate': <LogoModerate animated style={{ margin: "10px" }} />,
+      'bad': <LogoBad animated style={{ margin: "10px" }} />,
+      'very-bad': <LogoVeryBad animated style={{ margin: "10px" }} />,
+      'no-data': <LogoError animated style={{ margin: "10px" }} />,
+      'special': <LogoError animated style={{ margin: "10px" }} />,
     };
     return icons[grade] || <LogoGood animated />;
   };
@@ -71,16 +71,18 @@ function Card03() {
     return (
       <div className="card03-result-item">
         <p className="card03-font-b">{label}</p>
-        <p className="card03-font-small-gray card03-margin-bottom">{unit}</p>
-        <p className="card03-font-b card03-margin-bottom card03-font-small">
-          {
-            value !== null && value !== undefined && Number(value) !== 0 ?
-            `${value}${type.startsWith('PM') ? '㎍/㎥' : 'ppm'}` :
-            '-'
-          }
-        </p>
-        <div className="card03-icon-wrapper">{getAirQualityIcon(info.grade)}</div>
+        <p className="card03-font-small-12-gray card03-margin-bottom">{unit}</p>
         <p className="card03-result-info card03-font-nowrap card03-font-b card03-margin-top">{info.text}</p>
+        <div className="card03-icon-wrapper">{getAirQualityIcon(info.grade)}</div>
+        {
+          value !== null && value !== undefined && Number(value) !== 0 ? (
+            <span className="card03-font-b card03-margin-bottom card03-font-small-14-gray">
+              {value}{type.startsWith('PM') ? ' ㎍/㎥' : ' ppm'}
+            </span>
+          ) : (
+            '-'
+          )
+        }
       </div>
     );
   };
@@ -136,7 +138,7 @@ function Card03() {
     <>
       <div className="card03-container">
         <h1 className="card03-title">지금 대기 상태</h1>
-        <p className="card03-title-sub card03-font-small-gray">{dataTime} 측정</p>
+        <p className="card03-title-sub card03-font-small-12-gray">{dataTime} 측정</p>
           
           {/* 정보 출력 영역 */}
           <div className="card03-swipe-wrapper">
