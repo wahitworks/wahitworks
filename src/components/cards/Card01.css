@@ -1,37 +1,61 @@
 .action-guide-container {
   width: 90%;
-  height: 300px;
+  min-height: 300px;
   border-radius: 15px;
   box-shadow: 0px 0px 5px var(--light-blue);
   background-color: var(--personal-blue);
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   font-weight: 900;
   color: #ffffff;
+  padding: 15px;
 }
 
 .action-guide-intro {
-  padding-top: 15px;
   font-size: 1.5rem;
 }
+
 .action-guide-content {
   background-color: #ffffff;
   border-radius: 20px;
   padding: 10px 15px;
   color: black;
+  text-align: center;
 }
 
 .action-guide-icon-container {
+  flex-grow: 1;
   width: 100%;
-  height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .action-guide-text {
-  margin-bottom: 15px;
   font-size: 20px;
+}
+
+.weather-info-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 1.2rem;
+  padding: 5px 0;
+  margin-top: -10px;
+}
+
+.weather-icon {
+  font-size: 1.5rem;
+}
+
+.temperature {
+  font-weight: bold;
+}
+
+.precipitation {
+  color: #f0f0f0;
 }
