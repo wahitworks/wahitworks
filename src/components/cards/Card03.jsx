@@ -32,7 +32,7 @@ function Card03() {
     coFlag,
     so2Flag,
     loading,
-    error
+    error,
   } = useSelector(state => state.currentAirCondition);
 
   const measuringStation = useSelector(state => state.locationSlice.measuringStation);
@@ -72,7 +72,13 @@ function Card03() {
       <div className="card03-result-item">
         <p className="card03-font-b">{label}</p>
         <p className="card03-font-small-gray card03-margin-bottom">{unit}</p>
-        <p className="card03-font-b card03-margin-bottom card03-font-small">{ value !== null && value !== undefined && Number(value) !== 0 ? `${value}${type.startsWith('PM') ? '㎍/㎥' : 'ppm'}` : '-'}</p>
+        <p className="card03-font-b card03-margin-bottom card03-font-small">
+          {
+            value !== null && value !== undefined && Number(value) !== 0 ?
+            `${value}${type.startsWith('PM') ? '㎍/㎥' : 'ppm'}` :
+            '-'
+          }
+        </p>
         <div className="card03-icon-wrapper">{getAirQualityIcon(info.grade)}</div>
         <p className="card03-result-info card03-font-nowrap card03-font-b card03-margin-top">{info.text}</p>
       </div>
@@ -108,7 +114,7 @@ function Card03() {
     
   // ===== 로딩 스켈레톤 =====
   // loading 중이거나 아직 API 응답을 받지 않았으면 스켈레톤 표시 (단, 에러가 아닐 때만)
-  if((loading || currentPM10 === null) && !error) {
+  if((loading || currentPM10 === 0 ) && !error) {
     return (
         <LoadingSkeleton
           width="90%"

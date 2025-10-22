@@ -22,6 +22,7 @@ const currentAirConditionSlice = createSlice({
 
     loading: true,
     error: null,
+    dataFetched: false,
   },
   extraReducers: builder => {
     builder
@@ -53,10 +54,12 @@ const currentAirConditionSlice = createSlice({
 
         state.error = null;
 
-        // 모든 데이터가 다 채워진 후 마지막에 loading을 false로 변경
+        // 모든 데이터가 다 채워진 후 마지막에 dataFetched와 loading 변경
+        state.dataFetched = true;
         state.loading = false;
       } else {
         // 데이터가 없으면 loading은 false로
+        state.dataFetched = true;
         state.loading = false;
         state.error = null;
       }
@@ -70,6 +73,7 @@ const currentAirConditionSlice = createSlice({
     .addMatcher(
       action => action.type.endsWith('/rejected'),
       (state, action) => {
+        state.error = true;
         state.loading = false;
         state.error = action.error.message || '데이터를 불러오는데 실패했습니다.';
         console.log('현재 대기 정보 가져오기 실패 : ', action.error);

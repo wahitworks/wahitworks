@@ -9,6 +9,7 @@ const STORAGE_PREFIX = "DaeguMalgeum_";
 export const LOCALSTORAGE_KEYS = {
   // 코드에서 사용하는 이름 : 실제 로컬스토리지 KEY
   BOOKMARKED_REGIONS: `${STORAGE_PREFIX}bookmarkedRegions`,
+  SEARCH_KEYWORD_REGION: `${STORAGE_PREFIX}searchKeywordRegion`,
 };
 
 // ============================================

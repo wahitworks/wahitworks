@@ -349,9 +349,9 @@ function EditBookmark() {
               >
                 <HiMiniXMark color="#333" />
               </div>
-              <div className="bookmark-search-btn" type="button">
+              {/* <div className="bookmark-search-btn" type="button">
                 <IoMdSearch color="#333" />
-              </div>
+              </div> */}
             </div>
             {/* 검색 결과 영역 */}
             <motion.div

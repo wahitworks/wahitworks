@@ -26,8 +26,28 @@ export const localStorageUtil = {
     // null 체크: 데이터 없으면 빈 배열 반환
     return data ? JSON.parse(data) : [];
   },
-};
 
+
+  // ----------------------
+  //   위치 검색 관련
+  // ----------------------
+
+  /**
+   * 헤더에서 검색해서 매칭한 위치 정보를 저장하기
+   * @param {'sring'} keyword : Header에서 검색한 위치
+   */
+  setSearchKeywordRegion: (keyword) => {
+    localStorage.setItem(LOCALSTORAGE_KEYS.SEARCH_KEYWORD_REGION, keyword);
+  },
+
+  /**
+   * 헤더에서 검색해서 매칭한 위치 정보를 저장했다가 가져오기
+   * @returns 
+   */
+  getSearchKeywordRegion: () => {
+    return localStorage.getItem(LOCALSTORAGE_KEYS.SEARCH_KEYWORD_REGION);
+  },
+};
 
 // -----------------
 //  카드 순서 저장 관련

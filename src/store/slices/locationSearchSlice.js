@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { localStorageUtil } from "../../utils/localStorageUtil.js";
 
 const locationSearchSlice = createSlice({
   name: 'locationSearchSlice',
   initialState: {
     searchInput: '',
-    searchKeyword: null,
+    searchKeyword: localStorageUtil.getSearchKeywordRegion() || null,
     filteredLocationList: [],
   },
   reducers: {

@@ -5,8 +5,11 @@ import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+// 컴포넌트
 import LocationSearch from "./LocationSearch.jsx";
 import HeaderMenu from "./HeaderMenu.jsx";
+import LogoOrigin from "../logo/LogoOrigin.jsx";
+import Warning from "./Warning.jsx";
 
 import {
   setHeaderTitle,
@@ -20,14 +23,12 @@ import {
 } from "../../store/thunks/locationThunk.js";
 import { setMatchedLocation } from "../../store/slices/locationSlice.js";
 import { stringUtils } from "../../utils/stringUtil.js";
+import { localStorageUtil } from "../../utils/localStorageUtil.js";
 
 // 헤더에 들어가는 아이콘
 import { HiChevronLeft } from "react-icons/hi2";
 import { VscMenu } from "react-icons/vsc";
-import LogoOrigin from "../logo/LogoOrigin.jsx";
 import { LiaSearchLocationSolid } from "react-icons/lia";
-import Warning from "./Warning.jsx";
-
 
 function Header() {
   const navigate = useNavigate();
@@ -114,6 +115,7 @@ function Header() {
     if (searchKeyword?.trim) {
       // 1. 검색어로 데이터에서 찾기 (띄어쓰기 제외한 값을 서로 비교)
       const keywordNoSpace = stringUtils.removeSpaces(searchKeyword);
+      // 비교해서 찾은 값 담기
       foundLocation = LOCATION_LIST.find((location) => {
         const locationNoSpace = stringUtils.removeSpaces(location);
         return locationNoSpace.includes(keywordNoSpace);
@@ -123,6 +125,7 @@ function Header() {
         dispatch(setHeaderTitle(foundLocation));
         dispatch(setMatchedLocation(foundLocation));
         dispatch(getSearchLocation(foundLocation));
+        localStorageUtil.setSearchKeywordRegion(foundLocation);
         return;
       } else {
       //        -> 2-1. 매칭된 지역이 없을 경우, 현재 위치 가져오기 + 현재 위치를 기반으로 타이틀 출력하기
@@ -146,7 +149,7 @@ function Header() {
     if (currentRegion && !foundLocation) {
       dispatch(setHeaderTitle(currentRegion));
     }
-  }, [location.pathname, searchKeyword, currentRegion]);
+  }, [location.pathname, searchKeyword ]);
 
 
   return (

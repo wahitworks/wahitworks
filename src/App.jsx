@@ -28,6 +28,7 @@ function App() {
   // 새로고침용 커스텀 훅
   // 측정소 필요 API만을 위한 측정소 값 건네기
   // useRefresh(thunksToRefresh, measuringStation);
+  // 새로고침 --------------------------
 
   useEffect(() => {
     const handler = (e) => {

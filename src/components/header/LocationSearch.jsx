@@ -10,6 +10,7 @@ import { CiStar } from "react-icons/ci";
 import { FaStar } from "react-icons/fa";
 import { HiMiniXMark } from "react-icons/hi2";
 import { FiEdit3 } from "react-icons/fi";
+import { PiGpsFixBold } from "react-icons/pi";
 
 import { setSearchFlg } from "../../store/slices/headerSlice.js";
 import {
@@ -24,6 +25,9 @@ import {
   removeBookmark,
 } from "../../store/slices/bookmarkSlice.js";
 import { getSearchLocationForBookmark } from "../../store/thunks/bookmarkThunk.js";
+import { getCurrentLocation } from "../../store/thunks/locationThunk.js";
+import { setMatchedLocation } from "../../store/slices/locationSlice.js";
+import { localStorageUtil } from "../../utils/localStorageUtil.js";
 
 function LocationSearch() {
   // ====== Hook =====
@@ -41,6 +45,7 @@ function LocationSearch() {
   const bookmarkedRegions = useSelector(
     (state) => state.bookmarkSlice.bookmarkedRegions
   );
+  const matchedLocation = useSelector(state => state.locationSlice.matchedLocation);
   const headerTitle = useSelector(state => state.headerSlice.headerTitle);
 
 
@@ -111,6 +116,22 @@ function LocationSearch() {
     navigate('/editbookmark');
   }
 
+  /**
+   * 현재 위치를 가져오는 함수
+   */
+  const getCurrentLocationForBtn = () => {
+    // 1. 현재 위치 가져오기
+    dispatch(getCurrentLocation());
+    // 2. 검색 위치, 검색어, 입력어 초기화
+    dispatch(setMatchedLocation(''));
+    localStorageUtil.setSearchKeywordRegion('');
+    dispatch(setSearchKeyword(null));
+    dispatch(setSearchKeyword(''));
+    // 3. 검색창 닫기
+    dispatch(setSearchFlg(false));
+
+  }
+
 
   // ===== useEffect - 키워드(검색어)에 따른 변화
   useEffect(() => {
@@ -136,7 +157,7 @@ function LocationSearch() {
   // ===== 언마운트 - 검색창 닫을 때마다(searchFlg = false) input, list
   // ===== 마운트 - 검색창 열릴 때 현재 위치를 searchInput에 설정 =====
   useEffect(() => {
-    dispatch(setSearchInput(headerTitle)); // 현재 위치를 input에 표시
+    dispatch(setSearchInput(matchedLocation)); // 현재 위치를 input에 표시
     document.body.style.overflow = 'hidden';
 
     return () => {
@@ -206,7 +227,14 @@ function LocationSearch() {
               
               {/* 검색 영역 */}
               <div className="header-search-container">
-                <p className="header-search-title">장소 찾기</p>
+                <div className="header-search-title-container">
+                  <span className="header-search-title">장소 찾기</span>
+                  <span className="header-search-title-icon" 
+                    onClick={() => getCurrentLocationForBtn()}
+                  >
+                    <span>현재 위치 </span><PiGpsFixBold color="var(--deep-blue)" />
+                  </span>
+                </div>
                 <div className="header-search-input-btn header-flex-style">
                   <input
                     className="header-search-input"
@@ -225,12 +253,12 @@ function LocationSearch() {
                   >
                     <HiMiniXMark color="#333" />
                   </div>
-                  <div
+                  {/* <div
                     className="header-search-btn"
                     onClick={() => handleSelectLocation(searchInput)}
                   >
                     <IoMdSearch color="#333" />
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
@@ -279,9 +307,11 @@ function LocationSearch() {
             
               {/* 내 장소 */}
               <div className="header-mylocation-container">
-                <div className="header-mylocation-title-container">
+                <div className="header-search-title-container">
                   <span className='header-search-title'>내 장소</span>
-                  <span className="header-mylocation-title-icon" onClick={() => goBookmark()}><FiEdit3 color="var(--deep-blue)" /></span>
+                  <span className="header-mylocation-title-icon" onClick={() => goBookmark()}>
+                    <FiEdit3 color="var(--deep-blue)" />
+                  </span>
                 </div>
                 <motion.div
                   className="header-search-list header-flex-style"
@@ -339,8 +369,7 @@ function LocationSearch() {
                   }
                 </motion.div>
               </div>
-            
-            
+              <div className="hearder-search-emptyspace"></div>
             </motion.div>
           </>
         )}

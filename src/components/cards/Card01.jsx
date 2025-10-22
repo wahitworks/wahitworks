@@ -10,7 +10,7 @@ import LogoVeryBadWhite from "../commons/LogoVeryBadWhite.jsx";
 import LogoErrorWhite from "../commons/LogoErrorWhite.jsx";
 
 function Card01() {
-  const { currentPM10, dataTime, loading, error } = useSelector(state => state.currentAirCondition);
+  const { currentPM10, loading, error } = useSelector(state => state.currentAirCondition);
 
   const getDustInfo = (pm10Value) => {
       if (pm10Value === null || pm10Value === undefined || pm10Value === 0) {
@@ -65,7 +65,7 @@ function Card01() {
   const { IconComponent, className: iconClassName } = actionGuideDustInfo;
 
   // 로딩 스켈레톤 (에러가 아닐 때만)
-  if(loading && !error) {
+  if((loading || currentPM10 === 0 ) && !error) {
     return (
         <LoadingSkeleton
           width="90%"
