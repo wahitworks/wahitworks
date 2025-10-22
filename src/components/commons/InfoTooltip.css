@@ -1,0 +1,30 @@
+.info-tooltip-icon {
+  font-size: 1.2rem;
+  color: var(--personal-blue);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.info-tooltip-icon:hover {
+  color: var(--deep-blue);
+  transform: scale(1.1);
+}
+.info-tooltip-icon:active {
+  transform: scale(0.95);
+}
+
+.info-tooltip-box {
+  position: absolute;
+
+  background-color: #fff;
+  border: 1px solid var(--personal-blue);
+  border-radius: 10px;
+  padding: 10px 15px 10px 15px;
+
+  font-size: 12px;
+  color: #666;
+  text-align: center;
+  word-break: keep-all;
+
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index: 2;
+}

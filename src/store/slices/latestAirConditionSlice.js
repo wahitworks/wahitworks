@@ -4,7 +4,7 @@ import { getLatestAirCondition } from "../thunks/latestAirConditionThunk.js";
 const latestAirCondition = createSlice({
   name: 'latestAirCondition',
   initialState: {
-    pm10ValueList: [],
+    pm10pm25ValueList: [],
     loading: false,
     error: null,
   },
@@ -15,14 +15,16 @@ const latestAirCondition = createSlice({
       state.error = null;
     })
     .addCase(getLatestAirCondition.fulfilled, (state, action) => {
-      state.pm10ValueList = action.payload
-        ? action.payload.map(data => ({
-            dataTime: data.dataTime,
-            pm10: data.pm10Value,
-            pm10Grade: data.pm10Grade,
-            pm25: data.pm25Value,
-            pm25Grade: data.pm25Grade,
-          }))
+      state.pm10pm25ValueList = action.payload
+        ? action.payload
+            .map(data => ({
+              dataTime: data.dataTime,
+              pm10: data.pm10Value,
+              pm10Grade: data.pm10Grade,
+              pm25: data.pm25Value,
+              pm25Grade: data.pm25Grade,
+            }))
+            .slice(0, 48) // 최근 48개 (2일치)
         : [];
 
       state.loading = false;

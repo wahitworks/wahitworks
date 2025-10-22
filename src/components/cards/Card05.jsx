@@ -1,5 +1,6 @@
-import { useState } from "react";
 import "./Card05.css";
+import { useState } from "react";
+// import InfoTooltip from "../commons/InfoTooltip.jsx";
 
 // 1. 부모 컴포넌트 - 탭 + 범례 표시
 function Card05() {
@@ -61,6 +62,10 @@ function Card05() {
       <div className="card05-container">
         <div className="card05-title-box">
           <h2 className="card05-title">대기질 등급 기준</h2>
+          {/* <InfoTooltip message={'환경정책기본법시행령[2015.1.1 시행] 환경기준(제2조 관련)'}
+            width="100%"
+            top="4%"
+          /> */}
         </div>
         {/* 4. 탭 메뉴 */}
         <div className="card05-tab-menu">

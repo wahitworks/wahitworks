@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 
 // 측정소별 현재 대기질 api 호출
 import { getCurrentAirCondition } from "../../store/thunks/currentAirConditionThunk.js";
+import useCard01_03Refresh from "../../hooks/useCard01_03Refresh.js";
 
 // 카드 컴포넌트 임포트
 // 카드 추가시 추가 임포트및 cardList, defaultCardListOrderArray에 추가 필요.
@@ -30,16 +31,17 @@ const cardList = {
 function Main() {
   // ===== Hook =====
   const dispatch = useDispatch();
-  // 카드 순서 가져오기
-  // 저장값 있을 시: 저장값 출력
-  // 없을시 : DEFAULT_ORDER 적용
-  const order = useSelector((state) => state.cardOrder.order);
   const navigate = useNavigate();
-
+  
   // ===== 전역 state =====
+    // 카드 순서 가져오기
+    // 저장값 있을 시: 저장값 출력
+    // 없을시 : DEFAULT_ORDER 적용
+  const order = useSelector((state) => state.cardOrder.order);
   const measuringStation = useSelector(
     (state) => state.locationSlice.measuringStation
   );
+
 
   // =====================================
   // ||     측정소별 실시간 측정정보 조회 : CARD01, CARD03
@@ -54,6 +56,8 @@ function Main() {
     // ===== 측정소 값, 있을 시 -> api 호출 =====
     dispatch(getCurrentAirCondition(measuringStation));
   }, [dispatch, measuringStation]);
+
+  useCard01_03Refresh(measuringStation);
 
   // card12클릭시 EditCard 페이지로 이동
   const Navigate = () => {

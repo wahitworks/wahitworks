@@ -5,5 +5,130 @@
   box-shadow: 0px 0px 5px var(--light-blue);
   
   padding: 20px 10px 10px;
-  margin: 0 auto;  
+  margin: 0 auto;
+}
+/* 그래프 컨테이너 - focus 테두리 제거 */
+/* Recharts 내부 요소 선택 효과 제거 */
+.card06-graph-container *:focus {
+  outline: none;
+}
+
+/* 타이틀 */
+.card06-title-container {
+  margin-bottom: 20px;
+  position: relative;
+}
+.card06-title {
+  font-size: 1.5rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* 정보 아이콘 */
+.card06-info-icon {
+  font-size: 1.2rem;
+  color: var(--personal-blue);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.card06-info-icon:hover {
+  color: var(--deep-blue);
+  transform: scale(1.1);
+}
+.card06-info-icon:active {
+  transform: scale(0.95);
+}
+
+/* 정보 툴팁 */
+.card06-info-tooltip {
+  width: 50%;
+  position: absolute;
+  top: 100%;
+  right: 0%;
+
+  background-color: #fff;
+  border: 1px solid var(--personal-blue);
+  border-radius: 10px;
+  padding: 10px 15px 10px 15px;
+
+  font-size: 12px;
+  color: #666;
+  text-align: center;
+  word-break: keep-all;
+
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index: 2;
+}
+
+/* 툴팁 닫기 버튼 */
+.card06-info-tooltip-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #999;
+  cursor: pointer;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: color 0.2s;
+}
+
+.card06-info-tooltip-close:hover {
+  color: #333;
+}
+
+/* 탭 메뉴 */
+.card06-tab-Btn-container {
+  width: 100%;
+  margin-bottom: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5%;
+}
+.card06-tab-Btn {
+  width: 30%;
+  
+  color: #666;
+  font-size: 15px;
+  
+  background: white;
+  padding: 8px;
+
+  border: 1px solid #ddd;
+  border-radius: 12px;
+
+  transition: all 0.2s;
+}
+.card06-tab-Btn-active {
+  background: var(--personal-blue);
+  color: white;
+  border: none;
+}
+
+
+/* 그래프 Tooltip 커스터마이징 */
+.card06-tooltip-wrapper {
+  font-weight: 600;
+  font-size: 12px;
+  text-align: center;
+
+  background-color: #fff;
+  border: 1px solid var(--personal-blue);
+  border-radius: 15px;
+  
+  z-index: 1;
 }
