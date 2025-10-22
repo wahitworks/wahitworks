@@ -40,21 +40,33 @@ export const localStorageUtil = {
  */
 export function loadCardOrder(defaultOrder) {
   const saved = localStorage.getItem(CARD_ORDER_KEY);
+  // console.log('saved:', saved);
   // CASE.1 저장된 값이 없는 경우 -> 디폴트 반환
   if (!saved) {
+    // console.log('저장된 값 없음, 디폴트 반환');
     return defaultOrder;
   }
-  // CASE.2 저장된 있는 경우
+  // CASE.2 저장된 값이 있는 경우
   const savedOrder = JSON.parse(saved);
+  // console.log('savedOrder:', savedOrder);
+  // console.log('defaultOrder:', defaultOrder);
+
+  // 저장된 카드의 id 목록
+  const savedIds = savedOrder.map(card => card.id);
+  // 기본 카드들의 id 목록 (추가된 경우에는 이곳에 존재)
+  const defaultIds = defaultOrder.map(card => card.id);
   
   // 새로운 카드 찾기 (defaultOrder에는 있지만 savedOrder에는 없는 것들)
-  const newCards = defaultOrder.filter(cardId => !savedOrder.includes(cardId));
+  const newCards = defaultOrder.filter(card => !savedIds.includes(card.id));
   
   // 디폴트에서 삭제된 카드 제거 (savedOrder에는 있지만 defaultOrder에는 없는 것들)
-  const validOrder = savedOrder.filter(cardId => defaultOrder.includes(cardId));
+  const validOrder = savedOrder.filter(card => defaultIds.includes(card.id));
   
+  // const result = [...validOrder, ...newCards];
+  // console.log('최종 반환값:', result);
   // 삭제된 카드를 제거한 배열 + 새 카드
   return [...validOrder, ...newCards];
+  
 }
 
 

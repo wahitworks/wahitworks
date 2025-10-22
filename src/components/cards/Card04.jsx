@@ -114,12 +114,12 @@ function BookmarkItem({ region, stationName, nickname }) {
             {/* 닉네임이 있다면, 닉네임. 없다면 지역 */}
             { nickname ? (
               // CASA.1 닉네임 있음 ->  닉네임 + 지역
-              <p className="card04-bookmark-list-title">
+              <div className="card04-bookmark-list-title">
                 <p>{nickname}</p>
                 <p className="card04-bookmark-gray-little"> {region}</p>
-              </p>
+              </div>
             ) : (
-              // CASE.2 닉네임 없음 -> 지역 
+              // CASE.2 닉네임 없음 -> 지역
               <p className="card04-bookmark-list-title">
                 {region}
               </p>

@@ -1,5 +1,6 @@
 import "./LocationSearch.css";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -8,7 +9,7 @@ import { IoMdSearch } from "react-icons/io";
 import { CiStar } from "react-icons/ci";
 import { FaStar } from "react-icons/fa";
 import { HiMiniXMark } from "react-icons/hi2";
-
+import { FiEdit3 } from "react-icons/fi";
 
 import { setSearchFlg } from "../../store/slices/headerSlice.js";
 import {
@@ -25,7 +26,9 @@ import {
 import { getSearchLocationForBookmark } from "../../store/thunks/bookmarkThunk.js";
 
 function LocationSearch() {
+  // ====== Hook =====
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // ===== 전역 State =====
   const searchFlg = useSelector((state) => state.headerSlice.searchFlg);
@@ -96,6 +99,17 @@ function LocationSearch() {
     }
   };
 
+  // ======================================================
+  // ||     그 외
+  // ======================================================
+  
+  /**
+   * 북마크 편집 페이지로 이동하는 함수
+   */
+  const goBookmark = () => {
+    dispatch(setSearchFlg(false));
+    navigate('/editbookmark');
+  }
 
 
   // ===== useEffect - 키워드(검색어)에 따른 변화
@@ -222,7 +236,6 @@ function LocationSearch() {
 
               {/* 결과 영역 */}
               <div className="header-search-result-container">
-                {/* <p className='header-search-title'>검색 결과</p> */}
                 <motion.div
                   className="header-search-list header-flex-style"
                   initial={{ height: 0, minHeight: 0, opacity: 0 }}
@@ -263,6 +276,71 @@ function LocationSearch() {
                     ))}
                 </motion.div>
               </div>
+            
+              {/* 내 장소 */}
+              <div className="header-mylocation-container">
+                <div className="header-mylocation-title-container">
+                  <span className='header-search-title'>내 장소</span>
+                  <span className="header-mylocation-title-icon" onClick={() => goBookmark()}><FiEdit3 color="var(--deep-blue)" /></span>
+                </div>
+                <motion.div
+                  className="header-search-list header-flex-style"
+                  initial={{ height: 0, minHeight: 0, opacity: 0 }}
+                  animate={{
+                    height: bookmarkedRegions.length > 0 ? "auto" : 0,
+                    minHeight: bookmarkedRegions.length > 0 ? 50 : 0,
+                    opacity: bookmarkedRegions.length > 0 ? 1 : 0,
+                  }}
+                  transition={{
+                    duration: 0.3,
+                    ease: "easeOut",
+                  }}
+                >
+                  {
+                    bookmarkedRegions.length > 0 && bookmarkedRegions.map( item =>
+                      <div
+                        className="header-search-result"
+                        key={item.region}
+                      >
+                        <span
+                          className="bookmark-icon"
+                          onClick={(e) => {
+                            e.stopPropagation(); 
+                            toggleBookmark(item.region); 
+                          }}
+                        >
+                          {isBookmarked(item.region) ? (
+                            <FaStar color="var(--deep-blue)" />
+                          ) : (
+                            <CiStar color="var(--deep-blue)" />
+                          )}
+                        </span>
+                        {
+                          // 닉네임 여부에 따라 출력 방식
+                          item.nickname ? (
+                            <span
+                              className="header-search-result-item"
+                              onClick={(e) => {e.stopPropagation(); handleSelectLocation(item.region)}}
+                            >
+                              {item.nickname} <span className="header-search-text-gray">{item.region}</span>
+                            </span>
+
+                          ) : (
+                            <span
+                              className="header-search-result-item"
+                              onClick={(e) => {e.stopPropagation(); handleSelectLocation(item.region)}}
+                            >
+                              {item.region}
+                            </span>
+                          )
+                        }
+                      </div>
+                    )
+                  }
+                </motion.div>
+              </div>
+            
+            
             </motion.div>
           </>
         )}

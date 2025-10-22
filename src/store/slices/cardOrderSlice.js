@@ -1,4 +1,4 @@
-import { loadCardOrder } from "../../utils/localStorageUtil";
+import { loadCardOrder, saveCardOrder } from "../../utils/localStorageUtil";
 import { createSlice } from "@reduxjs/toolkit";
 
 // 기본 템플릿 순서 (상수)
@@ -16,6 +16,8 @@ const initialState = {
   order: loadCardOrder(DEFAULT_ORDER),
 };
 
+// console.log('초기 order:', initialState.order);
+
 const cardOrderSlice = createSlice({
   name: "cardOrder",
   initialState, //DEFAULT_ORDER
@@ -23,22 +25,25 @@ const cardOrderSlice = createSlice({
     // 카드 순서 변경
     setOrder(state, action) {
       state.order = action.payload;
-      // saveCardOrder(state.order); // 수동저장에 불필요
+      saveCardOrder(state.order); // localStorage에 즉시 저장
     },
     // 카드 순서 리셋
     resetOrder(state) {
-      state.order = DEFAULT_ORDER; // 해당 리듀서 실행시 default 카드 순서로 변경 후 로컬 스토리지에 저장.
-      // saveCardOrder(state.order); // 수동리셋에 불필요
+      state.order = DEFAULT_ORDER; // 해당 리듀서 실행시 default 카드
+      saveCardOrder(state.order); // localStorage에 즉시 저장
     },
     // 카드의 checked 상태 토글
     toggleCardVisibility: (state, action) => {
       const card = state.order.find((item) => item.id === action.payload);
       if (card) {
         card.checked = !card.checked;
+        saveCardOrder(state.order); // localStorage에 즉시 저장
       }
     },
   },
 });
+
+
 
 export const { setOrder, resetOrder, toggleCardVisibility } =
   cardOrderSlice.actions;

@@ -2,6 +2,7 @@ import "./Main.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { motion } from "framer-motion";
 
 // 측정소별 현재 대기질 api 호출
 import { getCurrentAirCondition } from "../../store/thunks/currentAirConditionThunk.js";
@@ -59,7 +60,12 @@ function Main() {
 
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       <div id="main-container">
         {/* 전체 카드 목록을 순회 */}
         {order.map((cardInfo) => {
@@ -82,7 +88,7 @@ function Main() {
             </p>
         </div>
       </div>
-    </>
+    </motion.div>
   );
 }
 

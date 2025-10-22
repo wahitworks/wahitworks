@@ -139,3 +139,30 @@
   width: 100%;
   padding: 5px;
 }
+
+/* 내 장소 영역 */
+.header-mylocation-container {
+  width: 100%;
+}
+.header-mylocation-title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 50px 0 20px 0;
+}
+.header-mylocation-title-container .header-search-title {
+  margin: 0;
+}
+.header-mylocation-title-icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.header-search-text-gray {
+  color: #999;
+  font-weight: 400;
+  font-size: 13px;  
+}

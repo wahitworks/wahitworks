@@ -1,10 +1,16 @@
 import LogoOrigin from "../logo/LogoOrigin.jsx";
 import "./Introduce.css";
 import logoTitle from "../../assets/logos/logo-title-200.svg";
+import { motion } from "framer-motion";
 
 function Introduce () {
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       <div className="introduce-container">
         {/* <h1 className="introduce-info">인사말</h1>
         <p className="introduce-content-title">
@@ -53,7 +59,7 @@ function Introduce () {
           <p>자주 가는 곳을 즐겨찾고,<br /> 원하는 정보만 카드로 채워보세요.<br /><br /> 직접 카드를 편집하여<br /> 여러분들만의 맞춤 앱을 만들어 보세요!</p>
         </div>
       </div>
-    </>
+    </motion.div>
   )
 };
 

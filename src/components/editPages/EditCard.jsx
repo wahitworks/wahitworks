@@ -23,9 +23,8 @@ import {
   toggleCardVisibility,
 } from "../../store/slices/cardOrderSlice";
 import { saveCardOrder } from "../../utils/localStorageUtil";
-// 알림창
-import Toast from "../commons/Toast";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
+import { motion } from "framer-motion";
 
 // 각 카드 아이템을 위한 컴포넌트
 function SortableItem(props) {
@@ -71,58 +70,13 @@ function EditCard() {
   // 카드 불러오기
   const order = useSelector((state) => state.cardOrder.order);
   const dispatch = useDispatch();
-  // 알림창(토스트) 표시여부관리
-  const [showToast, setShowToast] = useState(false);
-  // 타이머 id저장 ref
-  const toastTimerRef = useRef(null);
 
   // 초기화 버튼 상태관리
   const [modalOpen, setModalOpen] = useState(false);
 
-  // 컴포넌트 마운트 시점의 원래 순서를 저장할 ref
-  const originalOrderRef = useRef(null);
-  // 저장버튼 클릭시 추적 ref
-  const saveRef = useRef(false);
-
-  // 변경여부 추적
-  const [cardChanged, setCardChanged] = useState(false);
-
-  useEffect(() => {
-    // 컨포넌트 마운트 시 현재 redux 상태 order 원본 저장
-    originalOrderRef.current = order;
-    saveRef.current = false; // 컴포넌트 마운트 저장 플래그 초기화
-
-    // 컴포넌트 언마운트 시 실행될 클린업
-    return () => {
-      // 저장하기 버튼x 원래 순서로 돌림
-      if (!saveRef.current) {
-        dispatch(setOrder(originalOrderRef.current));
-      }
-    }
-  }, [])
-
-  // order 상태가 변경될 때마다 변경여부 확인
-  useEffect(() => {
-    if (originalOrderRef.current) {
-      const Changed = JSON.stringify(originalOrderRef.current) !== JSON.stringify(order);
-      setCardChanged(Changed);
-    }
-  }, [order]);
-
-
-  // 2초후 사라지게하기
-  useEffect(() => {
-    if (showToast) {
-      const timer = setTimeout(() => {
-        setShowToast(false);
-      }, 1000);
-      // 컴포넌트가 사라질 때 타이머도 정리
-      return () => clearTimeout(timer);
-    }
-  }, [showToast]);
-
   function handleToggle(idToToggle) {
     dispatch(toggleCardVisibility(idToToggle));
+    // Redux slice에서 자동으로 localStorage에 저장됨
   }
 
   const sensors = useSensors(
@@ -153,34 +107,10 @@ function EditCard() {
       const oldIndex = order.findIndex((item) => item.id === active.id);
       const newIndex = order.findIndex((item) => item.id === over.id);
       const newOrder = arrayMove(order, oldIndex, newIndex);
-      dispatch(setOrder(newOrder)); // setitems 대신 dispatch사용
+      dispatch(setOrder(newOrder));
+      // Redux slice에서 자동으로 localStorage에 저장됨
     }
   }
-
-  // 저장하기 버튼 클릭시
-  const handleSave = () => {
-    // 현재 상태를 localStorage에 저장
-    if (cardChanged) {
-      saveCardOrder(order);
-      saveRef.current = true; // 초기화도 저장으로 간주하여 플래그 설정
-
-      originalOrderRef.current = order; // 저장 시 원본 순서를 현재 순서로 업데이트
-      setCardChanged(false); // 저장 후 변경 상태 초기화
-      // 이전에 타이머가 있다면 취소
-      if (toastTimerRef.current) {
-        clearTimeout(toastTimerRef.current);
-      }
-
-      // 토스트 출력
-      setShowToast(true);
-
-      // 2초 뒤 토스트 숨기는 타이머
-      // ref에 저장
-      toastTimerRef.current = setTimeout(() => {
-        setShowToast(false);
-      }, 1000);
-    }    
-  };
 
   // 초기화 버튼 클릭시
   const handleReset = () => {
@@ -189,8 +119,16 @@ function EditCard() {
   // 모달에서 '예' 클릭
   const yesReset = () => {
     dispatch(resetOrder());
+    // resetOrder 실행 후 기본 순서로 저장
+    const DEFAULT_ORDER = [
+      { id: `card01`, name: "오늘의 행동요령", checked: true },
+      { id: `card02`, name: "대구 대기질 3일 예보", checked: true },
+      { id: `card03`, name: "지금 대기 상태", checked: true },
+      { id: `card04`, name: "내 장소", checked: true },
+      { id: `card05`, name: "맑음 단계", checked: true },
+    ];
+    saveCardOrder(DEFAULT_ORDER);
     setModalOpen(false);
-    saveRef.current = true; // 초기화도 저장으로 간주하여 플래그 설정
   };
   // 모달에서 '아니오' 클릭
   const cancelReset = () => {
@@ -198,7 +136,12 @@ function EditCard() {
   };
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       {/* 초기화 버튼 */}
       <div className="editcard-reset-btn-container">
         {
@@ -233,18 +176,6 @@ function EditCard() {
           </SortableContext>
         </DndContext>
       </div>
-      {/* 저장하기 버튼 */}
-      <div className="editcard-card-save-btn-container">
-        <button
-          className="editcard-card-save-btn"
-          type="button"
-          onClick={handleSave}
-        >
-          저장하기
-        </button>
-      </div>
-
-      <Toast message="저장되었습니다!" show={showToast}></Toast>
 
       {modalOpen && (
         <div className="editcard-modal-background">
@@ -269,7 +200,7 @@ function EditCard() {
           </div>
         </div>
       )}
-    </>
+    </motion.div>
   );
 }
 

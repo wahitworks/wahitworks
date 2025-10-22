@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Header from "./components/header/Header.jsx";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Topbtn from "./components/topBtn/topBtn.jsx";
 import AppTutorial from "./components/explainPages/AppTutorial.jsx";
 import "./App.css";
 import { PWAInstallContext } from "./contexts/PWAInstallContext.jsx";
+import { AnimatePresence } from "framer-motion";
 
 // 새로 생성한 커스텀 훅 임포트
 import useRefresh from "./hooks/refresh.js";
@@ -15,6 +16,7 @@ import { getCurrentAirCondition } from "./store/thunks/currentAirConditionThunk.
 import { fetchFineDustData } from "./store/thunks/fineDustThunk.js";
 
 function App() {
+  const location = useLocation();
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showInstallModal, setShowInstallModal] = useState(false);
   const [showManualInstallHint, setShowManualInstallHint] = useState(false); // New state
@@ -122,7 +124,9 @@ function App() {
       <>
         <Header />
         <main>
-          <Outlet />
+          <AnimatePresence mode="wait">
+            <Outlet key={location.pathname} />
+          </AnimatePresence>
           <Topbtn />
           {/* 커스텀 앱 설치 모달 */}
           {showInstallModal && (

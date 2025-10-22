@@ -1,8 +1,9 @@
 import "./Card03.css";
 import { useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { GoDotFill } from "react-icons/go";
+import { useSelector } from "react-redux";
 import { motion, AnimatePresence } from 'framer-motion';
+
+import { GoDotFill } from "react-icons/go";
 
 import LogoGood from '../logo/LogoGood.jsx';
 import LogoModerate from '../logo/LogoModerate.jsx';
@@ -15,25 +16,27 @@ import { getAirQualityInfo } from "../../utils/airQualityGradeUtil.js";
 
 function Card03() {
 
-  // ===== 전역 state =====
-  const currentPM10 = useSelector(state => state.currentAirCondition.currentPM10)
-  const currentPM25 = useSelector(state => state.currentAirCondition.currentPM25)
-  const currentO3 = useSelector(state => state.currentAirCondition.currentO3)
-  const currentNO2 = useSelector(state => state.currentAirCondition.currentNO2)
-  const currentCO = useSelector(state => state.currentAirCondition.currentCO)
-  const currentSO2 = useSelector(state => state.currentAirCondition.currentSO2)
-  
-  const dataTime = useSelector(state => state.currentAirCondition.dataTime);
-  const pm10Flag = useSelector(state => state.currentAirCondition.pm10Flag);
-  const pm25Flag = useSelector(state => state.currentAirCondition.pm25Flag);
-  const o3Flag = useSelector(state => state.currentAirCondition.o3Flag);
-  const no2Flag = useSelector(state => state.currentAirCondition.no2Flag);
-  const coFlag = useSelector(state => state.currentAirCondition.coFlag);
-  const so2Flag = useSelector(state => state.currentAirCondition.so2Flag);
-  
+  // ===== 전역 state - 한 번에 가져오기 =====
+  const {
+    currentPM10,
+    currentPM25,
+    currentO3,
+    currentNO2,
+    currentCO,
+    currentSO2,
+    dataTime,
+    pm10Flag,
+    pm25Flag,
+    o3Flag,
+    no2Flag,
+    coFlag,
+    so2Flag,
+    loading,
+    error
+  } = useSelector(state => state.currentAirCondition);
+
   const measuringStation = useSelector(state => state.locationSlice.measuringStation);
-  const loading = useSelector(state => state.currentAirCondition.loading);
-  
+
   // ===== 로컬 State ================
   const [page, setPage] = useState(0);
   const totalPages = 2;
@@ -41,6 +44,7 @@ function Card03() {
   // ===== 랜더링 필요없는 Ref ============
   const containerRef = useRef(null);
   
+  //  console.log('Card03 렌더링:', { loading, dataTime, currentPM10 });
   
   // ===== 등급에 맞는 아이콘 컴포넌트 반환 =====
   const getAirQualityIcon = (grade) => {
@@ -103,7 +107,8 @@ function Card03() {
   };
     
   // ===== 로딩 스켈레톤 =====
-  if(loading) {
+  // loading 중이거나 아직 API 응답을 받지 않았으면 스켈레톤 표시 (단, 에러가 아닐 때만)
+  if((loading || currentPM10 === null) && !error) {
     return (
         <LoadingSkeleton
           width="90%"

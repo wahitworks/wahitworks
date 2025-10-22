@@ -10,10 +10,10 @@ import LogoVeryBadWhite from "../commons/LogoVeryBadWhite.jsx";
 import LogoErrorWhite from "../commons/LogoErrorWhite.jsx";
 
 function Card01() {
-  const currentPM10 = useSelector(state => state.currentAirCondition.currentPM10);
+  const { currentPM10, dataTime, loading, error } = useSelector(state => state.currentAirCondition);
 
   const getDustInfo = (pm10Value) => {
-      if (pm10Value === null || pm10Value === undefined) {
+      if (pm10Value === null || pm10Value === undefined || pm10Value === 0) {
         return {
           statusText: "측정 불가",
           actionGuide: "데이터를 가져올 수 없습니다.",
@@ -61,10 +61,11 @@ function Card01() {
         };
       }
     };
-  const loading = useSelector(state => state.currentAirCondition.loading);  
   const actionGuideDustInfo = getDustInfo(currentPM10);
   const { IconComponent, className: iconClassName } = actionGuideDustInfo;
-  if(loading || currentPM10 === 0) {
+
+  // 로딩 스켈레톤 (에러가 아닐 때만)
+  if(loading && !error) {
     return (
         <LoadingSkeleton
           width="90%"

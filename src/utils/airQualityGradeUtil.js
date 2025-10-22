@@ -32,7 +32,7 @@ export const getAirQualityInfo = (value, type, flg) => {
   }
 
   // 데이터 없음
-  if (value === null || value === undefined || value === '' || value === '-' || value === 0) {
+  if (value === null || value === undefined || value === '' || value === '-' ) {
     return {
       grade: 'no-data',
       text: '데이터 없음',
