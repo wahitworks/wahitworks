@@ -48,6 +48,9 @@ function Header() {
   const currentRegion = useSelector(
     (state) => state.locationSlice.currentRegion
   );
+  const matchedLocation = useSelector(
+    (state) => state.locationSlice.matchedLocation
+  );
 
 
   // ======================================================
@@ -88,7 +91,7 @@ function Header() {
 
 
   // ======================================================
-  // ||     useEffect : 주소/pathname, 검색어, 현재지역(GPS)에 따른 변화
+  // ||     useEffect : 주소/pathname, 검색어에 따른 위치 데이터 가져오기
   // ======================================================
   useEffect(() => {
     // =============================================
@@ -120,15 +123,14 @@ function Header() {
         const locationNoSpace = stringUtils.removeSpaces(location);
         return locationNoSpace.includes(keywordNoSpace);
       });
-      //        -> 2. 데이터에서 검색어 값이 있다면 타이틀로 출력
+      //        -> 2. 데이터에서 검색어 값이 있다면 매칭된 위치 설정
       if (foundLocation) {
-        dispatch(setHeaderTitle(foundLocation));
         dispatch(setMatchedLocation(foundLocation));
         dispatch(getSearchLocation(foundLocation));
         localStorageUtil.setSearchKeywordRegion(foundLocation);
         return;
       } else {
-      //        -> 2-1. 매칭된 지역이 없을 경우, 현재 위치 가져오기 + 현재 위치를 기반으로 타이틀 출력하기
+      //        -> 2-1. 매칭된 지역이 없을 경우, 현재 위치 가져오기
         console.log(
           "검색어와 매칭된 지역이 없습니다. 현재위치를 가져옵니다."
         );
@@ -139,17 +141,21 @@ function Header() {
       // =============================================
       // ||         2. 검색어 없을 시!!!
       // =============================================
-      //        -> 1. 현재 위치 가져오기 + 현재 위치를 기반으로 타이틀 출력하기
+      //        -> 1. 현재 위치 가져오기
       console.log("검색어가 없습니다. 현재위치를 가져옵니다.");
       dispatch(getCurrentLocation());
     }
-    // =============================================
-    // ||         재검색 대비!!!  : 현재 위치 정보 있고, 매칭 주소 없음 (매칭에 실패했거나, 검색어 없음)
-    // =============================================
-    if (currentRegion && !foundLocation) {
-      dispatch(setHeaderTitle(currentRegion));
-    }
   }, [location.pathname, searchKeyword ]);
+
+  // ======================================================
+  // ||     useEffect : matchedLocation 변화에 따른 headerTitle 업데이트
+  // ======================================================
+  useEffect(() => {
+    // 메인 페이지이고 matchedLocation이 있을 때만 headerTitle 업데이트
+    if (location.pathname === "/" && matchedLocation) {
+      dispatch(setHeaderTitle(matchedLocation));
+    }
+  }, [matchedLocation, location.pathname]);
 
 
   return (

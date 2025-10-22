@@ -7,7 +7,7 @@ import axiosAirConfig from "../../configs/axiosAirConfig.js";
  * (measuringStation) : 측정소
  */
 export const getLatestAirCondition = createAsyncThunk(
-  'currentAirCondition/getCurrentAirCondition',
+  'currentAirCondition/getLatestAirCondition',
   async(measuringStation, { rejectWithValue }) => {
     try {
       // ============================================
