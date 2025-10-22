@@ -56,6 +56,11 @@
   cursor: pointer;
 }
 
+.card04-bookmark-list-triangle {
+  color: var(--deep-blue);
+  font-size: 15px;
+}
+
 /* 토글했을 때 */
 .card04-bookmark-list.toggled {
   width: 100%;
@@ -102,6 +107,7 @@
   width: 100%;
 
   display: flex;
+  gap: 5px;
 }
 
 .card04-bookmark-list-toggle-info{
@@ -109,17 +115,18 @@
   text-align: center;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   gap: 5px;
-}
+  padding: 5px;
 
-.card04-bookmark-list-toggle-info:nth-child(2) {
-  border-left: 1px solid var(--deep-blue);
-  border-right: 1px solid var(--deep-blue);
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  background-color: #fafafa;
 }
 
 .card04-bookmark-list-toggle-info-title {
   font-weight: 700;
-  font-size: 16px;
+  font-size: 0.9rem;
 }
 
 .card04-bookmark-list-toggle-info-value {

@@ -79,8 +79,8 @@
 .header-menu {
   width: 3.5rem;
   height: 80px;
-  /* text-align: center;
-  line-height: 100px; */
+  text-align: center;
+  line-height: 100px;
 
   /* 경보아이콘을 위한 flex */
   cursor: pointer;
