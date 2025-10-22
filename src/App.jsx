@@ -8,13 +8,6 @@ import "./App.css";
 import { PWAInstallContext } from "./contexts/PWAInstallContext.jsx";
 import { AnimatePresence } from "framer-motion";
 
-// 새로 생성한 커스텀 훅 임포트
-import useRefresh from "./hooks/refresh.js";
-// 새로고침 thunk 목록
-import { fetchAirQuality } from "./store/thunks/airQualityThunk.js";
-import { getCurrentAirCondition } from "./store/thunks/currentAirConditionThunk.js";
-import { fetchFineDustData } from "./store/thunks/fineDustThunk.js";
-
 function App() {
   const location = useLocation();
   const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -32,17 +25,9 @@ function App() {
     (state) => state.locationSlice.measuringStation
   );
 
-  // 새로고침할 thunk 함수 배열
-  const thunksToRefresh = [
-    fetchAirQuality,
-    getCurrentAirCondition,
-    fetchFineDustData,
-  ];
-
   // 새로고침용 커스텀 훅
   // 측정소 필요 API만을 위한 측정소 값 건네기
-  useRefresh(thunksToRefresh, measuringStation);
-  // 새로고침 --------------------------
+  // useRefresh(thunksToRefresh, measuringStation);
 
   useEffect(() => {
     const handler = (e) => {

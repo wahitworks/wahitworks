@@ -6,14 +6,15 @@ import LogoError from "../logo/LogoError.jsx";
 // 우리가 만든 Thunk와 Slice의 액션들을 가져옵니다.
 import { fetchAirQuality } from "../../store/thunks/airQualityThunk.js";
 import { nextDay, prevDay } from "../../store/slices/airQualitySlice.js";
-
 import LogoGood from "../logo/LogoGood.jsx";
 import LogoModerate from "../logo/LogoModerate.jsx";
 import LogoBad from "../logo/LogoBad.jsx";
 
 // 스켈레톤 컴포넌트 임포트
-
 import Card02LoadingSkeleton from "../commons/Card02LoadingSkeleton.jsx";
+
+// API 재호출 새로고침
+import useCard02Refresh from "../../hooks/useCard02Refresh.js";
 
 // 등급별 텍스트와 이미지를 매핑하는 헬퍼 객체
 const labelByGrade = { 1: "좋음", 2: "보통", 3: "나쁨", 4: "매우나쁨" };
@@ -32,6 +33,9 @@ function Card02() {
   useEffect(() => {
     dispatch(fetchAirQuality());
   }, [dispatch]);
+
+  // 매 시간 API 재호출 (새로고침)
+  useCard02Refresh();
 
   // 1. 로딩 중일 때 표시할 화면
   if (loading) {

@@ -9,6 +9,7 @@ import { getCurrentAirCondition } from "../../store/thunks/currentAirConditionTh
 
 // 카드 컴포넌트 임포트
 // 카드 추가시 추가 임포트및 cardList, defaultCardListOrderArray에 추가 필요.
+import CardWrapper from "../cards/CardWrapper.jsx"; // 메인 페이지에서 카드 삭제 기능용
 import Card01 from "../cards/Card01.jsx";
 import Card02 from "../cards/Card02.jsx";
 import Card03 from "../cards/Card03.jsx";
@@ -34,30 +35,28 @@ function Main() {
   const navigate = useNavigate();
 
   // ===== 전역 state =====
-  const measuringStation = useSelector(state => state.locationSlice.measuringStation);
-
+  const measuringStation = useSelector(
+    (state) => state.locationSlice.measuringStation
+  );
 
   // =====================================
   // ||     측정소별 실시간 측정정보 조회 : CARD01, CARD03
   // =====================================
   useEffect(() => {
     // ===== 측정소 값, 없을 시 =====
-    if(!measuringStation) {
+    if (!measuringStation) {
       // console.log('아직 측정소 저장 안됨!');
       return;
     }
-    
+
     // ===== 측정소 값, 있을 시 -> api 호출 =====
     dispatch(getCurrentAirCondition(measuringStation));
-    
-  }, [dispatch, measuringStation])
-
+  }, [dispatch, measuringStation]);
 
   // card12클릭시 EditCard 페이지로 이동
   const Navigate = () => {
     navigate(`/editcard`);
   };
-
 
   return (
     <motion.div
@@ -75,8 +74,12 @@ function Main() {
           }
           // cardInfo.id에 맞는 컴포넌트를 찾습니다.
           const CardComponent = cardList[cardInfo.id];
-          // 기존 로직과 동일하게 컴포넌트 렌더링
-          return CardComponent ? <CardComponent key={cardInfo.id} /> : null;
+          // CardWrapper로 감싸서 렌더링
+          return CardComponent ? (
+            <CardWrapper key={cardInfo.id} cardId={cardInfo.id}>
+              <CardComponent />
+            </CardWrapper>
+          ) : null;
         })}
       </div>
       {/* card12 EditCard 페이지로 이동 */}
@@ -85,7 +88,7 @@ function Main() {
           <p className="main-add-card-comment">
             + <br />
             카드를 추가해 보세요!
-            </p>
+          </p>
         </div>
       </div>
     </motion.div>
