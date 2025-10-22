@@ -1,0 +1,105 @@
+// 이 파일은 경보 알림을 주기 위해 만든 것입니다.
+import './Warning.css'
+import { RiAlarmWarningFill } from "react-icons/ri";
+import { useEffect, useState } from 'react';
+
+// 임시
+  const mockDataWithWarning = [
+    { districtName: '대구', moveName: '군위권역', itemCode: 'PM10', issueGbn: '주의보', issueDate:'2025-03-17', issueTime: '20:00', clearDate: null},
+    { districtName: '대구', moveName: '수성구, 달서구', itemCode: 'PM2.5', issueGbn: '경보', issueDate: '2025-03-17', issueTime: '21:00', clearDate: null},
+  ];
+
+  // 경보 없을 때 테스트
+  const mockDataWithoutWarning = [];
+
+function Warning() {
+  
+  // 경보 바꿔가며 테스트
+  const [warningData, setWarningData] = useState(mockDataWithoutWarning)
+  const [hasWarning, setHasWarning] = useState(false);
+  const [daeguWarnings, setDaeguWarnings] = useState([]);
+  
+  // 팝업 표시 여부
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  
+  // 애니메이션용
+  const [visible, setVisible] = useState(false);
+
+  // 바뀔때 대구 지역 경보 확인
+  useEffect(() => {
+    if (warningData && warningData.length > 0) {
+      const filtered = warningData.filter(
+        (warning) => warning.districtName === '대구' && !warning.clearDate 
+      );
+      setDaeguWarnings(filtered);
+      setHasWarning(filtered.length > 0);
+    } else {
+      setDaeguWarnings([]);
+      setHasWarning(false);
+    }
+  }, [warningData]);
+
+  // 팝업 상태에 따라 애니메이션 상태 
+  useEffect(() => {
+    if (isPopupOpen) {
+      const timer = setTimeout(() => setVisible(true, 100))
+      return () => clearTimeout(timer);
+    } else {
+      setVisible(false);
+    }
+  }, [isPopupOpen]);
+
+  // 경보 유무에 따라 아이콘 색상 변경
+  const iconColor = hasWarning ? 'var(--red)' : '#fff';
+  // 아이콘 클릭시 팝업 오픈
+  const handleClick = (e)  => {
+    if (hasWarning) {
+      // 부모(메뉴아이콘)가 전달받는 이벤트 막기
+      e.stopPropagation();
+      setIsPopupOpen(true); // 팝업 열기
+    }
+  }
+
+  // 팝업 닫기
+  const handlePopupClose = () => {
+    setIsPopupOpen(false);
+    // 0.3초 후 팝업을 DOM에서 완전 제거
+    setTimeout(() => {
+      setIsPopupOpen(false);
+    }, 300)
+  }
+
+  const handleContentClick = (e) => {
+    e.stopPropagation();
+  }
+  
+  return (
+    <>
+    {/* 아이콘 */}
+    <RiAlarmWarningFill 
+      size={30} color={iconColor} style={{
+        marginRight: '15px', cursor: hasWarning ? 'pointer' : 'default'
+      }}
+      onClick={handleClick}
+    />
+    {isPopupOpen && (
+      <div className={`warning-back ${visible ? 'visible' : ''}`} onClick={handlePopupClose}>
+      <div className={`warning-container ${visible ? 'visible' : ''}`} onClick={handleContentClick}>
+        <div className="warning-header"><RiAlarmWarningFill /></div>
+        <div className="warning-item-container">
+          {daeguWarnings.map((warning, index) => (
+            <div className="warning-item" key={index}>
+            <p className="warning-item-title">{`[${warning.itemCode === 'PM10' ? '미세먼지' : '초미세먼지'} ${warning.issueGbn}] ${warning.moveName}`}</p>
+            <p className="warning-item-comment">{`발령 시각: ${warning.issueDate} ${warning.issueTime}`}</p>
+          </div>
+          ))            
+          }
+        </div>
+      </div>
+    </div>
+    )}
+    </>
+  );
+}
+
+export default Warning;

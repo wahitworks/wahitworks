@@ -26,6 +26,7 @@ import { HiChevronLeft } from "react-icons/hi2";
 import { VscMenu } from "react-icons/vsc";
 import LogoOrigin from "../logo/LogoOrigin.jsx";
 import { LiaSearchLocationSolid } from "react-icons/lia";
+import Warning from "./Warning.jsx";
 
 
 function Header() {
@@ -189,10 +190,14 @@ function Header() {
         }
 
         {/* 오른쪽 메뉴 아이콘 영역 */}
-        <div className="header-menu" onClick={() => headerMenuClick()}>
-          <VscMenu size={35} />
+        <div className="header-right-wrapper">
+          {/* 경보아이콘 */}
+          <Warning />
         </div>
-      </div>
+          <div className="header-menu" onClick={() => headerMenuClick()}>
+            <VscMenu size={35} />
+          </div>
+        </div>      
       {/* Flg 컴포넌트 출력 */}
       { searchFlg && <LocationSearch />}
       { menuFlg && <HeaderMenu />}

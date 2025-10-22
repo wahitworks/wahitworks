@@ -71,10 +71,19 @@
 }
 
 /* 오른쪽 메뉴 아이콘 영역 */
+.header-right-wrapper {
+  display: flex;
+  align-items: center;
+}
+
 .header-menu {
-  width : 80px;
+  width: 3.5rem;
   height: 80px;
-  text-align: center;
-  line-height: 100px;
+  /* text-align: center;
+  line-height: 100px; */
+
+  /* 경보아이콘을 위한 flex */
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }

@@ -1,0 +1,75 @@
+/* 배경 반투명 */
+.warning-back {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  z-index: 1000;
+
+  /* 애니메이션 */
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+.warning-back.visible {
+  opacity: 1;
+}
+
+/* 모달 */
+.warning-container {
+  background-color: var(--red);
+  padding: 20px;
+  border-radius: 15px;
+  width: 80%;
+  max-width: 450px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+
+  /* 애니메이션 */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.warning-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.warning-header {
+  color: #fff;
+  font-size: 3rem;
+}
+
+/* 경보리스트 */
+.warning-item-container {
+  width: 100%; 
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.warning-item {
+  background-color: #fff;
+  padding: 10px;
+  text-align: center;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.warning-item-title {
+  font-weight: 900;
+}
