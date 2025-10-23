@@ -17,6 +17,7 @@ import Card03 from "../cards/Card03.jsx";
 import Card04 from "../cards/Card04.jsx";
 import Card05 from "../cards/Card05.jsx";
 import Card06 from "../cards/Card06.jsx";
+import TestClick from "../commons/TestClick.jsx";
 
 // 카드 id와 실제 컴포넌트를 짝지어주는 목록
 const cardList = {
@@ -72,6 +73,9 @@ function Main() {
       transition={{ duration: 0.3 }}
     >
       <div id="main-container">
+        {/* ===== 테스트 컴포넌트 출력 ===== */}
+        {/* <TestClick /> */}
+
         {/* 전체 카드 목록을 순회 */}
         {order.map((cardInfo) => {
           // card.checked가 true인 카드 출력

@@ -1,0 +1,32 @@
+.test-click-container {
+  border: 2px solid #ff6b6b;
+  border-radius: 8px;
+  margin: 16px;
+  background-color: #fff;
+}
+
+.scrollable-area {
+  height: 250px;
+  overflow-y: scroll;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin: 10px;
+  padding: 5px;
+}
+
+.icon-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 8px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.icon-label {
+  font-size: 16px;
+}
+
+.icon-trigger {
+  cursor: pointer;
+  padding: 5px;
+}

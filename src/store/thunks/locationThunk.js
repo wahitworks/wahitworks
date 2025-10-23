@@ -28,12 +28,13 @@ export const getCurrentLocation = createAsyncThunk(
         const gpsStation = findNearestStation(gps.lat, gps.lng);
         console.log('📍 GPS 측정소:', gpsStation);
 
-      // ===== 반환 : { 현재GPS: {위도, 경도, 현재지역}, 가까운 측정소: {가까운 측정소 정보, 거리} }
+      // ===== 반환 : 통일된 구조 { location, nearestStation }
         const result = {
-          currentGPS: {
+          location: {
+            name: gpsAddr,
             lat: gps.lat,
             lng: gps.lng,
-            currentRegion: gpsAddr,
+            source: 'gps'
           },
           nearestStation: gpsStation,
         };
@@ -44,10 +45,11 @@ export const getCurrentLocation = createAsyncThunk(
       console.error("위치정보 가져오기 실패 : ", error, '기본 값으로 설정합니다.');
       // ===== 주소 정보 대신, 기본 값 반환! =====
       return {
-        currentGPS: {
+        location: {
+          name: '중구 성내동',
           lat: 35.874465,
           lng: 128.584301,
-          currentRegion: '중구 성내동',
+          source: 'gps'
         },
         nearestStation: {
           stationCode: 422114,
@@ -77,12 +79,13 @@ export const getSearchLocation = createAsyncThunk(
       const keywordStation = findNearestStation(keywordCoordinates.lat, keywordCoordinates.lng)
       // console.log('좌표로 측정소 찾기 : ', keywordStation);
       
-      // ===== 반환 : { 검색주소: {위도, 경도}, 가까운 측정소: {측정소 정보, 거리} }
+      // ===== 반환 : 통일된 구조 { location, nearestStation }
       return {
-        searchLocation: {
-          searchLocation: searchKeyword,
+        location: {
+          name: searchKeyword,
           lat: keywordCoordinates.lat,
           lng: keywordCoordinates.lng,
+          source: 'search'
         },
         nearestStation: keywordStation,
       }

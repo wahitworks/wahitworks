@@ -25,8 +25,6 @@ import {
 } from "../../store/slices/bookmarkSlice.js";
 import { getSearchLocationForBookmark } from "../../store/thunks/bookmarkThunk.js";
 import { getCurrentLocation } from "../../store/thunks/locationThunk.js";
-import { setMatchedLocation } from "../../store/slices/locationSlice.js";
-import { localStorageUtil } from "../../utils/localStorageUtil.js";
 
 function LocationSearch() {
   // ====== Hook =====
@@ -44,13 +42,10 @@ function LocationSearch() {
   const bookmarkedRegions = useSelector(
     (state) => state.bookmarkSlice.bookmarkedRegions
   );
-  const matchedLocation = useSelector(state => state.locationSlice.matchedLocation);
-  const headerTitle = useSelector(state => state.headerSlice.headerTitle);
+  const displayLocation = useSelector(state => state.locationSlice.displayLocation);
 
 
-  // ======================================================
-  // ||     검색어 관련 함수
-  // ======================================================
+  // ===== 검색어 관련 함수 =====
 
   /**
    * 검색어 저장 + OML 창 사라짐 + 실시간 인풋 초기화
@@ -60,17 +55,29 @@ function LocationSearch() {
     dispatch(setSearchFlg(false));
   };
 
-  // ======================================================
-  // ||     북마크 관련 함수
-  // ======================================================
+  /**
+   * "현재 위치" 버튼 클릭 시 GPS로 위치 가져오기
+   */
+  const getCurrentLocationForBtn = () => {
+    // 1. GPS로 현재 위치 가져오기 (성공 시 locationSlice에서 자동으로 로컬스토리지 저장)
+    dispatch(getCurrentLocation());
+ 
+    // 2. 검색어 초기화
+    dispatch(setSearchKeyword(null));
+ 
+    // 3. 검색창 닫기
+    dispatch(setSearchFlg(false));
+  }
 
+  // ===== 북마크 관련 함수 =====
+  
   /**
    * bookmarkedRegions에 추가되어있는지 아닌지 true/false 반환
    * @param {string} item : 검색한 지역
    * @returns {boolean}
-   */
-  const isBookmarked = (item) => {
-    return bookmarkedRegions.some((bookmarkeditems) => bookmarkeditems.region === item);
+  */
+ const isBookmarked = (item) => {
+   return bookmarkedRegions.some((bookmarkeditems) => bookmarkeditems.region === item);
   };
 
   /**
@@ -102,10 +109,6 @@ function LocationSearch() {
       }
     }
   };
-
-  // ======================================================
-  // ||     그 외
-  // ======================================================
   
   /**
    * 북마크 편집 페이지로 이동하는 함수
@@ -115,19 +118,6 @@ function LocationSearch() {
     navigate('/editbookmark');
   }
 
-  /**
-   * 현재 위치를 가져오는 함수
-   */
-  const getCurrentLocationForBtn = () => {
-    
-    // 1. 현재 위치 가져오기
-    dispatch(getCurrentLocation());
-    // 2. 검색어를 null로 초기화
-    dispatch(setSearchKeyword(null));
-    
-    // 3. 검색창 닫기
-    dispatch(setSearchFlg(false));
-  }
 
 
   // ===== useEffect - 키워드(검색어)에 따른 변화
@@ -154,7 +144,7 @@ function LocationSearch() {
   // ===== 언마운트 - 검색창 닫을 때마다(searchFlg = false) input, list
   // ===== 마운트 - 검색창 열릴 때 현재 위치를 searchInput에 설정 =====
   useEffect(() => {
-    dispatch(setSearchInput(matchedLocation)); // 현재 위치를 input에 표시
+    dispatch(setSearchInput(displayLocation.name)); // 현재 위치를 input에 표시
     document.body.style.overflow = 'hidden';
 
     return () => {

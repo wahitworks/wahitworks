@@ -21,8 +21,9 @@ import {
   getCurrentLocation,
   getSearchLocation,
 } from "../../store/thunks/locationThunk.js";
-import { setMatchedLocation } from "../../store/slices/locationSlice.js";
+import { setDisplayLocation, setMeasuringStation } from "../../store/slices/locationSlice.js";
 import { stringUtils } from "../../utils/stringUtil.js";
+import { localStorageUtil } from "../../utils/localStorageUtil.js";
 
 // 헤더에 들어가는 아이콘
 import { HiChevronLeft } from "react-icons/hi2";
@@ -30,6 +31,7 @@ import { VscMenu } from "react-icons/vsc";
 import { LiaSearchLocationSolid } from "react-icons/lia";
 
 function Header() {
+  // ===== Hook =====
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -41,28 +43,12 @@ function Header() {
   const searchKeyword = useSelector(
     (state) => state.locationSearchSlice.searchKeyword
   );
+  const displayLocation = useSelector(
+    (state) => state.locationSlice.displayLocation
+  );
   const measuringStation = useSelector(
     (state) => state.locationSlice.measuringStation
   );
-  const currentRegion = useSelector(
-    (state) => state.locationSlice.currentRegion
-  );
-  const matchedLocation = useSelector(
-    (state) => state.locationSlice.matchedLocation
-  );
-
-  // ======================================================
-  // ||     검색어 관련 함수
-  // ======================================================
-
-  /**
-   * path '/'로 이동시키는 함수
-   */
-  const goHome = () => {
-    navigate("/");
-    dispatch(setMenuFlg(false));
-    dispatch(setSearchFlg(false));
-  };
 
   // 페이지 path 별로 수정할 타이틀 지정
   const pageTitle = {
@@ -75,11 +61,21 @@ function Header() {
   const measuringOn = !pageTitle[location.pathname];
 
   /**
+   * path '/'로 이동시키는 함수
+   */
+  const goHome = () => {
+    navigate("/");
+    dispatch(setMenuFlg(false));
+    dispatch(setSearchFlg(false));
+  };
+
+  /**
    * headerTitle 클릭 시, searchFlg true ↔ false
    */
   const headerTitleClick = () => {
     dispatch(setSearchFlg(!searchFlg));
   };
+  
   /**
    * headerMenu 클릭 시, menuFlg true
    */
@@ -88,72 +84,100 @@ function Header() {
   };
 
   // ======================================================
-  // ||     useEffect : 주소/pathname, 검색어에 따른 위치 데이터 가져오기
+  // ||     useEffect : 최초 마운트 시 로컬스토리지에서 위치 복원
   // ======================================================
   useEffect(() => {
-    // =============================================
-    // ||        CASE.1 특정 path값 존재 시,
-    // =============================================
-    //       -> 해당 페이지 타이틀 출력
-    if (pageTitle[location.pathname]) {
-      dispatch(setHeaderTitle(pageTitle[location.pathname]));
-      return;
+    // 로컬스토리지에서 저장된 위치 정보 가져오기
+    const savedData = localStorageUtil.getLocationData();
+
+    if (savedData) {
+      const { displayLocation, measuringStation, timestamp } = savedData;
+
+      // CASE 1: 위치 정보가 '검색'으로 저장한 경우 → 그대로 사용
+      if (displayLocation.source === 'search') {
+        console.log('검색 위치를 로컬스토리지에서 복원:', displayLocation.name);
+        dispatch(setDisplayLocation(displayLocation));
+        dispatch(setMeasuringStation(measuringStation));
+        return;
+      }
+
+      // CASE 2: 위치 정보가 'GPS'로 저장한 경우 → 24시간 확인
+      if (displayLocation.source === 'gps') {
+        const isExpired = localStorageUtil.isLocationDataExpired(timestamp);
+
+        if (isExpired) {
+          // 24시간 지남 → GPS 재호출
+          console.log('GPS 위치가 만료되어 새로 가져옵니다.');
+          dispatch(getCurrentLocation());
+        } else {
+          // 24시간 안 지남 → 그대로 사용
+          console.log('로컬스토리지에서 GPS 위치 복원:', displayLocation.name);
+          dispatch(setDisplayLocation(displayLocation));
+          dispatch(setMeasuringStation(measuringStation));
+        }
+        return;
+      }
     }
-    // 메인 페이지 아닐 시, 함수 종료
+
+    // CASE 3: 저장된 데이터 없음 → GPS로 현재 위치 가져오기
+    console.log('저장된 위치 정보가 없습니다. GPS로 현재 위치를 가져옵니다.');
+    dispatch(getCurrentLocation());
+  }, []); // 빈 배열: 최초 마운트 시 한 번만 실행
+
+  // ======================================================
+  // ||     useEffect : 검색어 변경 시 위치 검색
+  // ======================================================
+  useEffect(() => {
+    // 메인 페이지가 아니면 ->  실행 안 함
     if (location.pathname !== "/") {
       return;
     }
 
-    // =============================================
-    // ||         CASE.2 메인페이지 '/' 일 경우,
-    // =============================================
-    // ||         1. 검색어 있을 시!!!
-    // =============================================
-
-    // 매칭된 검색어 담을 변수
-    let foundLocation = null;
-    if (searchKeyword?.trim) {
-      // 1. 검색어로 데이터에서 찾기 (띄어쓰기 제외한 값을 서로 비교)
-      const keywordNoSpace = stringUtils.removeSpaces(searchKeyword);
-      // 비교해서 찾은 값 담기
-      foundLocation = LOCATION_LIST.find((location) => {
-        const locationNoSpace = stringUtils.removeSpaces(location);
-        return locationNoSpace.includes(keywordNoSpace);
-      });
-      //        -> 2. 데이터에서 검색어 값이 있다면 매칭된 위치 설정
-      if (foundLocation) {
-        dispatch(setMatchedLocation(foundLocation));
-        dispatch(getSearchLocation(foundLocation));
-        return;
-      } else {
-        //        -> 2-1. 매칭된 지역이 없을 경우, 현재 위치 가져오기
-        console.log("검색어와 매칭된 지역이 없습니다. 현재위치를 가져옵니다.");
-        dispatch(getCurrentLocation());
-      }
-    } else {
-      // =============================================
-      // ||         2. 검색어 없을 시!!!
-      // =============================================
-      //        -> 1. 현재 위치 가져오기
-      console.log("검색어가 없습니다. 현재위치를 가져옵니다.");
-      dispatch(getCurrentLocation());
+    // searchKeyword가 없으면 = 검색하지 않았으면 -> 실행 안 함
+    if (!searchKeyword?.trim || searchKeyword.trim() === "") {
+      return;
     }
-  }, [location.pathname, searchKeyword]);
+
+    // 검색어로 데이터에서 찾기 (띄어쓰기 제외)
+    const keywordNoSpace = stringUtils.removeSpaces(searchKeyword);
+    const foundLocation = LOCATION_LIST.find((location) => {
+      const locationNoSpace = stringUtils.removeSpaces(location);
+      return locationNoSpace.includes(keywordNoSpace);
+    });
+
+    // 검색어가 매칭 된 경우
+    if (foundLocation) {
+      // 이미 같은 위치로 설정되어 있으면 API 재호출 방지
+      if (displayLocation.name === foundLocation) {
+        console.log('이미 같은 위치로 설정되어 있음. API 호출 스킵:', foundLocation);
+        return;
+      }
+
+      // 측정소 가져오기 (getSearchLocation이 displayLocation 설정 + 로컬스토리지 저장까지 자동으로 해줌)
+      dispatch(getSearchLocation(foundLocation));
+      console.log('검색 위치 API 호출:', foundLocation);
+    } else {
+      // 매칭된 지역이 없을 경우
+      console.log("검색어와 매칭된 지역이 없습니다.");
+    }
+  }, [searchKeyword, location.pathname, displayLocation.name, dispatch]);
 
   // ======================================================
-  // ||     useEffect : matchedLocation 변화에 따른 headerTitle 업데이트
+  // ||     useEffect : pathname 변경 시 headerTitle 업데이트
   // ======================================================
   useEffect(() => {
-    // 메인 페이지일 때 headerTitle 업데이트
-    if (location.pathname === "/") {
-      if (matchedLocation) {
-        dispatch(setHeaderTitle(matchedLocation));
-      }
-    } else if (pageTitle[location.pathname]) {
-      // 다른 페이지일 때는 페이지 타이틀로 업데이트
+    // 특정 페이지 타이틀이 있는 경우
+    if (pageTitle[location.pathname]) {
       dispatch(setHeaderTitle(pageTitle[location.pathname]));
+      return;
     }
-  }, [matchedLocation, location.pathname, dispatch]);
+
+    // 메인 페이지이고 displayLocation이 있는 경우
+    if (location.pathname === "/" && displayLocation.name) {
+      dispatch(setHeaderTitle(displayLocation.name));
+    }
+  }, [location.pathname, displayLocation.name, dispatch]);
+
 
   return (
     <>

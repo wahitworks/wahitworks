@@ -1,24 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { getCurrentLocation, getSearchLocation } from "../thunks/locationThunk.js";
+import { localStorageUtil } from "../../utils/localStorageUtil.js";
 
 const locationSlice = createSlice({
   name: 'locationSlice',
   initialState: {
-    currentLocation: {lat: 0, lng: 0},
-    currentRegion: '',
-    matchedLocation: '',
+    // === 통합된 위치 정보 ===
+    displayLocation: {
+      name: '',
+      lat: null,
+      lng: null,
+      source: null  // "gps" | "search" | null
+    },
+    // === 측정소 정보 ===
     measuringStation: '',
     measuringStationDistance: 0,
+    // === 기타 ===
     error: null,
     selectedLocationByUser: null,
   },
   reducers: {
-    setCurrentLocation(state, action) {
-      state.currentLocation = action.payload;
-    },
-    setMatchedLocation(state, action) {
-      state.matchedLocation = action.payload;
+    setDisplayLocation(state, action) {
+      state.displayLocation = action.payload;
     },
     setMeasuringStation(state, action) {
       state.measuringStation = action.payload;
@@ -39,11 +43,16 @@ const locationSlice = createSlice({
       state.error = null;
     })
     .addCase(getCurrentLocation.fulfilled, (state, action) => {
-      state.currentLocation = { lat: action.payload.currentGPS.lat, lng: action.payload.currentGPS.lng };
-      state.currentRegion = action.payload.currentGPS.currentRegion;
-      state.matchedLocation = action.payload.currentGPS.currentRegion; // 현재 위치를 matchedLocation에 설정
+      // 통합된 위치 정보 저장
+      state.displayLocation = action.payload.location;
       state.measuringStation = action.payload.nearestStation.stationName;
       state.measuringStationDistance = action.payload.nearestStation.distance;
+
+      // 로컬스토리지에 저장
+      localStorageUtil.setLocationData({
+        displayLocation: action.payload.location,
+        measuringStation: action.payload.nearestStation.stationName
+      });
     })
 
     // ============================================
@@ -54,8 +63,16 @@ const locationSlice = createSlice({
       state.error = null;
     })
     .addCase(getSearchLocation.fulfilled, (state, action) => {
+      // 통합된 위치 정보 저장
+      state.displayLocation = action.payload.location;
       state.measuringStation = action.payload.nearestStation.stationName;
       state.measuringStationDistance = action.payload.nearestStation.distance;
+
+      // 로컬스토리지에 저장
+      localStorageUtil.setLocationData({
+        displayLocation: action.payload.location,
+        measuringStation: action.payload.nearestStation.stationName
+      });
     })
 
     // ============================================
@@ -71,8 +88,7 @@ const locationSlice = createSlice({
 })
 
 export const {
-  setCurrentLocation,
-  setMatchedLocation,
+  setDisplayLocation,
   setMeasuringStation,
   setMeasuringStationDistance,
   setSelectedLocationByUser,

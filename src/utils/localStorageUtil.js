@@ -29,40 +29,48 @@ export const localStorageUtil = {
 
 
   // ----------------------
-  //   위치 검색 관련
+  //   측정소 검색 관련
   // ----------------------
 
   /**
-   * 헤더에서 검색해서 매칭한 위치 정보를 저장하기
-   * @param {'sring'} keyword : Header에서 검색한 위치
+   * 위치 정보를 로컬스토리지에 저장
+   * @param {Object} data
+   * @param {Object} data.displayLocation - 위치 정보 { name, lat, lng, source }
+   * @param {string} data.measuringStation - 측정소명
    */
-  setSearchKeywordRegion: (keyword) => {
-    localStorage.setItem(LOCALSTORAGE_KEYS.SEARCH_KEYWORD_REGION, keyword);
+  setLocationData: (data) => {
+    const dataToSave = {
+      displayLocation: data.displayLocation,
+      measuringStation: data.measuringStation,
+      timestamp: Date.now(), // 저장 시간 추가
+    };
+    localStorage.setItem('LOCATION_DATA', JSON.stringify(dataToSave));
   },
 
   /**
-   * 헤더에서 검색해서 매칭한 위치 정보를 저장했다가 가져오기
-   * @returns
-   */
-  getSearchKeywordRegion: () => {
-    return localStorage.getItem(LOCALSTORAGE_KEYS.SEARCH_KEYWORD_REGION);
-  },
-
-  /**
-   * 현재 위치와 측정소를 객체로 저장
-   * @param {Object} locationData - { region: string, stationName: string }
-   */
-  setLocationData: (locationData) => {
-    localStorage.setItem('LOCATION_DATA', JSON.stringify(locationData));
-  },
-
-  /**
-   * 저장된 위치와 측정소 객체 가져오기
-   * @returns {Object|null} - { region: string, stationName: string } or null
+   * 저장된 위치 정보 가져오기
+   * @returns {Object|null} - { displayLocation, measuringStation, timestamp } or null
    */
   getLocationData: () => {
     const data = localStorage.getItem('LOCATION_DATA');
     return data ? JSON.parse(data) : null;
+  },
+
+  /**
+   * 저장된 위치 정보 삭제
+   */
+  clearLocationData: () => {
+    localStorage.removeItem('LOCATION_DATA');
+  },
+
+  /**
+   * GPS 위치 데이터가 만료되었는지 확인 (24시간 기준)
+   * @param {number} timestamp - 저장된 시간 (밀리초)
+   * @returns {boolean} - 만료되었으면 true
+   */
+  isLocationDataExpired: (timestamp) => {
+    const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000; // 24시간 (밀리초)
+    return Date.now() - timestamp > TWENTY_FOUR_HOURS;
   },
 };
 

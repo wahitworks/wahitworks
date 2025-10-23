@@ -6,9 +6,9 @@ import store from "./store/store.js";
 import swRegister from "./swRegister.js";
 
 // 개발 모드에서만 Eruda (모바일 콘솔) 활성화
-// if (import.meta.env.DEV) {
-//   import('eruda').then(eruda => eruda.default.init());
-// }
+if (import.meta.env.DEV) {
+  import('eruda').then(eruda => eruda.default.init());
+}
 
 swRegister();
 

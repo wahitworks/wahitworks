@@ -31,9 +31,9 @@ function Card03() {
     no2Flag,
     coFlag,
     so2Flag,
-    loading,
-    error,
   } = useSelector(state => state.currentAirCondition);
+  const loading = useSelector(state => state.currentAirCondition.loading);
+  const error = useSelector(state => state.currentAirCondition.error);
 
   const measuringStation = useSelector(state => state.locationSlice.measuringStation);
 
