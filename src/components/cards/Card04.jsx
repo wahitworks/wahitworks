@@ -14,6 +14,7 @@ import LogoError from "../logo/LogoError.jsx";
 import LoadingSkeleton from "../commons/LoadingSkeleton.jsx";  // 컴포넌트 임포트
 import { useNavigate } from "react-router-dom";
 import { TbTriangleInvertedFilled } from "react-icons/tb";
+import { GRADE_CLASS } from "../../constants/ultraFineDustLevel.js";
 
 import useCard04Refresh from '../../hooks/useCard04Refresh'; // 새로고침 훅
 
@@ -70,6 +71,11 @@ function BookmarkItem({ region, stationName, nickname }) {
   const dustGrade = getGradeNumberFromValue(dustValue, 'PM10');
   const ultraDustGrade = getGradeNumberFromValue(ultraDustValue, 'PM25');
   const o3Grade = getGradeNumberFromValue(o3Value, 'O3');
+
+  const pm10ClassName = GRADE_CLASS[dustGrade];  
+  const pm25ClassName = GRADE_CLASS[ultraDustGrade];
+  const o3ClassName = GRADE_CLASS[o3Grade];
+
   
   // 등급별 로고
   const AirQualityLogo = ({ grade }) => {
@@ -98,9 +104,21 @@ function BookmarkItem({ region, stationName, nickname }) {
         {/* 클릭시 토글 */}
         <div className={`card04-bookmark-list ${listToggle ? "toggled" : ""}`} 
         onClick={handleToggle}>
-          <span className="bookmark-icon">
-             <FaStar color='var(--deep-blue)' />
-          </span>
+          <div className="card04-bookmark-list-air-status">
+          {/* 데이터 불러오기 성공시 출력 */}
+          {card04Loading && <small>로딩 중...</small>}
+          {card04Error && <small>오류</small>}
+          {!card04Loading && !card04Error && data && (
+            <>
+            {/* 미세먼지 */}
+            <span className={`card04-air-status ${pm10ClassName}`}>●</span>
+            {/* 초미세먼지 */}
+            <span className={`card04-air-status ${pm25ClassName}`}>●</span>
+            {/* 오존 */}
+            <span className={`card04-air-status ${o3ClassName}`}>●</span>
+            </>           
+          )}
+          </div>          
             {/* 닉네임이 있다면, 닉네임. 없다면 지역 */}
             { nickname ? (
               // CASA.1 닉네임 있음 ->  닉네임 + 지역
@@ -114,15 +132,7 @@ function BookmarkItem({ region, stationName, nickname }) {
                 {region}
               </p>
             )}
-
-          <div className="card04-bookmark-list-air-status">
-          {/* 데이터 불러오기 성공시 출력 */}
-          {card04Loading && <small>로딩 중...</small>}
-          {card04Error && <small>오류</small>}
-          {!card04Loading && !card04Error && data && (
-            <div className="card04-bookmark-list-triangle"><TbTriangleInvertedFilled /></div>            
-          )}
-          </div>
+          <div className="card04-bookmark-list-triangle"><TbTriangleInvertedFilled /></div>
         </div>
         {/* 장소 클릭시 출력 정보 */}
         {listToggle && (
