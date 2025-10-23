@@ -43,7 +43,7 @@
   top: -115px;
   right: 0;
 
-  z-index: 5;
+  z-index: 31; /* z-index 상향 조정 */
 }
 
 /* ===== 상단 영역 ===== */
@@ -73,18 +73,18 @@
   cursor: pointer;
 }
 .header-Menu-container-bar {
-  border: none;                    /* 기본 보더 제거 */
-  border-top: 2px solid var(--deep-blue);      /* 선 스타일 */
-  height: 1px;                      /* 두께 */
-  margin: 0 auto;                   /* 여백 */
-  width: 100%;                       /* 너비 */
+  border: none; /* 기본 보더 제거 */
+  border-top: 2px solid var(--deep-blue); /* 선 스타일 */
+  height: 1px; /* 두께 */
+  margin: 0 auto; /* 여백 */
+  width: 100%; /* 너비 */
 }
 
 .header-Menu-line {
-  border: none;                    /* 기본 보더 제거 */
-  border-top: 1px solid var(--personal-blue);      /* 선 스타일 */
-  height: 1px;                      /* 두께 */
-  width: 60%;                       /* 너비 */
+  border: none; /* 기본 보더 제거 */
+  border-top: 1px solid var(--personal-blue); /* 선 스타일 */
+  height: 1px; /* 두께 */
+  width: 60%; /* 너비 */
 }
 
 /* ===== 메인 영역 ===== */
@@ -109,7 +109,7 @@
 
 /* 세로 바(bar) 스타일 */
 .header-Menu-container-list::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 50%;
@@ -122,7 +122,7 @@
 }
 /* 마우스 호버 시 효과 */
 .header-Menu-container-list:hover {
-background-color: #f0f8ff; /* 연한 하늘색 배경으로 변경 */
+  background-color: #f0f8ff; /* 연한 하늘색 배경으로 변경 */
 }
 .header-Menu-container-list:hover::before {
   height: 60%; /* 호버 시 높이를 60%로 늘림 */
@@ -153,4 +153,3 @@ background-color: #f0f8ff; /* 연한 하늘색 배경으로 변경 */
   font-size: 14px;
   text-align: right;
 }
-
