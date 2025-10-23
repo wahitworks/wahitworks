@@ -15,7 +15,7 @@
   transform: translateX(-50%);
   max-width: 600px;
 
-  z-index: 4;
+  z-index: 10;
 }
 .heacer-Menu-wrapper {
   width: 100%;
@@ -24,7 +24,7 @@
 
   position: fixed;
 
-  z-index: 4;
+  z-index: 10;
 }
 .header-Menu-container {
   width: 70%;
@@ -127,10 +127,14 @@ background-color: #f0f8ff; /* 연한 하늘색 배경으로 변경 */
 .header-Menu-container-list:hover::before {
   height: 60%; /* 호버 시 높이를 60%로 늘림 */
 }
-/* 클릭 시 효과 (기존 스타일 유지 또는 원하는 대로 수정) */
+/* 클릭 시 효과 - 호버와 동일 + scale로 눌림 느낌 */
 .header-Menu-container-list:active {
-  transform: scale(0.95);
+  background-color: #f0f8ff; /* 호버와 동일 */
+  transform: scale(0.97); /* 전체가 3% 작아짐 - 눌림 느낌! */
   color: var(--deep-blue);
+}
+.header-Menu-container-list:active::before {
+  height: 60%; /* 호버와 동일 - 바 표시 */
 }
 /* 아이콘 있는 목록 */
 .header-Menu-item-with-icon {

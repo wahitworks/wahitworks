@@ -284,6 +284,11 @@ function LocationSearch() {
                       >
                         <span
                           className="bookmark-icon"
+                          onTouchEnd={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            toggleBookmark(item);
+                          }}
                           onClick={(e) => {
                             e.stopPropagation(); // 1. div로 이벤트 전파 막기!
                             toggleBookmark(item); // 2. item 값 그대로 전달!
@@ -313,7 +318,7 @@ function LocationSearch() {
                   </span>
                 </div>
                 <motion.div
-                  className="header-search-list header-flex-style"
+                  className="header-search-list_2 header-flex-style"
                   initial={{ height: 0, minHeight: 0, opacity: 0 }}
                   animate={{
                     height: bookmarkedRegions.length > 0 ? "auto" : 0,
@@ -333,9 +338,14 @@ function LocationSearch() {
                       >
                         <span
                           className="bookmark-icon"
+                          onTouchEnd={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            toggleBookmark(item.region);
+                          }}
                           onClick={(e) => {
-                            e.stopPropagation(); 
-                            toggleBookmark(item.region); 
+                            e.stopPropagation();
+                            toggleBookmark(item.region);
                           }}
                         >
                           {isBookmarked(item.region) ? (

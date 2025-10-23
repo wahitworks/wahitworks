@@ -146,11 +146,16 @@ function Header() {
   // ||     useEffect : matchedLocation 변화에 따른 headerTitle 업데이트
   // ======================================================
   useEffect(() => {
-    // 메인 페이지이고 matchedLocation이 있을 때만 headerTitle 업데이트
-    if (location.pathname === "/" && matchedLocation) {
-      dispatch(setHeaderTitle(matchedLocation));
+    // 메인 페이지일 때 headerTitle 업데이트
+    if (location.pathname === "/") {
+      if (matchedLocation) {
+        dispatch(setHeaderTitle(matchedLocation));
+      }
+    } else if (pageTitle[location.pathname]) {
+      // 다른 페이지일 때는 페이지 타이틀로 업데이트
+      dispatch(setHeaderTitle(pageTitle[location.pathname]));
     }
-  }, [matchedLocation, location.pathname]);
+  }, [matchedLocation, location.pathname, dispatch]);
 
   return (
     <>
@@ -188,7 +193,10 @@ function Header() {
           </div>
         ) : (
           // ===== 현재 주소가 메인'/' 가 아닌 경우 -> 페이지 제목 =====
-          <p className="header-title header-right-padding">{headerTitle}</p>
+          <div className="header-title-wrapper">
+
+            <p className="header-title">{headerTitle}</p>
+          </div>
         )}
 
         {/* 오른쪽 메뉴 아이콘 영역 */}
