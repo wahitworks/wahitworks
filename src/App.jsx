@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Header from "./components/header/Header.jsx";
 import { Outlet, useLocation } from "react-router-dom";
 import Topbtn from "./components/topBtn/topBtn.jsx";
@@ -7,16 +7,17 @@ import AppTutorial from "./components/explainPages/AppTutorial.jsx";
 import "./App.css";
 import { PWAInstallContext } from "./contexts/PWAInstallContext.jsx";
 import { AnimatePresence } from "framer-motion";
+import { setShowInstallModal } from "./store/slices/headerSlice.js";
 
 function App() {
   const location = useLocation();
+  const dispatch = useDispatch();
   const [deferredPrompt, setDeferredPrompt] = useState(null);
-  const [showInstallModal, setShowInstallModal] = useState(false);
   const [showManualInstallHint, setShowManualInstallHint] = useState(false); // New state
   const [isInstalling, setIsInstalling] = useState(false); // 설치 시도 중 상태 플래그
 
-  const isTutorialVisible = useSelector(
-    (state) => state.headerSlice.isTutorialVisible
+  const { isTutorialVisible, showInstallModal } = useSelector(
+    (state) => state.headerSlice
   );
 
   useEffect(() => {
@@ -41,7 +42,7 @@ function App() {
       }
 
       // 커스텀 모달을 띄우기 위해 상태 변경
-      setShowInstallModal(true);
+      dispatch(setShowInstallModal(true));
     };
 
     window.addEventListener("beforeinstallprompt", handler);
@@ -49,12 +50,12 @@ function App() {
     return () => {
       window.removeEventListener("beforeinstallprompt", handler);
     };
-  }, [isInstalling]); // isInstalling을 의존성 배열에 추가
+  }, [isInstalling, dispatch]); // dispatch를 의존성 배열에 추가
 
   // '아니오' 버튼 클릭 시
   const handleInstallDismiss = () => {
     // 모달 닫기
-    setShowInstallModal(false);
+    dispatch(setShowInstallModal(false));
     // '다시는 보지 않기'를 위해 사용자의 선택을 영구적으로 기록
     localStorage.setItem("installDeclined", "true");
 
@@ -89,7 +90,7 @@ function App() {
     } finally {
       // 모든 과정이 끝나면 상태를 초기화한다.
       setDeferredPrompt(null);
-      setShowInstallModal(false);
+      dispatch(setShowInstallModal(false));
       setIsInstalling(false);
     }
   };

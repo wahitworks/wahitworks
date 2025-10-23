@@ -1,6 +1,6 @@
 #topBtn {
   position: fixed;
-  bottom: 90px;
+  bottom: 20px; /* 기본 위치를 더 낮게 조정 */
   right: 40px;
   width: 45px;
   height: 45px;
@@ -11,6 +11,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: bottom 0.3s ease; /* 부드러운 이동 효과 추가 */
+}
+
+#topBtn.moved-up {
+  bottom: 90px; /* 모달이 나타났을 때의 위치 */
 }
 
 #topBtn::before {

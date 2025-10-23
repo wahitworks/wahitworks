@@ -1,8 +1,12 @@
 import { useEffect } from "react";
 import "./TopBtn.css";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Topbtn() {
+  const showInstallModal = useSelector(
+    (state) => state.headerSlice.showInstallModal
+  );
   //   페이지 이동 시 버튼 생성 || 숨김 재실행 유무를 위한 url값 불러오기
   const location = useLocation();
   useEffect(() => {
@@ -34,7 +38,11 @@ function Topbtn() {
   };
   return (
     <>
-      <button id="topBtn" onClick={scrollToTop}></button>
+      <button
+        id="topBtn"
+        className={showInstallModal ? "moved-up" : ""}
+        onClick={scrollToTop}
+      ></button>
     </>
   );
 }

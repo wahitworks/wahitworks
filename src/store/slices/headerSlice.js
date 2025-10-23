@@ -7,6 +7,7 @@ const headerSlice = createSlice({
     searchFlg: false,
     menuFlg: false,
     isTutorialVisible: false, // 튜토리얼 표시 여부
+    showInstallModal: false, // PWA 설치 모달 표시 여부
   },
   reducers: {
     setHeaderTitle(state, action) {
@@ -20,6 +21,9 @@ const headerSlice = createSlice({
     },
     setTutorialVisible(state, action) { // 튜토리얼 표시 여부 설정
       state.isTutorialVisible = action.payload;
+    },
+    setShowInstallModal(state, action) { // PWA 설치 모달 표시 여부 설정
+      state.showInstallModal = action.payload;
     }
   }
 });
@@ -29,6 +33,7 @@ export const {
   setSearchFlg,
   setMenuFlg,
   setTutorialVisible, // action export 추가
+  setShowInstallModal,
 } = headerSlice.actions;
 
 export default headerSlice.reducer;

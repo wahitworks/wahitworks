@@ -17,7 +17,7 @@ const tutorialSteps = [
     position: "bottom",
   },
   {
-    targetSelector: ".header-menu",
+    targetSelector: ".header-menu-icon",
     message:
       "세부 기능 메뉴입니다. 장소 즐겨찾기, 카드 관리, 앱 수동 설치, 사이트 소개등이 있습니다.",
     position: "bottom",
@@ -92,14 +92,33 @@ const AppTutorial = () => {
   const currentStep = tutorialSteps[step];
 
   // 스타일 동적 계산
+  // 단계별로 다른 확대/축소 비율을 반환하는 헬퍼 함수
+  const getScaleForStep = (step) => {
+    switch (step) {
+      case 0: // 지역 검색
+        return { x: 1.15, y: 1.3 };
+      case 1: // 첫 번째 카드
+        return { x: 0.99, y: 0.99 }; // 테두리를 약간 축소
+      case 2: // 햄버거 메뉴
+        return { x: 1.5, y: 1.5 };
+      default: // 기본값
+        return { x: 1.1, y: 1.1 };
+    }
+  };
+
+  // 스타일 동적 계산
   const highlightStyle = targetPosition
     ? // 강조 요소 있을 시
-      {
-        left: `${targetPosition.left - 5}px`,
-        top: `${targetPosition.top - 5}px`,
-        width: `${targetPosition.width + 10}px`,
-        height: `${targetPosition.height + 10}px`,
-      }
+      (() => {
+        const scale = getScaleForStep(step);
+        return {
+          left: `${targetPosition.left}px`,
+          top: `${targetPosition.top}px`,
+          width: `${targetPosition.width}px`,
+          height: `${targetPosition.height}px`,
+          transform: `scale(${scale.x}, ${scale.y})`,
+        };
+      })()
     : // 없을 시 스킵
       { display: "none" };
 

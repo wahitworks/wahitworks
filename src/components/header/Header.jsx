@@ -38,7 +38,7 @@ function Header() {
   // ===== 전역 state =====
   const headerTitle = useSelector((state) => state.headerSlice.headerTitle);
   const searchFlg = useSelector((state) => state.headerSlice.searchFlg);
-  const menuFlg = useSelector(state => state.headerSlice.menuFlg);
+  const menuFlg = useSelector((state) => state.headerSlice.menuFlg);
   const searchKeyword = useSelector(
     (state) => state.locationSearchSlice.searchKeyword
   );
@@ -51,7 +51,6 @@ function Header() {
   const matchedLocation = useSelector(
     (state) => state.locationSlice.matchedLocation
   );
-
 
   // ======================================================
   // ||     검색어 관련 함수
@@ -88,7 +87,6 @@ function Header() {
   const headerMenuClick = () => {
     dispatch(setMenuFlg(true));
   };
-
 
   // ======================================================
   // ||     useEffect : 주소/pathname, 검색어에 따른 위치 데이터 가져오기
@@ -130,14 +128,11 @@ function Header() {
         localStorageUtil.setSearchKeywordRegion(foundLocation);
         return;
       } else {
-      //        -> 2-1. 매칭된 지역이 없을 경우, 현재 위치 가져오기
-        console.log(
-          "검색어와 매칭된 지역이 없습니다. 현재위치를 가져옵니다."
-        );
+        //        -> 2-1. 매칭된 지역이 없을 경우, 현재 위치 가져오기
+        console.log("검색어와 매칭된 지역이 없습니다. 현재위치를 가져옵니다.");
         dispatch(getCurrentLocation());
       }
     } else {
-
       // =============================================
       // ||         2. 검색어 없을 시!!!
       // =============================================
@@ -145,7 +140,7 @@ function Header() {
       console.log("검색어가 없습니다. 현재위치를 가져옵니다.");
       dispatch(getCurrentLocation());
     }
-  }, [location.pathname, searchKeyword ]);
+  }, [location.pathname, searchKeyword]);
 
   // ======================================================
   // ||     useEffect : matchedLocation 변화에 따른 headerTitle 업데이트
@@ -157,59 +152,57 @@ function Header() {
     }
   }, [matchedLocation, location.pathname]);
 
-
   return (
     <>
       <div className="header-container">
         {/* 왼쪽 로고 영역 */}
-        { 
-          location.pathname === "/" ? (
-            // ===== 현재 주소가 메인 '/' 인 경우 -> 로고 =====
-            <div className="header-logo-container" onClick={() => goHome()}>
-              <LogoOrigin animated className="header-logo" />
-              <div
-                className="header-logo-title"
-                style={{ backgroundImage: `url(${logoTitle})` }}
-              ></div>
-            </div>
-          ) : (
-            // ===== 현재 주소가 메인 '/' 가 아닌 경우 -> `<` 아이콘 ===== 
-            <span className="header-return" onClick={() => goHome()}>
-              <HiChevronLeft size={35} />
-            </span>)
-        }
+        {location.pathname === "/" ? (
+          // ===== 현재 주소가 메인 '/' 인 경우 -> 로고 =====
+          <div className="header-logo-container" onClick={() => goHome()}>
+            <LogoOrigin animated className="header-logo" />
+            <div
+              className="header-logo-title"
+              style={{ backgroundImage: `url(${logoTitle})` }}
+            ></div>
+          </div>
+        ) : (
+          // ===== 현재 주소가 메인 '/' 가 아닌 경우 -> `<` 아이콘 =====
+          <span className="header-return" onClick={() => goHome()}>
+            <HiChevronLeft size={35} />
+          </span>
+        )}
 
         {/* 가운데 타이틀 영역 */}
-        {
-          location.pathname === "/" ? (
-            // ===== 현재 주소가 메인 '/' 인 경우 -> 현재(검색)위치 =====
-            <div className="header-center" onClick={() => headerTitleClick()}>
-              <div className="header-icon-wrapper">
-                <LiaSearchLocationSolid size={'24px'} color="#777"/>
-              </div>
-              <span className="header-title">{headerTitle}</span>
-              {measuringOn && measuringStation && (
-                <span className="header-title-info">{measuringStation} 측정소</span>
-              )}
+        {location.pathname === "/" ? (
+          // ===== 현재 주소가 메인 '/' 인 경우 -> 현재(검색)위치 =====
+          <div className="header-center" onClick={() => headerTitleClick()}>
+            <div className="header-icon-wrapper">
+              <LiaSearchLocationSolid size={"24px"} color="#777" />
             </div>
-          ) : (
-            // ===== 현재 주소가 메인'/' 가 아닌 경우 -> 페이지 제목 =====
-            <p className="header-title header-right-padding">{headerTitle}</p>
-          )
-        }
+            <span className="header-title">{headerTitle}</span>
+            {measuringOn && measuringStation && (
+              <span className="header-title-info">
+                {measuringStation} 측정소
+              </span>
+            )}
+          </div>
+        ) : (
+          // ===== 현재 주소가 메인'/' 가 아닌 경우 -> 페이지 제목 =====
+          <p className="header-title header-right-padding">{headerTitle}</p>
+        )}
 
         {/* 오른쪽 메뉴 아이콘 영역 */}
         <div className="header-right-wrapper">
           {/* 경보아이콘 */}
           <Warning />
         </div>
-          <div className="header-menu" onClick={() => headerMenuClick()}>
-            <VscMenu size={35} />
-          </div>
-        </div>      
+        <div className="header-menu" onClick={() => headerMenuClick()}>
+          <VscMenu size={35} className="header-menu-icon" />
+        </div>
+      </div>
       {/* Flg 컴포넌트 출력 */}
-      { searchFlg && <LocationSearch />}
-      { menuFlg && <HeaderMenu />}
+      {searchFlg && <LocationSearch />}
+      {menuFlg && <HeaderMenu />}
     </>
   );
 }
