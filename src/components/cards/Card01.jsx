@@ -18,15 +18,22 @@ import { WiCloud } from "react-icons/wi"; // 흐림
 import { MdOutlineWaterDrop } from "react-icons/md"; //물방울
 
 function Card01() {
-  const { currentPM10, loading: airLoading, error: airError } = useSelector(state => state.currentAirCondition);
+  const { currentPM10, pm10Flag, loading: airLoading, error: airError } = useSelector(state => state.currentAirCondition);
   const { data: weatherData, loading: weatherLoading, error: weatherError } = useSelector(state => state.weather);
+  
+  const flgText = {
+    점검및교정: `측정소 점검 중`,
+    장비점검: `장비 점검 중`,
+    통신장애: `통신 점검 중`,
+    자료이상: `데이터 점검 중`,
+  }
 
   useCard01Refresh();
 
   const getDustInfo = (pm10Value) => {
     if (pm10Value === null || pm10Value === undefined || pm10Value === 0) {
       return {
-        statusText: "측정 불가",
+        statusText: flgText[pm10Flag],
         actionGuide: "데이터를 가져올 수 없습니다.",
         IconComponent: LogoErrorWhite,
         backgroundColor: "#808080",
