@@ -1,7 +1,6 @@
 import "./Card01.css";
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchDaeguTodayWeather } from "../../store/thunks/weatherThunk.js";
+import { useSelector } from "react-redux";
+import useCard01Refresh from "../../hooks/useCard01Refresh.js";
 import LoadingSkeleton from "../commons/LoadingSkeleton.jsx";
 
 // 로고 컴포넌트 import
@@ -19,13 +18,10 @@ import { WiCloud } from "react-icons/wi"; // 흐림
 import { MdOutlineWaterDrop } from "react-icons/md"; //물방울
 
 function Card01() {
-  const dispatch = useDispatch();
   const { currentPM10, loading: airLoading, error: airError } = useSelector(state => state.currentAirCondition);
   const { data: weatherData, loading: weatherLoading, error: weatherError } = useSelector(state => state.weather);
 
-  useEffect(() => {
-    dispatch(fetchDaeguTodayWeather());
-  }, [dispatch]);
+  useCard01Refresh();
 
   const getDustInfo = (pm10Value) => {
     if (pm10Value === null || pm10Value === undefined || pm10Value === 0) {
@@ -80,13 +76,13 @@ function Card01() {
   const getWeatherInfo = (weatherDesc) => {
     switch (weatherDesc) {
       case "맑음":
-        return <HiOutlineSun />;
+        return <HiOutlineSun className="weather-cloud" size={28}/>;
       case "구름 조금":
-        return <WiDayCloudy />;
+        return <WiDayCloudy className="weather-cloud" size={28} />;
       case "구름 많음":
-        return <WiCloudy />;
+        return <WiCloudy className="weather-cloud" size={28}/>;
       case "흐림":
-        return <WiCloud />;
+        return <WiCloud className="weather-cloud" size={28}/>;
       default:
         return null;
     }
@@ -132,10 +128,10 @@ function Card01() {
             <p>{weatherError}</p>
           ) : weatherData ? (
             <>
-              <span className="weather-icon">{getWeatherInfo(weatherData.weatherDesc)}</span>
-              <span className="temperature">{Math.round(weatherData.temperature)} °C</span>
-              <span className="weather-icon"><MdOutlineWaterDrop size={20}/></span>
-              <span className="precipitation">{weatherData.rainProb} %</span>
+              <div className="weather-icon">{getWeatherInfo(weatherData.weatherDesc)}</div>
+              <span className="temperature">{Math.round(weatherData.temperature)}°C</span>
+              <div className="weather-icon"><MdOutlineWaterDrop size={20}/></div>
+              <span className="precipitation">{weatherData.rainProb}%</span>
             </>
           ) : null}
         </div>
