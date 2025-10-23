@@ -101,6 +101,8 @@
 .card06-grade-color-moderate { background-color: #91e986; }
 .card06-grade-color-bad { background-color: #ecd049; }
 .card06-grade-color-very-bad { background-color: #db1d1c; }
+.card06-grade-color-special { background-color: #999; }
+.card06-grade-color-no-gata { background-color: #999; }
 
 .card03-icon-wrapper {
   width: 100%;
