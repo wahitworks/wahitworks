@@ -371,13 +371,18 @@ function EditBookmark() {
                 filteredList.map((filteredItem) => (
                   <div className="bookmark-filtered-item"
                     key={filteredItem}
-                    onPointerDown={(e) => {
-                      e.preventDefault();
-                      toggleBookmark(filteredItem);
-                    }}
                   >
                     <span
                       className="bookmark-icon"
+                      onTouchEnd={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        toggleBookmark(filteredItem);
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleBookmark(filteredItem);
+                      }}
                     >
                       {isBookmarked(filteredItem) ? (
                         <FaStar color="var(--deep-blue)" />
