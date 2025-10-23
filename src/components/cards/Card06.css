@@ -132,3 +132,12 @@
   
   z-index: 1;
 }
+
+/* 그래프를 불러올 수 없습니다. */
+.card06-nodata-container {
+  text-align: center;
+  padding: 50px;
+}
+.card06-nodata-icon {
+  width: 80%;
+}

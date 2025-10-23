@@ -9,8 +9,8 @@ const DEFAULT_ORDER = [
   { id: `card02`, name: "대구 대기질 3일 예보", checked: true },
   { id: `card03`, name: "지금 대기 상태", checked: true },
   { id: `card04`, name: "내 장소", checked: true },
-  { id: `card05`, name: "맑음 단계", checked: true },
-  { id: `card06`, name: "미세먼지 추세 그래프", checked: true },
+  { id: `card05`, name: "대기질 등급 기준", checked: true },
+  { id: `card06`, name: "시간대별 추세", checked: true },
 ];
 
 const initialState = {

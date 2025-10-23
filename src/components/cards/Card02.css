@@ -20,6 +20,15 @@
   font-weight: 600;
   line-height: 25px;
 }
+.card02-date-day-background {
+  width: 60%;
+  /* color: #fff; */
+
+  /* background-color: var(--personal-blue); */
+  /* border: 1px solid var(--personal-blue); */
+  border-radius: 40px;
+  padding: 5px;
+}
 
 /* 날짜 이동 섹션 */
 .day-navigation {

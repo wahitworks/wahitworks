@@ -70,19 +70,23 @@ function Card03() {
     // console.log('Flg: pm10Flag-', pm10Flag, 'pm25Flag-', pm25Flag, 'o3Flag-', o3Flag, 'no2Flag-', no2Flag, 'coFlag-', coFlag, 'so2Flag-', so2Flag);
     return (
       <div className="card03-result-item">
-        <p className="card03-font-b">{label}</p>
-        <p className="card03-font-small-12-gray card03-margin-bottom">{unit}</p>
-        <p className="card03-result-info card03-font-nowrap card03-font-b card03-margin-top">{info.text}</p>
-        <div className="card03-icon-wrapper">{getAirQualityIcon(info.grade)}</div>
+        <div className="card03-result-title-background">
+          <p className="card03-font-b">{label}</p>
+          {/* <p className="card03-font-small-12-gray">{unit}</p> */}
+        </div>
         {
           value !== null && value !== undefined && Number(value) !== 0 ? (
-            <span className="card03-font-b card03-margin-bottom card03-font-small-14-gray">
+            <span className="card03-margin-top card03-margin-bottom card03-font-small-12-gray">
               {value}{type.startsWith('PM') ? ' ㎍/㎥' : ' ppm'}
             </span>
           ) : (
             '-'
           )
         }
+        <div className="card03-icon-wrapper">{getAirQualityIcon(info.grade)}</div>
+        <div className={`card06-result-grade-background card06-grade-color-${info.grade}`}>
+          <p className="card03-result-info card03-margin-bottom">{info.text}</p>
+        </div>
       </div>
     );
   };
@@ -138,26 +142,26 @@ function Card03() {
     <>
       <div className="card03-container">
         <h1 className="card03-title">지금 대기 상태</h1>
-        <p className="card03-title-sub card03-font-small-12-gray">{dataTime} 측정</p>
+        <p className="card03-title-sub card03-font-small-12-gray">{dataTime} {measuringStation} 측정소</p>
           
           {/* 정보 출력 영역 */}
           <div className="card03-swipe-wrapper">
           { measuringStation 
           ? <motion.div className="card03-swipe-container"
-          ref={containerRef}
-          drag = "x"
-          dragConstraints={{ left: 0, right: 0 }} // 드래그 범위
-          dragElastic={0.5}  // 탄성효과
-          onDragEnd={handleDragEnd}
-          animate={{
-            x: -page * (containerRef.current?.offsetWidth || 0) // 페이지 전환 애니메이션
-          }}
-          transition={{
-            type: "spring",
-            stiffness: 300,
-            damping: 30,
-          }}
-          >
+            ref={containerRef}
+            drag = "x"
+            dragConstraints={{ left: 0, right: 0 }} // 드래그 범위
+            dragElastic={0.5}  // 탄성효과
+            onDragEnd={handleDragEnd}
+            animate={{
+              x: -page * (containerRef.current?.offsetWidth || 0) // 페이지 전환 애니메이션
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 30,
+            }}
+            >
               <div className="card03-swipe-page">
                 {renderAirQualityItem('미세먼지', 'PM-10', currentPM10, 'PM10', pm10Flag)}
                 {renderAirQualityItem('초미세먼지', 'PM-2.5', currentPM25, 'PM25', pm25Flag)}

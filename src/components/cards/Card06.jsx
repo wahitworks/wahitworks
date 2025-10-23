@@ -2,7 +2,11 @@ import "./Card06.css"
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceArea } from 'recharts';
-import { getLatestAirCondition } from "../../store/thunks/latestAirConditionThunk";
+import { getLatestAirCondition } from "../../store/thunks/latestAirConditionThunk.js";
+
+import LogoError from "../logo/LogoError.jsx";
+import LoadingSkeleton from "../commons/LoadingSkeleton.jsx";
+
 import { IoInformationCircleOutline } from "react-icons/io5";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -10,8 +14,8 @@ function Card06() {
   // ===== Hook =====
   const dispatch = useDispatch();
   // ===== 전역 State =====
-  const pm10pm25ValueList = useSelector(state => state.latestAirCondition.pm10pm25ValueList);
   const measuringStation = useSelector(state => state.locationSlice.measuringStation);
+  const { pm10pm25ValueList, loading, error } = useSelector(state => state.latestAirCondition);
   // ===== 로컬 State =====
   const [selectGraph, setSelectGraph] = useState('PM10'); // 기본값: PM10
   const [showInfoTooltip, setShowInfoTooltip] = useState(false); // 정보 툴팁 표시 여부
@@ -96,8 +100,28 @@ function Card06() {
     }
   };
 
+  // ===== 로딩 스켈레톤 =====
+  // loading 중이거나 아직 API 응답을 받지 않았으면 스켈레톤 표시 (단, 에러가 아닐 때만)
+  if(loading && !error) {
+    return (
+         <LoadingSkeleton
+          width="90%"
+          height="435px"
+          borderRadius="15px"
+          backgroundColor="#e6e9ecff"
+          highlightColor="#f8f9fa"
+          lines={[
+            { width: '60%', height: '50px', align: 'center' },
+            { width: '50%', height: '50px', align: 'center' },
+            { width: '100%', height: '250px' },
+          ]}
+        />
+    );
+  }
+
   return (
     <>
+     
       <div className="card06-container">
         <div className="card06-title-container">
           <h2 className="card06-title">
@@ -107,6 +131,7 @@ function Card06() {
               onClick={handleInfoIconClick}
             />
           </h2>
+
           <AnimatePresence>
             {showInfoTooltip && (
               <motion.div
@@ -137,88 +162,99 @@ function Card06() {
         </div>
 
         {/* 그래프 영역 */}
-        <div className="card06-graph-container">
-          <ResponsiveContainer width="100%" height={250}>
-            <LineChart
-              data={pm10pm25ValueList}
-              margin={{ top: 5, right: 10, left: 0, bottom: 5 }}
-            >
-              {/* 등급별 배경 구간 */}
-              <ReferenceArea y1={gradeRanges.good.y1} y2={gradeRanges.good.y2} fill={gradeRanges.good.color} fillOpacity={0.5} />
-              <ReferenceArea y1={gradeRanges.moderate.y1} y2={gradeRanges.moderate.y2} fill={gradeRanges.moderate.color} fillOpacity={0.5} />
-              <ReferenceArea y1={gradeRanges.bad.y1} y2={gradeRanges.bad.y2} fill={gradeRanges.bad.color} fillOpacity={0.5} />
-              <ReferenceArea y1={gradeRanges.veryBad.y1} y2={gradeRanges.veryBad.y2} fill={gradeRanges.veryBad.color} fillOpacity={0.5} />
+        {
+          pm10pm25ValueList.length > 0 ? (
+            <div className="card06-graph-container">
+              <ResponsiveContainer width="100%" height={250}>
+                <LineChart
+                  data={pm10pm25ValueList}
+                  margin={{ top: 5, right: 10, left: 0, bottom: 5 }}
+                >
+                  {/* 등급별 배경 구간 */}
+                  <ReferenceArea y1={gradeRanges.good.y1} y2={gradeRanges.good.y2} fill={gradeRanges.good.color} fillOpacity={0.5} />
+                  <ReferenceArea y1={gradeRanges.moderate.y1} y2={gradeRanges.moderate.y2} fill={gradeRanges.moderate.color} fillOpacity={0.5} />
+                  <ReferenceArea y1={gradeRanges.bad.y1} y2={gradeRanges.bad.y2} fill={gradeRanges.bad.color} fillOpacity={0.5} />
+                  <ReferenceArea y1={gradeRanges.veryBad.y1} y2={gradeRanges.veryBad.y2} fill={gradeRanges.veryBad.color} fillOpacity={0.5} />
 
-              <CartesianGrid strokeDasharray="2 5" stroke="#ddd" opacity={0.3} />
-              <XAxis
-                dataKey="dataTime"
-                interval={0}
-                tick={<CustomXAxisTick />}
-                height={50}
-                ticks={filteredTicks}
-              />
-              <YAxis
-                domain={[0, selectGraph === 'PM10' ? 180 : 100]}
-                ticks={selectGraph === 'PM10' ? [15, 55, 115, 165] : [7.5, 25, 55, 87.5]}
-                tick={(props) => {
-                  const { x, y, payload } = props;
-                  const value = payload.value;
+                  <CartesianGrid strokeDasharray="2 5" stroke="#ddd" opacity={0.3} />
+                  <XAxis
+                    dataKey="dataTime"
+                    interval={0}
+                    tick={<CustomXAxisTick />}
+                    height={50}
+                    ticks={filteredTicks}
+                  />
+                  <YAxis
+                    domain={[0, selectGraph === 'PM10' ? 180 : 100]}
+                    ticks={selectGraph === 'PM10' ? [15, 55, 115, 165] : [7.5, 25, 55, 87.5]}
+                    tick={(props) => {
+                      const { x, y, payload } = props;
+                      const value = payload.value;
 
-                  // PM10 기준
-                  let gradeName = '';
-                  let gradeRange = '';
-                  if (selectGraph === 'PM10') {
-                    if (value === 15) { gradeName = '좋음'; gradeRange = '~30'; }
-                    else if (value === 55) { gradeName = '보통'; gradeRange = '~80'; }
-                    else if (value === 115) { gradeName = '나쁨'; gradeRange = '~150'; }
-                    else if (value === 165) { gradeName = '매우나쁨'; gradeRange = '151~'; }
-                  } else {
-                    // PM25 기준
-                    if (value === 7.5) { gradeName = '좋음'; gradeRange = '~15'; }
-                    else if (value === 25) { gradeName = '보통'; gradeRange = '~35'; }
-                    else if (value === 55) { gradeName = '나쁨'; gradeRange = '~75'; }
-                    else if (value === 87.5) { gradeName = '매우나쁨'; gradeRange = '76~'; }
-                  }
+                      // PM10 기준
+                      let gradeName = '';
+                      let gradeRange = '';
+                      if (selectGraph === 'PM10') {
+                        if (value === 15) { gradeName = '좋음'; gradeRange = '~30'; }
+                        else if (value === 55) { gradeName = '보통'; gradeRange = '~80'; }
+                        else if (value === 115) { gradeName = '나쁨'; gradeRange = '~150'; }
+                        else if (value === 165) { gradeName = '매우나쁨'; gradeRange = '151~'; }
+                      } else {
+                        // PM25 기준
+                        if (value === 7.5) { gradeName = '좋음'; gradeRange = '~15'; }
+                        else if (value === 25) { gradeName = '보통'; gradeRange = '~35'; }
+                        else if (value === 55) { gradeName = '나쁨'; gradeRange = '~75'; }
+                        else if (value === 87.5) { gradeName = '매우나쁨'; gradeRange = '76~'; }
+                      }
 
-                  return (
-                    <g transform={`translate(${x},${y})`}>
-                      <text x={0} y={0} textAnchor="end" fill="#666" fontSize={12}>
-                        <tspan x={0} dy={0}>{gradeName}</tspan>
-                        <tspan x={0} dy={15}>{gradeRange}</tspan>
-                      </text>
-                    </g>
-                  );
-                }}
-              />
-              
-              {/* Tooltip (터치/호버 시 나타남) */}
-              <Tooltip
-                wrapperClassName="card06-tooltip-wrapper"
-                // contentStyle={{ backgroundColor: '#fff', border: '1px solid #ccc', fontSize: 12 }}
-                labelFormatter={(value) => {
-                  return new Date(value).toLocaleString('ko-KR', {
-                    year: 'numeric',
-                    month: 'numeric',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    hour12: true
-                  });
-                }}
-                formatter={(value) => {
-                  return [`${value} ㎍/㎥`, ''];  // 두 번째 값을 빈 문자열로!
-                }}
-              />
-              <Line
-                type="monotone"
-                dataKey={dataKey}
-                stroke={strokeColor}
-                strokeWidth={2}
-                dot={false}
-                activeDot={false}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
+                      return (
+                        <g transform={`translate(${x},${y})`}>
+                          <text x={0} y={0} textAnchor="end" fill="#666" fontSize={12}>
+                            <tspan x={0} dy={0}>{gradeName}</tspan>
+                            <tspan x={0} dy={15}>{gradeRange}</tspan>
+                          </text>
+                        </g>
+                      );
+                    }}
+                  />
+                  
+                  {/* Tooltip (터치/호버 시 나타남) */}
+                  <Tooltip
+                    wrapperClassName="card06-tooltip-wrapper"
+                    // contentStyle={{ backgroundColor: '#fff', border: '1px solid #ccc', fontSize: 12 }}
+                    labelFormatter={(value) => {
+                      return new Date(value).toLocaleString('ko-KR', {
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        hour12: true
+                      });
+                    }}
+                    formatter={(value) => {
+                      return [`${value} ㎍/㎥`, ''];  // 두 번째 값을 빈 문자열로!
+                    }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey={dataKey}
+                    stroke={strokeColor}
+                    strokeWidth={2}
+                    dot={false}
+                    activeDot={false}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+
+          ) : (
+            <div className="card06-nodata-container">
+              <LogoError animated className="card06-nodata-icon" style={{ margin: "10px" }} />
+              <p>데이터를 불러올 수 없습니다.</p>
+            </div>
+          )
+
+        }
 
 
 

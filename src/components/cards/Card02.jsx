@@ -93,7 +93,7 @@ function Card02() {
           >
             &lt;
           </button>
-          <div className="card02-date-flex-container">
+          <div className="card02-date-flex-container card02-date-day-background">
             {dayLabels[currentIndex]}{" "}
             <span className="date-text">{currentDayData.date}</span>
           </div>
