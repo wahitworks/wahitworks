@@ -42,10 +42,8 @@ const locationSlice = createSlice({
       state.currentLocation = { lat: action.payload.currentGPS.lat, lng: action.payload.currentGPS.lng };
       state.currentRegion = action.payload.currentGPS.currentRegion;
       state.matchedLocation = action.payload.currentGPS.currentRegion; // 현재 위치를 matchedLocation에 설정
-      // console.log('GPS slice에서 담은 것: currentLocation-', state.currentLocation, 'currentRegion-', state.currentRegion);
       state.measuringStation = action.payload.nearestStation.stationName;
       state.measuringStationDistance = action.payload.nearestStation.distance;
-      // console.log('GPS slice에서 담은 것: measuringStation-', state.measuringStation, 'measuringDistance-', state.measuringStationDistance);
     })
 
     // ============================================
@@ -58,7 +56,6 @@ const locationSlice = createSlice({
     .addCase(getSearchLocation.fulfilled, (state, action) => {
       state.measuringStation = action.payload.nearestStation.stationName;
       state.measuringStationDistance = action.payload.nearestStation.distance;
-      // console.log('검색 slice에서 담은 것: measuringStation-', state.measuringStation, 'measuringDistance-', state.measuringStationDistance);
     })
 
     // ============================================

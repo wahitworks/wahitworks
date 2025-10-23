@@ -119,16 +119,14 @@ function LocationSearch() {
    * 현재 위치를 가져오는 함수
    */
   const getCurrentLocationForBtn = () => {
+    
     // 1. 현재 위치 가져오기
     dispatch(getCurrentLocation());
-    // 2. 검색 위치, 검색어, 입력어 초기화
-    dispatch(setMatchedLocation(''));
-    localStorageUtil.setSearchKeywordRegion('');
+    // 2. 검색어를 null로 초기화
     dispatch(setSearchKeyword(null));
-    dispatch(setSearchKeyword(''));
+    
     // 3. 검색창 닫기
     dispatch(setSearchFlg(false));
-
   }
 
 
@@ -338,7 +336,7 @@ function LocationSearch() {
                       >
                         <span
                           className="bookmark-icon"
-                          onTouchEnd={(e) => {
+                          onTouchStart={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
                             toggleBookmark(item.region);

@@ -18,14 +18,18 @@ export const getCurrentLocation = createAsyncThunk(
       if(navigator.geolocation) {
         // 1. GPS로 위도 경도 가져오기
         const gps = await getCurrentGPS()
+        console.log('📍 GPS 위도/경도:', gps);
+
         // 2. 위도 경도로 주소 값 받기
         const gpsAddr = await getAddrFromGPS(gps.lng, gps.lat);
-        //  3. 가져온 위도 경도 값으로 측정소 매칭 
+        console.log('📍 GPS 주소:', gpsAddr);
+
+        //  3. 가져온 위도 경도 값으로 측정소 매칭
         const gpsStation = findNearestStation(gps.lat, gps.lng);
-        // console.log('측정소 찾기 완료 :', nearestStation);
-        
+        console.log('📍 GPS 측정소:', gpsStation);
+
       // ===== 반환 : { 현재GPS: {위도, 경도, 현재지역}, 가까운 측정소: {가까운 측정소 정보, 거리} }
-        return {
+        const result = {
           currentGPS: {
             lat: gps.lat,
             lng: gps.lng,
@@ -33,6 +37,8 @@ export const getCurrentLocation = createAsyncThunk(
           },
           nearestStation: gpsStation,
         };
+        console.log('📍 최종 반환값:', result);
+        return result;
       } 
     } catch (error) {
       console.error("위치정보 가져오기 실패 : ", error, '기본 값으로 설정합니다.');
@@ -74,6 +80,7 @@ export const getSearchLocation = createAsyncThunk(
       // ===== 반환 : { 검색주소: {위도, 경도}, 가까운 측정소: {측정소 정보, 거리} }
       return {
         searchLocation: {
+          searchLocation: searchKeyword,
           lat: keywordCoordinates.lat,
           lng: keywordCoordinates.lng,
         },

@@ -42,10 +42,27 @@ export const localStorageUtil = {
 
   /**
    * 헤더에서 검색해서 매칭한 위치 정보를 저장했다가 가져오기
-   * @returns 
+   * @returns
    */
   getSearchKeywordRegion: () => {
     return localStorage.getItem(LOCALSTORAGE_KEYS.SEARCH_KEYWORD_REGION);
+  },
+
+  /**
+   * 현재 위치와 측정소를 객체로 저장
+   * @param {Object} locationData - { region: string, stationName: string }
+   */
+  setLocationData: (locationData) => {
+    localStorage.setItem('LOCATION_DATA', JSON.stringify(locationData));
+  },
+
+  /**
+   * 저장된 위치와 측정소 객체 가져오기
+   * @returns {Object|null} - { region: string, stationName: string } or null
+   */
+  getLocationData: () => {
+    const data = localStorage.getItem('LOCATION_DATA');
+    return data ? JSON.parse(data) : null;
   },
 };
 

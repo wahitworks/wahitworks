@@ -23,7 +23,6 @@ import {
 } from "../../store/thunks/locationThunk.js";
 import { setMatchedLocation } from "../../store/slices/locationSlice.js";
 import { stringUtils } from "../../utils/stringUtil.js";
-import { localStorageUtil } from "../../utils/localStorageUtil.js";
 
 // 헤더에 들어가는 아이콘
 import { HiChevronLeft } from "react-icons/hi2";
@@ -125,7 +124,6 @@ function Header() {
       if (foundLocation) {
         dispatch(setMatchedLocation(foundLocation));
         dispatch(getSearchLocation(foundLocation));
-        localStorageUtil.setSearchKeywordRegion(foundLocation);
         return;
       } else {
         //        -> 2-1. 매칭된 지역이 없을 경우, 현재 위치 가져오기
