@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Header from "./components/header/Header.jsx";
 import { Outlet, useLocation } from "react-router-dom";
-import Topbtn from "./components/topBtn/topBtn.jsx";
+import Topbtn from "./components/topBtn/TopBtn.jsx";
 import AppTutorial from "./components/explainPages/AppTutorial.jsx";
 import "./App.css";
 import { PWAInstallContext } from "./contexts/PWAInstallContext.jsx";
