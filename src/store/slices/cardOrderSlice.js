@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 // 기본 템플릿 순서 (상수)
 // 현재 4개, 카드 추가시 수정 필요
-const DEFAULT_ORDER = [
+ export const DEFAULT_ORDER = [
   // 자유롭게 수정 부탁드립니다.
   { id: `card01`, name: "오늘의 행동요령", checked: true },
   { id: `card02`, name: "대구 대기질 3일 예보", checked: true },
