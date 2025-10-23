@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
 
 // 아이콘
-import { IoMdSearch } from "react-icons/io";
 import { CiStar } from "react-icons/ci";
 import { FaStar } from "react-icons/fa";
 import { HiMiniXMark } from "react-icons/hi2";

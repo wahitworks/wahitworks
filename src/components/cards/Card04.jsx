@@ -2,6 +2,8 @@ import { useState } from "react";
 import { FaStar } from "react-icons/fa";
 import "./Card04.css";
 import { useSelector } from "react-redux";
+import { motion, AnimatePresence } from "framer-motion";
+
 // 로고
 import LogoGood from '../logo/LogoGood.jsx';
 import LogoModerate from '../logo/LogoModerate.jsx';
@@ -136,7 +138,23 @@ function BookmarkItem({ region, stationName, nickname }) {
         </div>
         {/* 장소 클릭시 출력 정보 */}
         {listToggle && (
-          <div className={`card04-bookmark-list-toggle ${listToggle ? "show" : ""}`}>
+          <motion.div className={`card04-bookmark-list-toggle ${listToggle ? "show" : ""}`}
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            {/* 내부 콘텐츠를 motion.div로 한 번 더 감싸서 내용물을 늦게 뜨게 만들기 */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{
+                duration: 0.3,
+                delay: 0.1  // 살짝 지연시켜서 부드럽게
+              }}
+              style={{ width: '100%'}}
+            >
             {card04Error ? (
               // 에러 : 에러 메시지
               <div className="card04-bookmark-list-comment-err">정보를 가져올 수 없습니다.</div>
@@ -179,7 +197,8 @@ function BookmarkItem({ region, stationName, nickname }) {
                 </div>
               </>
             ) : null }
-        </div>
+            </motion.div>
+          </motion.div>
         )}
       </div>
   )  

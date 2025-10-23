@@ -1,5 +1,6 @@
 import "./Card05.css";
 import { useState } from "react";
+import { motion, AnimatePresence } from 'framer-motion';
 // import InfoTooltip from "../commons/InfoTooltip.jsx";
 
 // 1. 부모 컴포넌트 - 탭 + 범례 표시
@@ -83,15 +84,27 @@ function Card05() {
 
         {/* 6. 선택된 탭의 등급 카드들 출력 */}
         <div className="card05-grade-container">
-          {gradeStandard[selectedPollutant].map((gradeInfo, index) => (
-            <Card05Grade
-            key={index}
-            grade={gradeInfo.grade}
-            range={gradeInfo.range}
-            color={gradeInfo.color}
-            unit={gradeInfo.unit}
-            />
-          ))}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selectedPollutant}
+              initial={{ opacity: 0, x: 5 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -5 }}
+              transition={{ duration: 0.3 }}
+              style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '10px' }}
+            >
+              {gradeStandard[selectedPollutant].map((gradeInfo, index) => (
+                <Card05Grade
+                  key={index}
+                  grade={gradeInfo.grade}
+                  range={gradeInfo.range}
+                  color={gradeInfo.color}
+                  unit={gradeInfo.unit}
+                  index={index}
+                />
+              ))}
+            </motion.div>
+          </AnimatePresence>
         </div>
         <p className="card05-source-info">환경정책기본법시행령[2015.1.1 시행] 환경기준(제2조 관련)</p>
       </div>
@@ -101,17 +114,23 @@ function Card05() {
 export default Card05;
 
 // 7. 자식 컴포넌트 - 등급 카드
-function Card05Grade({ grade, range, color, unit }) {
+function Card05Grade({ grade, range, color, unit, index }) {
   return (
-    <>
-      <div className="card05-grade-items">
-        <div
-          className="card05-grade-color"
-          style={{ backgroundColor: color }}
-        />
-        <p className="card05-grade-item-title">{grade}</p>
-        <p className="card05-grade-item-range">{range} {unit}</p>
-      </div>
-    </>
+    <motion.div
+      className="card05-grade-items"
+      initial={{ opacity: 0, y: 5 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.3,
+        delay: index * 0.08  // 순차적으로 나타나는 효과
+      }}
+    >
+      <div
+        className="card05-grade-color"
+        style={{ backgroundColor: color }}
+      />
+      <p className="card05-grade-item-title">{grade}</p>
+      <p className="card05-grade-item-range">{range} {unit}</p>
+    </motion.div>
   );
 }
