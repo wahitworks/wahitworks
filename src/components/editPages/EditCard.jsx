@@ -21,6 +21,7 @@ import {
   setOrder,
   resetOrder,
   toggleCardVisibility,
+  DEFAULT_ORDER,
 } from "../../store/slices/cardOrderSlice";
 import { saveCardOrder } from "../../utils/localStorageUtil";
 import { useState } from "react";
@@ -120,13 +121,6 @@ function EditCard() {
   const yesReset = () => {
     dispatch(resetOrder());
     // resetOrder 실행 후 기본 순서로 저장
-    const DEFAULT_ORDER = [
-      { id: `card01`, name: "오늘의 행동요령", checked: true },
-      { id: `card02`, name: "대구 대기질 3일 예보", checked: true },
-      { id: `card03`, name: "지금 대기 상태", checked: true },
-      { id: `card04`, name: "내 장소", checked: true },
-      { id: `card05`, name: "맑음 단계", checked: true },
-    ];
     saveCardOrder(DEFAULT_ORDER);
     setModalOpen(false);
   };

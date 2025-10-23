@@ -193,8 +193,8 @@ function Header() {
 
         {/* 오른쪽 메뉴 아이콘 영역 */}
         <div className="header-right-wrapper">
-          {/* 경보아이콘 */}
-          <Warning />
+        {/* 경보아이콘 */}
+        {location.pathname === "/" && <Warning />}          
         </div>
         <div className="header-menu" onClick={() => headerMenuClick()}>
           <VscMenu size={35} className="header-menu-icon" />

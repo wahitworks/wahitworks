@@ -63,7 +63,7 @@
   font-weight: 900;
 }
 .header-right-padding {
-  padding-right: 20px;
+  padding-left: 1.2rem;
 }
 .header-title-info {
   font-size: 12px;
@@ -77,7 +77,7 @@
 }
 
 .header-menu {
-  width: 3.5rem;
+  width: 2.8rem;
   height: 80px;
   text-align: center;
   line-height: 100px;
