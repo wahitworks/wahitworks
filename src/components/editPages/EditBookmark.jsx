@@ -393,7 +393,9 @@ function EditBookmark() {
 
           {/* 편집 영역 */}
           <div className="bookmark-list-container">
-            <span className="bookmark-title">내 장소</span><span className="bookmark-name-gray"> 닉네임은 8글자까지 저장할 수 있어요.</span>
+            <div className="bookmark-list-title-container">
+             <span className="bookmark-title">내 장소</span><span className="bookmark-name-gray"> 장소 별칭은 8글자까지 저장할 수 있습니다.</span>
+            </div>
 
             {/* 내 장소 편집 영역 */}
             <DndContext

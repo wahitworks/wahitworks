@@ -79,6 +79,11 @@
 
 
 /* 검색 결과 영역 */
+.bookmark-list-title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .bookmark-filtered-conatiner {
   width: 90%;
   min-height: 50px;
