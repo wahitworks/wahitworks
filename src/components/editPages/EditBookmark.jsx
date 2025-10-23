@@ -113,7 +113,7 @@ function SortableItem(props) {
                 className="bookmark-nickname-input bookmark-name"
                 value={editNickname}
                 onChange={(e) => setEditNickname(e.target.value)}
-                maxLength={6}
+                maxLength={8}
                 placeholder={props.nickname ? props.nickname : props.id}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
@@ -393,7 +393,7 @@ function EditBookmark() {
 
           {/* 편집 영역 */}
           <div className="bookmark-list-container">
-            <p className="bookmark-title">내 장소</p>
+            <span className="bookmark-title">내 장소</span><span className="bookmark-name-gray"> 닉네임은 8글자까지 저장할 수 있어요.</span>
 
             {/* 내 장소 편집 영역 */}
             <DndContext
