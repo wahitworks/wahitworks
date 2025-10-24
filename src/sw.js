@@ -15,5 +15,10 @@ self.addEventListener("activate", (event) => {
 
 // 서비스 워커가 네트워크 요청을 가로챌 때마다 호출되는 이벤트 리스너
 self.addEventListener("fetch", (event) => {
+  // 카카오맵 SDK는 Service Worker를 거치지 않고 직접 로드
+  if (event.request.url.includes('dapi.kakao.com')) {
+    return; // Service Worker가 개입하지 않음
+  }
+
   console.log("Service Worker: resource fetched", event);
 });
