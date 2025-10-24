@@ -33,16 +33,15 @@ function Main() {
   // ===== Hook =====
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   // ===== 전역 state =====
-    // 카드 순서 가져오기
-    // 저장값 있을 시: 저장값 출력
-    // 없을시 : DEFAULT_ORDER 적용
+  // 카드 순서 가져오기
+  // 저장값 있을 시: 저장값 출력
+  // 없을시 : DEFAULT_ORDER 적용
   const order = useSelector((state) => state.cardOrder.order);
   const measuringStation = useSelector(
     (state) => state.locationSlice.measuringStation
   );
-
 
   // =====================================
   // ||     측정소별 실시간 측정정보 조회 : CARD01, CARD03
@@ -74,7 +73,7 @@ function Main() {
     >
       <div id="main-container">
         {/* ===== 테스트 컴포넌트 출력 ===== */}
-        {/* <TestClick /> */}
+        <TestClick />
 
         {/* 전체 카드 목록을 순회 */}
         {order.map((cardInfo) => {
