@@ -98,11 +98,11 @@ function LocationSearch() {
         // unwrap(): 성공 -> payload반환, 실패 -> error throw
         const result = await dispatch(getSearchLocationForBookmark(item)).unwrap();
         dispatch(addBookmark({
-          region: item, 
+          region: item,
           stationName: result.nearestStation.stationName,
           nickname: '',
         }));
-        console.log("북마크 추가에 성공했습니다. ", bookmarkedRegions);
+        // console.log("북마크 추가에 성공했습니다. ", bookmarkedRegions);
 
       } catch (error) {
         console.error("북마크에 추가한 지역의 측정소를 찾지 못했습니다. ", error);

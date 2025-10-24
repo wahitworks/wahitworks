@@ -98,8 +98,8 @@ function Header() {
       const { displayLocation, measuringStation, timestamp } = savedData;
 
       // CASE 1: 위치 정보가 '검색'으로 저장한 경우 → 그대로 사용
-      if (displayLocation.source === "search") {
-        console.log("검색 위치를 로컬스토리지에서 복원:", displayLocation.name);
+      if (displayLocation.source === 'search') {
+        // console.log('검색 위치를 로컬스토리지에서 복원:', displayLocation.name);
         dispatch(setDisplayLocation(displayLocation));
         dispatch(setMeasuringStation(measuringStation));
         return;
@@ -111,11 +111,11 @@ function Header() {
 
         if (isExpired) {
           // 24시간 지남 → GPS 재호출
-          console.log("GPS 위치가 만료되어 새로 가져옵니다.");
+          // console.log('GPS 위치가 만료되어 새로 가져옵니다.');
           dispatch(getCurrentLocation());
         } else {
           // 24시간 안 지남 → 그대로 사용
-          console.log("로컬스토리지에서 GPS 위치 복원:", displayLocation.name);
+          // console.log('로컬스토리지에서 GPS 위치 복원:', displayLocation.name);
           dispatch(setDisplayLocation(displayLocation));
           dispatch(setMeasuringStation(measuringStation));
         }
@@ -124,7 +124,7 @@ function Header() {
     }
 
     // CASE 3: 저장된 데이터 없음 → GPS로 현재 위치 가져오기
-    console.log("저장된 위치 정보가 없습니다. GPS로 현재 위치를 가져옵니다.");
+    // console.log('저장된 위치 정보가 없습니다. GPS로 현재 위치를 가져옵니다.');
     dispatch(getCurrentLocation());
   }, []); // 빈 배열: 최초 마운트 시 한 번만 실행
 
@@ -153,19 +153,16 @@ function Header() {
     if (foundLocation) {
       // 이미 같은 위치로 설정되어 있으면 API 재호출 방지
       if (displayLocation.name === foundLocation) {
-        console.log(
-          "이미 같은 위치로 설정되어 있음. API 호출 스킵:",
-          foundLocation
-        );
+        // console.log('이미 같은 위치로 설정되어 있음. API 호출 스킵:', foundLocation);
         return;
       }
 
       // 측정소 가져오기 (getSearchLocation이 displayLocation 설정 + 로컬스토리지 저장까지 자동으로 해줌)
       dispatch(getSearchLocation(foundLocation));
-      console.log("검색 위치 API 호출:", foundLocation);
+      // console.log('검색 위치 API 호출:', foundLocation);
     } else {
       // 매칭된 지역이 없을 경우
-      console.log("검색어와 매칭된 지역이 없습니다.");
+      // console.log("검색어와 매칭된 지역이 없습니다.");
     }
   }, [searchKeyword, location.pathname, displayLocation.name, dispatch]);
 

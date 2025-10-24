@@ -59,7 +59,6 @@ const locationSlice = createSlice({
     // ||     주소(검색어)로 측정소 가져오기
     // ============================================
     .addCase(getSearchLocation.pending, (state) => {
-      // console.log('현재 주소로 측정소를 가져오고 있는 중...');
       state.error = null;
     })
     .addCase(getSearchLocation.fulfilled, (state, action) => {

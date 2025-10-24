@@ -23,7 +23,7 @@ const bookmarkCard04 = createSlice({
     .addMatcher(
       action => action.type.endsWith('/rejected'),
       (state, action) => {
-        console.log('내 장소의 측정소 가져오기 실패 : ', action.payload);
+        console.error('내 장소의 측정소 가져오기 실패 : ', action.payload);
         // 특정 지역 검색 실패 시, 맵에 에러 상태 저장
         if (action.meta.arg) {
           state.regionStationMap[action.meta.arg] = 'error';

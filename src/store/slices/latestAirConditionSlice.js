@@ -39,7 +39,7 @@ const latestAirCondition = createSlice({
       (state, action) => {
         state.loading = false;
         state.error = action.error.message || '미세먼지 추세 데이터 불러오기 실패';
-        console.log('미세먼지 추세 데이터 불러오기 실패', action.error);
+        console.error('미세먼지 추세 데이터 불러오기 실패', action.error);
       }
     )
   }

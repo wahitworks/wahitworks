@@ -19,17 +19,17 @@ function waitForKakao(timeout = 10000) {
   return new Promise((resolve, reject) => {
     // 이미 로드되어 있으면 즉시 반환
     if (window.kakao && window.kakao.maps && window.kakao.maps.services) {
-      console.log('✅ 카카오맵 SDK 이미 로드됨');
+      // console.log('✅ 카카오맵 SDK 이미 로드됨');
       resolve();
       return;
     }
 
     console.log('⏳ 카카오맵 SDK 로딩 대기 중...');
-    console.log('현재 상태:', {
-      kakao: !!window.kakao,
-      maps: !!(window.kakao?.maps),
-      services: !!(window.kakao?.maps?.services)
-    });
+    // console.log('현재 상태:', {
+    //   kakao: !!window.kakao,
+    //   maps: !!(window.kakao?.maps),
+    //   services: !!(window.kakao?.maps?.services)
+    // });
 
     const startTime = Date.now();
 
@@ -40,7 +40,7 @@ function waitForKakao(timeout = 10000) {
         maps: !!(window.kakao?.maps),
         services: !!(window.kakao?.maps?.services)
       };
-      console.log('체크 중...', currentState);
+      // console.log('체크 중...', currentState);
 
       // SDK 로드 완료 확인
       if (window.kakao && window.kakao.maps && window.kakao.maps.services) {
@@ -102,7 +102,7 @@ function degreeToRadian(deg) {
 export function findNearestStation(currentLat, currentLng) {
   // 현재 위도 경도 값이 없을 경우, null 반환
   if (currentLat === null || currentLng === null) {
-    console.log('위도 경도 정보가 없습니다.');
+    console.error('위도 경도 정보가 없습니다.');
     return null;
   }
 

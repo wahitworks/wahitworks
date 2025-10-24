@@ -76,7 +76,7 @@ const currentAirConditionSlice = createSlice({
         state.error = true;
         state.loading = false;
         state.error = action.error.message || '데이터를 불러오는데 실패했습니다.';
-        console.log('현재 대기 정보 가져오기 실패 : ', action.error);
+        console.error('현재 대기 정보 가져오기 실패 : ', action.error);
       }
     )
   }

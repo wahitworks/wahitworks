@@ -70,7 +70,7 @@ const bookmarkSlice = createSlice({
       action => action.type.endsWith('/rejected'),
       (state, action) => {
         state.loading = false;
-        console.log('현재 북마크 저장하기 위한 측정소 정보 가져오기 실패 : ', action.error);
+        console.error('현재 북마크 저장하기 위한 측정소 정보 가져오기 실패 : ', action.error);
       }
     )
   }
