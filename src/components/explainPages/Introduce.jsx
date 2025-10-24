@@ -61,13 +61,17 @@ function Introduce() {
             주요 기능
           </p>
           <p> - 오늘의 행동요령</p>
+          <p> - 장소 즐겨찾기</p>
+          <p> - 기능 카드 편집</p>
+          <p> - 앱 설치</p>
+          <p> </p>
+          <p className="introduce-content-title introduce-color-deepblue">
+            주요 제공 정보
+          </p>
           <p> - 대기정보 3일 예보</p>
           <p> - 지금 대기 상태</p>
           <p> - 대기질 수치 등급 기준</p>
           <p> - 미세/초미세먼지 추세 그래프</p>
-          <p> - 장소 즐겨찾기</p>
-          <p> - 기능 카드 편집</p>
-          <p> - 앱 설치</p>
         </div>
         <div className="introduce-font-bold introduce-font-line">
           <p>

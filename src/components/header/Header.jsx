@@ -29,6 +29,7 @@ import { localStorageUtil } from "../../utils/localStorageUtil.js";
 import { HiChevronLeft } from "react-icons/hi2";
 import { VscMenu } from "react-icons/vsc";
 import { LiaSearchLocationSolid } from "react-icons/lia";
+import { FaChevronDown } from "react-icons/fa6";
 
 function Header() {
   // ===== Hook =====
@@ -199,24 +200,29 @@ function Header() {
           </span>
         )}
 
+        {/* 왼쪽 빈 공간 (오른쪽과 대칭) */}
+        <div className="header-left-wrapper">
+        </div>
+
         {/* 가운데 타이틀 영역 */}
         {location.pathname === "/" ? (
           // ===== 현재 주소가 메인 '/' 인 경우 -> 현재(검색)위치 =====
           <div className="header-center" onClick={() => headerTitleClick()}>
-            <div className="header-icon-wrapper">
-              <LiaSearchLocationSolid size={"24px"} color="#777" />
+            <div className="header-location-center-wapper">
+              <div className="header-location-title-wrapper">
+                <span className="header-title">{headerTitle}</span>
+                <FaChevronDown className="header-title=icon" size={"16px"} color="var(--deep-blue)" />
+              </div>
+              {measuringOn && measuringStation && (
+                <span className="header-title-info">
+                  {measuringStation} 측정소
+                </span>
+              )}
             </div>
-            <span className="header-title">{headerTitle}</span>
-            {measuringOn && measuringStation && (
-              <span className="header-title-info">
-                {measuringStation} 측정소
-              </span>
-            )}
           </div>
         ) : (
           // ===== 현재 주소가 메인'/' 가 아닌 경우 -> 페이지 제목 =====
           <div className="header-title-wrapper">
-
             <p className="header-title">{headerTitle}</p>
           </div>
         )}
@@ -224,7 +230,7 @@ function Header() {
         {/* 오른쪽 메뉴 아이콘 영역 */}
         <div className="header-right-wrapper">
         {/* 경보아이콘 */}
-        {location.pathname === "/" && <Warning />}          
+        {location.pathname === "/" && <Warning />}
         </div>
         <div className="header-menu" onClick={() => headerMenuClick()}>
           <VscMenu size={35} className="header-menu-icon" />

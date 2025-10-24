@@ -42,17 +42,34 @@
 }
 
 
+/* 양쪽 대칭 wrapper */
+.header-left-wrapper {
+  display: flex;
+  align-items: center;
+  min-width: 50px; /* Warning 아이콘과 동일한 최소 너비 */
+}
+
 /* 가운데 타이틀 영역 */
 .header-center {
   width: 50%;
   margin: 30px auto;
 
-  cursor: pointer;
-
-  display: grid;
-  align-items: center;
+  display: flex;
   justify-content: center;
-  grid-template: 1fr 1fr / auto auto; 
+  align-items: center;
+
+  cursor: pointer;
+}
+.header-location-center-wapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+.header-location-title-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 .header-icon-wrapper {
   grid-row: 1 / 3;
@@ -60,7 +77,6 @@
 }
 .header-title-wrapper {
   width: 50%;
-
 }
 .header-title {
   font-size: 16px;

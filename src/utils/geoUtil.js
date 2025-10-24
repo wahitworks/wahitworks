@@ -12,10 +12,10 @@ import { MEASURING_STATIONS } from "../constants/measuringStation.js";
 
 /**
  * 카카오맵 SDK가 로드될 때까지 대기하는 함수
- * @param {number} timeout - 최대 대기 시간 (ms), 기본값 10000ms (10초)
+ * @param {number} timeout - 최대 대기 시간 (ms), 기본값 20000ms (20초)
  * @returns {Promise<void>}
  */
-function waitForKakao(timeout = 10000) {
+function waitForKakao(timeout = 20000) {
   return new Promise((resolve, reject) => {
     // 이미 로드되어 있으면 즉시 반환
     if (window.kakao && window.kakao.maps && window.kakao.maps.services) {
