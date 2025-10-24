@@ -272,11 +272,6 @@ function LocationSearch() {
                       >
                         <span
                           className="bookmark-icon"
-                          onTouchEnd={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            toggleBookmark(item);
-                          }}
                           onClick={(e) => {
                             e.stopPropagation(); // 1. div로 이벤트 전파 막기!
                             toggleBookmark(item); // 2. item 값 그대로 전달!
@@ -290,7 +285,10 @@ function LocationSearch() {
                         </span>
                         <span
                           className="header-search-result-item"
-                          onClick={(e) => {e.stopPropagation(); handleSelectLocation(item)}}
+                          onClick={(e) => {
+                            e.stopPropagation(); 
+                            handleSelectLocation(item)
+                          }}
                         >{item}</span>
                       </div>
                     ))}
@@ -326,11 +324,6 @@ function LocationSearch() {
                       >
                         <span
                           className="bookmark-icon"
-                          onTouchStart={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            toggleBookmark(item.region);
-                          }}
                           onClick={(e) => {
                             e.stopPropagation();
                             toggleBookmark(item.region);

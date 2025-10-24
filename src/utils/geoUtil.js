@@ -1,6 +1,7 @@
 import { MEASURING_STATIONS } from "../constants/measuringStation.js";
 
 // =================================================================
+// ||    0. 카카오맵 SDK 로딩 대기 함수
 // ||    1. 좌표(위도, 경도)로 거리 계산 함수
 // ||    2. 각도를 라디안으로 변환하는 함수
 // ||    3. 좌표(위도, 경도)로 가장 가까운 거리의 측정소를 찾는 함수
@@ -8,6 +9,40 @@ import { MEASURING_STATIONS } from "../constants/measuringStation.js";
 // ||    5. 주소로 위도, 경도 받는 함수
 // ||    6. 위도, 경도로 주소 구하는 함수
 // =================================================================
+
+/**
+ * 카카오맵 SDK가 로드될 때까지 대기하는 함수
+ * @param {number} timeout - 최대 대기 시간 (ms), 기본값 10000ms (10초)
+ * @returns {Promise<void>}
+ */
+function waitForKakao(timeout = 10000) {
+  return new Promise((resolve, reject) => {
+    // 이미 로드되어 있으면 즉시 반환
+    if (window.kakao && window.kakao.maps && window.kakao.maps.services) {
+      console.log('✅ 카카오맵 SDK 이미 로드됨');
+      resolve();
+      return;
+    }
+
+    console.log('⏳ 카카오맵 SDK 로딩 대기 중...');
+    const startTime = Date.now();
+
+    const interval = setInterval(() => {
+      // SDK 로드 완료 확인
+      if (window.kakao && window.kakao.maps && window.kakao.maps.services) {
+        clearInterval(interval);
+        console.log('✅ 카카오맵 SDK 로드 완료');
+        resolve();
+      }
+      // 타임아웃 체크
+      else if (Date.now() - startTime > timeout) {
+        clearInterval(interval);
+        console.error('❌ 카카오맵 SDK 로딩 타임아웃');
+        reject(new Error('카카오맵 SDK 로딩 타임아웃'));
+      }
+    }, 100); // 100ms마다 체크
+  });
+}
 
 /**
  * haversine공식을 사용,
@@ -101,6 +136,9 @@ export async function getCurrentGPS() {
  * @param {string} addr : 위도, 경도 구할 주소
  */
 export async function getLatLngFromAddr(addr) {
+  // 카카오맵 SDK 로딩 대기
+  await waitForKakao();
+
   // 카카오 객체 생성
   const geocoder = new window.kakao.maps.services.Geocoder();
   // 비동기이므로 promise로 감싸서 await
@@ -122,10 +160,13 @@ export async function getLatLngFromAddr(addr) {
 
 /**
  * 경도, 위도 받아서 현재 주소 출력
- * @param {number} longitude 
- * @param {number} latitude 
+ * @param {number} longitude
+ * @param {number} latitude
  */
 export async function getAddrFromGPS(longitude, latitude) {
+  // 카카오맵 SDK 로딩 대기
+  await waitForKakao();
+
   // 카카오 SDK의 Geocoder 객체 생성
   const geocoder = new window.kakao.maps.services.Geocoder();
   const addressData = await new Promise((resolve, reject) => {

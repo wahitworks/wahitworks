@@ -374,11 +374,6 @@ function EditBookmark() {
                   >
                     <span
                       className="bookmark-icon"
-                      onTouchStart={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        toggleBookmark(filteredItem);
-                      }}
                       onClick={(e) => {
                         e.stopPropagation();
                         toggleBookmark(filteredItem);

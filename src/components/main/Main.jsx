@@ -73,7 +73,7 @@ function Main() {
     >
       <div id="main-container">
         {/* ===== 테스트 컴포넌트 출력 ===== */}
-        <TestClick />
+        {/* <TestClick /> */}
 
         {/* 전체 카드 목록을 순회 */}
         {order.map((cardInfo) => {
