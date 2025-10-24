@@ -8,7 +8,11 @@ import { useContext, useEffect } from "react";
 
 import { MdDownload } from "react-icons/md";
 
-import { setMenuFlg, setSearchFlg, setTutorialVisible } from "../../store/slices/headerSlice.js";
+import {
+  setMenuFlg,
+  setSearchFlg,
+  setTutorialVisible,
+} from "../../store/slices/headerSlice.js";
 
 import { PWAInstallContext } from "../../contexts/PWAInstallContext.jsx";
 
@@ -21,7 +25,6 @@ function HeaderMenu() {
   // ===== 전역 State =====
   const menuFlg = useSelector((state) => state.headerSlice.menuFlg);
 
-
   // ===== 마운트, 언마운트 - 스크롤 방지 설정 =====
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -29,7 +32,6 @@ function HeaderMenu() {
       document.body.style.overflow = "unset";
     };
   }, []);
-
 
   // ===== handle =====
 
@@ -40,7 +42,6 @@ function HeaderMenu() {
     dispatch(setMenuFlg(false));
     dispatch(setSearchFlg(false));
   };
-
 
   return (
     <div className="app-wrapper">
@@ -70,121 +71,128 @@ function HeaderMenu() {
             />
 
             {/* 실제 영역 */}
-            <div className="heacer-Menu-wrapper" onClick={() => handleMenuClose()}>
-            <motion.div
-              className="header-Menu-container"
-              onClick={(e) => e.stopPropagation()}
-              initial={{
-                opacity: 0,
-                filter: "blur(10px)",
-                x: 20,
-              }}
-              animate={{
-                opacity: 1,
-                filter: "blur(0px)",
-                x: 0,
-              }}
-              exit={{
-                opacity: 0,
-                filter: "blur(10px)",
-                x: 20,
-              }}
-              transition={{
-                duration: 0.15,
-                ease: "easeOut",
-              }}
+            <div
+              className="heacer-Menu-wrapper"
+              onClick={() => handleMenuClose()}
+            >
+              <motion.div
+                className="header-Menu-container"
+                onClick={(e) => e.stopPropagation()}
+                initial={{
+                  opacity: 0,
+                  filter: "blur(10px)",
+                  x: 20,
+                }}
+                animate={{
+                  opacity: 1,
+                  filter: "blur(0px)",
+                  x: 0,
+                }}
+                exit={{
+                  opacity: 0,
+                  filter: "blur(10px)",
+                  x: 20,
+                }}
+                transition={{
+                  duration: 0.15,
+                  ease: "easeOut",
+                }}
               >
                 {/* 상단 영역 */}
-              <div className="header-Menu-container-top">
-                <h2 className="header-Menu-container-title">메뉴</h2>
-                <div
-                  className="header-Menu-off"
-                  onClick={() => handleMenuClose()}
+                <div className="header-Menu-container-top">
+                  <h2 className="header-Menu-container-title">메뉴</h2>
+                  <div
+                    className="header-Menu-off"
+                    onClick={() => handleMenuClose()}
                   >
-                  ✕
+                    ✕
+                  </div>
                 </div>
-              </div>
 
-              <hr className="header-Menu-container-bar" />
-              
+                <hr className="header-Menu-container-bar" />
+
                 {/* 메뉴 영역 */}
-              <div className="header-Menu-container-main">
-                <p
-                  className="header-Menu-container-list"
-                  onClick={() => {
-                    handleMenuClose();
-                    navigate("/");
-                  }}
+                <div className="header-Menu-container-main">
+                  <p
+                    className="header-Menu-container-list"
+                    onClick={() => {
+                      handleMenuClose();
+                      navigate("/");
+                    }}
                   >
-                  홈
-                </p>
-                <div className="haeder-Menu-empty-line"></div>
-                {/* <hr className="header-Menu-line" /> */}
-                <p
-                  className="header-Menu-container-list"
-                  onClick={() => {
-                    handleMenuClose();
-                    navigate("/editbookmark");
-                  }}
+                    홈
+                  </p>
+                  <div className="haeder-Menu-empty-line"></div>
+                  {/* <hr className="header-Menu-line" /> */}
+                  <p
+                    className="header-Menu-container-list"
+                    onClick={() => {
+                      handleMenuClose();
+                      navigate("/editbookmark");
+                    }}
                   >
-                  내 장소 관리
-                </p>
-                <p
-                  className="header-Menu-container-list"
-                  onClick={() => {
-                    handleMenuClose();
-                    navigate("/editcard");
-                  }}
+                    내 장소 관리
+                  </p>
+                  <p
+                    className="header-Menu-container-list"
+                    onClick={() => {
+                      handleMenuClose();
+                      navigate("/editcard");
+                    }}
                   >
-                  카드 관리
-                </p>
-                <div className="haeder-Menu-empty-line"></div>
+                    카드 관리
+                  </p>
+                  <div className="haeder-Menu-empty-line"></div>
 
-                <p
-                  className="header-Menu-container-list header-Menu-item-with-icon"
-                  onClick={() => {
-                    if (deferredPrompt) {
-                      handleInstallAccept();
-                    } else {
-                      alert("새로고침 후 다시 시도해주세요");
-                    }
-                    handleMenuClose();
-                  }}
+                  <p
+                    className="header-Menu-container-list header-Menu-item-with-icon"
+                    onClick={() => {
+                      if (deferredPrompt) {
+                        handleInstallAccept();
+                      } else {
+                        alert("새로고침 후 다시 시도해주세요");
+                      }
+                      handleMenuClose();
+                    }}
                   >
-                  <span>앱 설치</span><MdDownload size={'17px'} style={{ transform: 'translateY(2px)' }} />
-                  {/* <img src={installIconUrl} alt="install icon" /> */}
-                </p>
-                <div className="haeder-Menu-empty-line"></div>
-                <p
-                  className="header-Menu-container-list"
-                  onClick={() => {
-                    // 튜토리얼 시작 명령을 먼저 예약
-                    setTimeout(() => {
-                      dispatch(setTutorialVisible(true));
-                    }, 300); // 충분한 지연 시간
+                    <span>앱 설치</span>
+                    <MdDownload
+                      size={"17px"}
+                      style={{ transform: "translateY(2px)" }}
+                    />
+                    {/* <img src={installIconUrl} alt="install icon" /> */}
+                  </p>
+                  <div className="haeder-Menu-empty-line"></div>
+                  <p
+                    className="header-Menu-container-list"
+                    onClick={() => {
+                      // 튜토리얼 시작 명령을 먼저 예약
+                      setTimeout(() => {
+                        dispatch(setTutorialVisible(true));
+                      }, 300); // 충분한 지연 시간
 
-                    navigate('/'); // 메인 페이지로 이동
-                    handleMenuClose(); // 메뉴 닫기
-                  }}
+                      navigate("/"); // 메인 페이지로 이동
+                      handleMenuClose(); // 메뉴 닫기
+                    }}
                   >
-                  사용 가이드
-                </p>
-                <p
-                  className="header-Menu-container-list"
-                  onClick={() => {
-                    handleMenuClose();
-                    navigate("/introduce");
-                  }}
+                    사용 가이드
+                  </p>
+                  <p
+                    className="header-Menu-container-list"
+                    onClick={() => {
+                      handleMenuClose();
+                      navigate("/introduce");
+                    }}
                   >
-                  사이트 소개
-                </p>
-              </div>
+                    사이트 소개
+                  </p>
+                </div>
 
-                  {/*  최하단 영역 */}
-              <div className="header-Menu-container-bottom">
-                <p className="header-Menu-container-ver">대구맑음 ver. 1.0</p>
-              </div>
-            </motion.div>
+                {/*  최하단 영역 */}
+                <div className="header-Menu-container-bottom">
+                  <p className="header-Menu-container-ver">대구맑음 ver. 1.0</p>
+                </div>
+              </motion.div>
             </div>
           </>
         )}

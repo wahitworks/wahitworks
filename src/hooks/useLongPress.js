@@ -1,7 +1,7 @@
 import { useCallback, useRef } from "react";
 
 // 스크롤 방지 및 딜레이 시간 조정을 적용한 커스텀 훅
-const useLongPress = (onLongPress, { delay = 1500, threshold = 10 } = {}) => {
+const useLongPress = (onLongPress, { delay = 800, threshold = 10 } = {}) => {
   const timeout = useRef();
   const isLongPressTriggered = useRef(false);
   const startPosition = useRef({ x: 0, y: 0 }); // 터치 시작 지점 저장

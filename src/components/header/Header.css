@@ -3,9 +3,9 @@
   height: 115px;
 
   padding: 10px;
-  
+
   border-bottom: 1px solid var(--deep-blue);
-  
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -13,7 +13,6 @@
   position: sticky;
   z-index: 9;
 }
-
 
 /*  죄측 로고 영역 */
 .header-logo-container {
@@ -40,7 +39,6 @@
   height: 80px;
   line-height: 90px;
 }
-
 
 /* 양쪽 대칭 wrapper */
 .header-left-wrapper {
@@ -77,6 +75,8 @@
 }
 .header-title-wrapper {
   width: 50%;
+  padding-right: 3rem;
+  text-align: center;
 }
 .header-title {
   font-size: 16px;
