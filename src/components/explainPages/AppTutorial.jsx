@@ -7,25 +7,25 @@ import "./AppTutorial.css";
 const tutorialSteps = [
   {
     targetSelector: ".header-title",
-    message: "지역을 검색해보세요. 선택된 지역의 대기상태를 불러옵니다.",
+    message: "지역을 검색해보세요. \n선택된 지역의 대기상태를 불러옵니다.",
     position: "bottom",
   },
   {
     targetSelector: "#main-container > div:first-child",
     message:
-      "선택된 지역을 기반으로 다양한 대기 상태에 관련된 정보들을 보여주는 카드입니다. 각 카드들은 메뉴의 '카드 관리'에서 on/off 및 순서 재배치가 가능합니다 ",
+      "다양한 대기 정보들을 보여주는 카드입니다. 꾹 눌러서 경우 홈 화면에서 삭제할 수 있습니다. \n\n각 카드는 메뉴의 `카드 관리`에서 재배치 가능합니다.",
     position: "bottom",
   },
   {
     targetSelector: ".header-menu-icon",
     message:
-      "세부 기능 메뉴입니다. 장소 즐겨찾기, 카드 관리, 앱 수동 설치, 사이트 소개등이 있습니다.",
+      "메뉴를 볼 수 있습니다. \n내 장소와 카드를 관리하거나, 앱을 설치 할 수 있습니다.",
     position: "bottom",
   },
   {
     targetSelector: ".main-add-card-container",
     message:
-      "홈 화면에서 카드 관리를 하고싶을 때 해당 기능으로 바로 갈 수 있습니다.",
+      "홈 화면에서 카드 관리를 하고싶을 때 \n해당 기능으로 바로 갈 수 있습니다.",
     position: "top",
   },
 ];

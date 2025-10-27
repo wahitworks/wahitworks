@@ -2,8 +2,9 @@ import './LogoOrigin.css';
 
 // 기본 로고 컴포넌트
 // className props 받고 animated 적용 가능
-// 색상: 파란색 (#7eafe3)
-function LogoOrigin({ className = '', animated = false }) {
+// color props로 색상 변경 가능
+// 기본 색상: 파란색 (#7eafe3)
+function LogoOrigin({ className = '', animated = false, color = '#7eafe3' }) {
   return (
     <svg
       // logo 클래스 + animated 클래스 + 추가 className
@@ -18,14 +19,14 @@ function LogoOrigin({ className = '', animated = false }) {
           }
 
           .cls-origin-1, .cls-origin-2 {
-            stroke: #7eafe3;
+            stroke: ${color};
             stroke-linecap: round;
             stroke-linejoin: round;
             stroke-width: 20px;
           }
 
           .cls-origin-2 {
-            fill: #7eafe3;
+            fill: ${color};
           }
         `} </style>
       </defs>

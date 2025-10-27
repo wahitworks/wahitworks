@@ -33,6 +33,9 @@ const locationSlice = createSlice({
     setSelectedLocationByUser(state, action) {
       state.selectedLocationByUser = action.payload;
     },
+    clearLocationError(state) {
+      state.error = null;
+    },
   },
   extraReducers: builder => {
     builder
@@ -47,6 +50,9 @@ const locationSlice = createSlice({
       state.displayLocation = action.payload.location;
       state.measuringStation = action.payload.nearestStation.stationName;
       state.measuringStationDistance = action.payload.nearestStation.distance;
+
+      // 에러 정보 저장 (성공 시 null, 실패 시 { type, message })
+      state.error = action.payload.error;
 
       // 로컬스토리지에 저장
       localStorageUtil.setLocationData({
@@ -91,6 +97,7 @@ export const {
   setMeasuringStation,
   setMeasuringStationDistance,
   setSelectedLocationByUser,
+  clearLocationError,
 } = locationSlice.actions;
 
 export default locationSlice.reducer;

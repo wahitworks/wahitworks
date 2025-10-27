@@ -2,6 +2,24 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { findNearestStation, getAddrFromGPS, getCurrentGPS, getLatLngFromAddr } from "../../utils/geoUtil.js";
 
 /**
+ * GPS 에러 타입에 따른 사용자 안내 메시지 반환
+ * @param {string} errorType - 'PERMISSION_DENIED', 'TIMEOUT', 'POSITION_UNAVAILABLE' 등
+ * @returns {string} 사용자에게 표시할 메시지
+ */
+function getGPSErrorMessage(errorType) {
+  switch(errorType) {
+    case 'PERMISSION_DENIED':
+      return '위치 권한이 거절되었습니다.\n기본 위치로 표시합니다.';
+    case 'TIMEOUT':
+      return '위치 요청 시간이 초과되었습니다.\n기본 위치로 표시합니다.';
+    case 'POSITION_UNAVAILABLE':
+      return '위치 정보를 사용할 수 없습니다.\n기본 위치로 표시합니다.';
+    default:
+      return '위치 정보를 가져올 수 없습니다.\n기본 위치로 표시합니다.';
+  }
+}
+
+/**
  * 현재 GPS 기반으로 주소 + 측정소 가져오기
  */
 export const getCurrentLocation = createAsyncThunk(
@@ -28,7 +46,7 @@ export const getCurrentLocation = createAsyncThunk(
         const gpsStation = findNearestStation(gps.lat, gps.lng);
         // console.log('📍 GPS 측정소:', gpsStation);
 
-      // ===== 반환 : 통일된 구조 { location, nearestStation }
+      // ===== 반환 : 통일된 구조 { location, nearestStation, error }
         const result = {
           location: {
             name: gpsAddr,
@@ -37,13 +55,14 @@ export const getCurrentLocation = createAsyncThunk(
             source: 'gps'
           },
           nearestStation: gpsStation,
+          error: null  // 성공 시 에러 없음
         };
         // console.log('📍 최종 반환값:', result);
         return result;
       } 
     } catch (error) {
       console.error("위치정보 가져오기 실패 : ", error, '기본 값으로 설정합니다.');
-      // ===== 주소 정보 대신, 기본 값 반환! =====
+      // ===== 주소 정보 대신, 기본 값 반환 + 에러 정보 포함 =====
       return {
         location: {
           name: '중구 성내동',
@@ -57,6 +76,10 @@ export const getCurrentLocation = createAsyncThunk(
           district: '중구',
           address: '중구 달성로 22길 30(수창초등학교 4층 옥상)',
           distance: 0,
+        },
+        error: {
+          type: error.message,
+          message: getGPSErrorMessage(error.message)
         }
       };
     }

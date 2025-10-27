@@ -55,7 +55,7 @@
   font-size: 1rem;
   line-height: 1.4;
   word-break: normal; /* 글자가 개별적으로 줄바꿈되는 현상 방지 */
-  white-space: normal; /* 공백 처리 방식 표준화 */
+  white-space: pre-line; /* \n을 줄바꿈으로 인식 */
 }
 
 /* 튜토리얼 진행 안내 표시 */

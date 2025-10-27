@@ -1,25 +1,66 @@
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import Header from "./components/header/Header.jsx";
-import { Outlet, useLocation } from "react-router-dom";
-import Topbtn from "./components/topBtn/TopBtn.jsx";
-import AppTutorial from "./components/explainPages/AppTutorial.jsx";
 import "./App.css";
-import { PWAInstallContext } from "./contexts/PWAInstallContext.jsx";
+import { useState, useEffect } from "react";
+import { Outlet, useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { AnimatePresence } from "framer-motion";
+
+import Topbtn from "./components/topBtn/TopBtn.jsx";
+import Header from "./components/header/Header.jsx";
+import AppTutorial from "./components/explainPages/AppTutorial.jsx";
+import Toast from "./components/commons/Toast.jsx";
+import { PWAInstallContext } from "./contexts/PWAInstallContext.jsx";
+
 import { setShowInstallModal } from "./store/slices/headerSlice.js";
 
 function App() {
   const location = useLocation();
   const dispatch = useDispatch();
+  
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showManualInstallHint, setShowManualInstallHint] = useState(false); // New state
   const [isInstalling, setIsInstalling] = useState(false); // 설치 시도 중 상태 플래그
+  const [showLandscapeToast, setShowLandscapeToast] = useState(false); // 가로모드 Toast 표시 여부
 
   const { isTutorialVisible, showInstallModal } = useSelector(
     (state) => state.headerSlice
   );
 
+  // ======================================================
+  // ||     useEffect : 가로모드 감지 → 2초간 Toast 표시
+  // ======================================================
+  useEffect(() => {
+    const checkOrientation = () => {
+      // 모바일 가로모드 감지:
+      // 1. 가로 > 세로 (가로모드)
+      // 2. 가로 < 1000px (최신 플래그십 모바일 포함)
+      // 3. 1.8 < 가로/세로 비율 < 2.5 (모바일 가로모드 특유의 비율)
+      const ratio = window.innerWidth / window.innerHeight;
+      const isLandscape = window.innerWidth > window.innerHeight &&
+                          window.innerWidth < 1000 &&
+                          ratio > 1.8 && ratio < 2.5;
+
+      if (isLandscape) {
+        // 가로모드 감지 시 Toast 표시
+        setShowLandscapeToast(true);
+
+        // 2초 후 Toast 자동 숨김
+        const timer = setTimeout(() => {
+          setShowLandscapeToast(false);
+        }, 2000);
+
+        return () => clearTimeout(timer);
+      }
+    };
+
+    checkOrientation(); // 초기 체크
+    window.addEventListener('resize', checkOrientation);
+
+    return () => window.removeEventListener('resize', checkOrientation);
+  }, []);
+
+  // ======================================================
+  // ||     pwa 설치 모달
+  // ======================================================
   useEffect(() => {
     const handler = (e) => {
       // 현재 설치 과정이 진행 중이면, 새로운 이벤트를 무시
@@ -98,6 +139,15 @@ function App() {
   return (
     <PWAInstallContext.Provider value={{ deferredPrompt, handleInstallAccept }}>
       <>
+        {/* 가로모드 경고 Toast (2초간 표시) */}
+        <Toast
+          show={showLandscapeToast}
+          message="세로모드에 최적화되어 있습니다. 세로모드로 사용해 주세요."
+          backgroundColor="#333"
+          borderColor="#333"
+          top="35%"
+        />
+
         <Header />
         <main>
           <AnimatePresence mode="wait">

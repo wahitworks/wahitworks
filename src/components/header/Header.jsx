@@ -1,7 +1,7 @@
 import "./Header.css";
 import logoTitle from "../../assets/logos/logo-title-200.svg";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -10,6 +10,7 @@ import LocationSearch from "./LocationSearch.jsx";
 import HeaderMenu from "./HeaderMenu.jsx";
 import LogoOrigin from "../logo/LogoOrigin.jsx";
 import Warning from "./Warning.jsx";
+import Toast from "../commons/Toast.jsx";
 
 import {
   setHeaderTitle,
@@ -24,6 +25,7 @@ import {
 import {
   setDisplayLocation,
   setMeasuringStation,
+  clearLocationError,
 } from "../../store/slices/locationSlice.js";
 import { stringUtils } from "../../utils/stringUtil.js";
 import { localStorageUtil } from "../../utils/localStorageUtil.js";
@@ -53,6 +55,13 @@ function Header() {
   const measuringStation = useSelector(
     (state) => state.locationSlice.measuringStation
   );
+  const locationError = useSelector(
+    (state) => state.locationSlice.error
+  );
+
+  // ===== 로컬 state (Toast) =====
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
   // 페이지 path 별로 수정할 타이틀 지정
   const pageTitle = {
@@ -182,8 +191,39 @@ function Header() {
     }
   }, [location.pathname, displayLocation.name, dispatch]);
 
+  // ======================================================
+  // ||     useEffect : locationError 감지 시 Toast 표시
+  // ======================================================
+  useEffect(() => {
+    if (locationError) {
+      // 토스트 메시지 설정 및 표시
+      setToastMessage(locationError.message);
+      setShowToast(true);
+
+      // 2.5초 후 토스트 자동 닫기
+      const timer = setTimeout(() => {
+        setShowToast(false);
+        // 토스트 닫힌 후 에러 초기화
+        dispatch(clearLocationError());
+      }, 2500);
+
+      // cleanup: 컴포넌트 언마운트 시 타이머 정리
+      return () => clearTimeout(timer);
+    }
+  }, [locationError, dispatch]);
+
   return (
     <>
+      {/* GPS 에러 Toast */}
+      <Toast
+        show={showToast}
+        message={toastMessage}
+        backgroundColor="#fff"
+        color="#000"
+        borderColor="var(--personal-blue)"
+        top="13%"
+      />
+
       <div className="header-container">
         {/* 왼쪽 로고 영역 */}
         {location.pathname === "/" ? (

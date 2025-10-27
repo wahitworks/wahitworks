@@ -133,18 +133,73 @@ export function findNearestStation(currentLat, currentLng) {
 
  /**
   * 브라우저의 GPS 기능으로 현재 위치를 가져오는 함수
+  * @throws {Error} PERMISSION_DENIED - 위치 권한이 거절된 경우
+  * @throws {Error} POSITION_UNAVAILABLE - 위치를 사용할 수 없는 경우
+  * @throws {Error} TIMEOUT - 위치 요청 시간 초과
   */
 export async function getCurrentGPS() {
-  // navigator.geolocation.getCurrentPosition은 콜백 방식
-  // -> 값 받기 위해 promise 사용
-  // -> async + await 사용
+  // 1. Permissions API로 권한 상태 미리 확인 (지원하는 브라우저만)
+  if (navigator.permissions) {
+    try {
+      const permission = await navigator.permissions.query({ name: 'geolocation' });
+
+      console.log('📍 위치 권한 상태:', permission.state);
+
+      // 권한이 거절된 상태 - 사용자가 브라우저 설정에서 변경해야 함
+      if (permission.state === 'denied') {
+        throw new Error('PERMISSION_DENIED');
+      }
+
+      // permission.state === 'granted' 또는 'prompt'인 경우 계속 진행
+      
+      // 권한이 거절 -> error 처리
+    } catch (error) {
+      if (error.message === 'PERMISSION_DENIED') {
+        throw error;
+      }
+      // Permissions API를 지원하지 않는 브라우저는 그냥 진행
+      console.error('⚠️ Permissions API 미지원, geolocation API로 직접 시도');
+    }
+  }
+
+  // 2. 위치 정보 요청 (콜백 방식 -> Promise로 변환)
   const position = await new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(resolve, reject);
-  })
-  return {  // ✅ 값을 반환해야 함!
+    navigator.geolocation.getCurrentPosition(
+      // getCurrentPosition(resolve, reject, optoion)
+      // 1. resolve
+      resolve,
+      // 2. reject
+      (error) => {
+        // 에러 코드에 따라 다른 메시지로 reject
+        if (error.code === error.PERMISSION_DENIED) {
+          console.error('❌ 위치 권한 거절됨');
+          reject(new Error('PERMISSION_DENIED'));
+        } else if (error.code === error.POSITION_UNAVAILABLE) {
+          console.error('❌ 위치 정보를 사용할 수 없음');
+          reject(new Error('POSITION_UNAVAILABLE'));
+        } else if (error.code === error.TIMEOUT) {
+          console.error('❌ 위치 요청 시간 초과');
+          reject(new Error('TIMEOUT'));
+        } else {
+          console.error('❌ 알 수 없는 위치 오류:', error);
+          reject(error);
+        }
+      },
+      // 3. option
+      {
+        enableHighAccuracy: false,  // 정확도 vs 속도/배터리를 선택하는 옵션
+                                      // true: GPS 사용 → 정확하지만 느리고 배터리 많이 씀
+                                      // false: WiFi/네트워크 기반 → 덜 정확하지만 빠르고 배터리 적게 씀
+        timeout: 10000,             // 요청시간 최대 10초
+        maximumAge: 60000           // 60초 이내 캐시 허용 -> 재요청 시 60초 이내라면 캐시 사용
+      }
+    );
+  });
+
+  return {
     lat: position.coords.latitude,
     lng: position.coords.longitude
-  }
+  };
 }
 
 /**

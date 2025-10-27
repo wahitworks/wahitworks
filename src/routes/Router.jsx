@@ -3,7 +3,6 @@ import App from "../App";
 import Main from "../components/main/Main.jsx";
 import EditBookmark from "../components/editPages/EditBookmark.jsx";
 import EditCard from "../components/editPages/EditCard.jsx";
-import AppTutorial from "../components/explainPages/AppTutorial.jsx";
 import Introduce from "../components/explainPages/Introduce.jsx";
 
 const router = createBrowserRouter([
