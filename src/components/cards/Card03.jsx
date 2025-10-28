@@ -142,12 +142,12 @@ function Card03() {
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.3}
                 onDragEnd={handleDragEnd}
-                initial={{ opacity: 0.9, x: page > 0 ? 30 : -30 }}
+                initial={{ opacity: 0.3, x: page > 0 ? 30 : 0 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0.9, x: page > 0 ? -30 : 30 }}
+                exit={{ opacity: 0.3, x: page > 0 ? 300 : -300 }}
                 transition={{
                   type: "tween",
-                  duration: 0.4,
+                  duration: 0.3,
                   ease: [0.4, 0, 0.2, 1],
                 }}
               >
